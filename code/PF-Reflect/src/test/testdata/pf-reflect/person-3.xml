@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Data className="org.pfsw.reflect.test.PersonData">
+  <attribute id="firstName">Linda</attribute>
+  <attribute id="lastName">Hamilton</attribute>
+  <attribute id="numberOfChildren">4</attribute>
+  <attribute id="female">true</attribute>
+  <attribute id="zipCode">12999</attribute>
+</Data>

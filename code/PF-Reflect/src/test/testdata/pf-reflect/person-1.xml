@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Person class="org.pfsw.reflect.test.PersonData">
+  <property name="firstName" value="Richard"/>
+  <property name="lastName" value="Burton"/>
+  <property name="numberOfChildren" value="3"/>
+  <property name="female" value="false"/>
+  <property name="zipCode" value="15666"/>
+</Person>
