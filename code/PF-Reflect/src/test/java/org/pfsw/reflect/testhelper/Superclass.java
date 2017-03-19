@@ -7,7 +7,7 @@
 //
 // Copyright (c) 2002, by Manfred Duchrow. All rights reserved.
 // ===========================================================================
-package org.pfsw.reflect.test ;
+package org.pfsw.reflect.testhelper ;
 
 // ===========================================================================
 // IMPORTS
@@ -32,7 +32,7 @@ public class Superclass
   // =========================================================================
 	private String name 		= "Superclass" ;
 	protected boolean flag1	= true ;
-	public Class myClass		= this.getClass() ;
+	public Class<?> myClass		= this.getClass() ;
 	Long ident							= new Long(27883783L) ;
 
   // =========================================================================
@@ -58,7 +58,7 @@ public class Superclass
 	// -------------------------------------------------------------------------
 	public String name() { return name ; }
 	public boolean flag1() { return flag1 ; }
-	public Class myClass() { return myClass ; }
+	public Class<?> myClass() { return myClass ; }
 	public Long ident() { return ident ; }
 
 	// -------------------------------------------------------------------------

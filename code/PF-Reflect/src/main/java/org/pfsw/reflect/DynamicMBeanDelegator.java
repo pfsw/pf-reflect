@@ -73,7 +73,7 @@ public class DynamicMBeanDelegator<TRECEIVER> implements DynamicMBean
   public Object invoke(String methodName, Object[] params, String[] signature)
 		throws MBeanException, javax.management.ReflectionException
 	{
-		Class[] paramTypes = null;
+		Class<?>[] paramTypes = null;
 		Object result;
 
 		try

@@ -1,7 +1,8 @@
-package org.pfsw.reflect.test;
+package org.pfsw.reflect.testhelper;
 
 import java.util.Collection;
 
+@SuppressWarnings({ "rawtypes" })
 public class DummyClass1
 {
 	public static String label = "nothing";

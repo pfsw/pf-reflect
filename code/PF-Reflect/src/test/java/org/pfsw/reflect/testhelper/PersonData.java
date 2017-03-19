@@ -7,7 +7,7 @@
 //
 // Copyright (c) 2012, by MDCS. All rights reserved.
 // ===========================================================================
-package org.pfsw.reflect.test ;
+package org.pfsw.reflect.testhelper ;
 @ExternalTypeId("person")
 public class PersonData
 {

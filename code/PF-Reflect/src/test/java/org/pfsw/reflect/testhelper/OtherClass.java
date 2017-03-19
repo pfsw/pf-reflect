@@ -1,4 +1,4 @@
-package org.pfsw.reflect.test;
+package org.pfsw.reflect.testhelper;
 
 public class OtherClass
 {

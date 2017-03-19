@@ -170,7 +170,7 @@ public class XmlReflection
   
   // -------------------------------------------------------------------------
   
-  protected Object convertToType(String text, Class type) 
+  protected Object convertToType(String text, Class<?> type) 
 	{
   	if (type == String.class)
   	{
@@ -210,7 +210,7 @@ public class XmlReflection
 		}
 		try
 		{
-			Constructor constructor = type.getConstructor(String.class);
+			Constructor<?> constructor = type.getConstructor(String.class);
 			return constructor.newInstance(text);
 		}
 		catch (Exception ex)

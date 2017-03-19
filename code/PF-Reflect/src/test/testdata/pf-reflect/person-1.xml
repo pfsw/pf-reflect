@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Person class="org.pfsw.reflect.test.PersonData">
+<Person class="org.pfsw.reflect.testhelper.PersonData">
   <property name="firstName" value="Richard"/>
   <property name="lastName" value="Burton"/>
   <property name="numberOfChildren" value="3"/>

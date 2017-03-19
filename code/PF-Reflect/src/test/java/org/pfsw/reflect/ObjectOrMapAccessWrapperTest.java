@@ -27,6 +27,7 @@ import junit.framework.TestSuite;
  * @author Manfred Duchrow
  * @version 1.0
  */
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class ObjectOrMapAccessWrapperTest extends CommonObjectAccessWrapperTestCases
 {
   // =========================================================================

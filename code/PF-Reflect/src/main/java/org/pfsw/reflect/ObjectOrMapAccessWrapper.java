@@ -218,9 +218,10 @@ public class ObjectOrMapAccessWrapper extends ObjectAccessWrapper
   // =========================================================================
   // PROTECTED INSTANCE METHODS
   // =========================================================================
-  protected Map getMap()
+  @SuppressWarnings("unchecked")
+  protected Map<String, Object> getMap()
   {
-    return (Map)this.getObject();
+    return (Map<String, Object>)this.getObject();
   } // getMap() 
 
   // -------------------------------------------------------------------------

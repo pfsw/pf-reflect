@@ -12,6 +12,7 @@ package org.pfsw.reflect;
 // ===========================================================================
 // IMPORTS
 // ===========================================================================
+import java.lang.reflect.Field;
 import java.util.List;
 
 /**
@@ -166,7 +167,7 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
   @Override
   public String[] getAttributeNames()
   {
-    List fields;
+    List<Field> fields;
 
     if (this.getObject() == null)
     {
@@ -237,8 +238,5 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
   protected void handleException(Exception e)
   {
     // Nothing to do here
-  } // handleException() 
-
-  // -------------------------------------------------------------------------
-
-} // class ObjectAccessWrapper 
+  } 
+}

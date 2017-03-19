@@ -1,7 +1,7 @@
 // ===========================================================================
 // CONTENT  : CLASS ReflectUtil
 // AUTHOR   : Manfred Duchrow
-// VERSION  : 2.2 - 27/07/2014
+// VERSION  : 2.3 - 18/03/2017
 // HISTORY  :
 //  27/09/2002  duma  CREATED
 //	24/10/2002	duma	added		-> isDefaultVisibility()
@@ -15,8 +15,9 @@
 //	15/01/2012	mdu		added 	-> getAnnotationValueFrom()
 //	12/08/2012	mdu		added 	-> getAllTypesOf()
 //  27/07/2014  mdu   changed -> signatures of method finder methods to use varargs rather than arrays
+//  18/03/2017  mdu   added   -> asObjectProperty(), asObjectProperties()
 //
-// Copyright (c) 2002-2014, by Manfred Duchrow. All rights reserved.
+// Copyright (c) 2002-2017, by Manfred Duchrow. All rights reserved.
 // ===========================================================================
 package org.pfsw.reflect;
 
@@ -48,7 +49,7 @@ import java.util.Set;
  * access to normally invisible members will cause an exception. 
  *
  * @author Manfred Duchrow
- * @version 2.2
+ * @version 2.3
  */
 public class ReflectUtil
 {
@@ -58,7 +59,7 @@ public class ReflectUtil
   /**
    *  A reusable empty array of type Class[]
    */
-  public static final Class[] EMPTY_CLASS_ARRAY = new Class[0];
+  public static final Class<?>[] EMPTY_CLASS_ARRAY = new Class[0];
 
   /**
    *  A reusable empty array of type Field[]
@@ -73,7 +74,7 @@ public class ReflectUtil
   /**
    *  A reusable empty array of type Constructor[]
    */
-  public static final Constructor[] EMPTY_CONSTRUCTOR_ARRAY = new Constructor[0];
+  public static final Constructor<?>[] EMPTY_CONSTRUCTOR_ARRAY = new Constructor[0];
 
   private static final int NOT_FOUND = -1;
 
@@ -146,10 +147,10 @@ public class ReflectUtil
    * the class object corresponding to the given class names.
    * @throws ClassNotFoundException If any of the classes cannot be found.
    */
-  public Class[] findClasses(String... classNames) throws ClassNotFoundException
+  public Class<?>[] findClasses(String... classNames) throws ClassNotFoundException
   {
-    Class[] classes;
-    Class clazz;
+    Class<?>[] classes;
+    Class<?> clazz;
 
     if (classNames == null)
     {
@@ -178,9 +179,9 @@ public class ReflectUtil
    * 
    * @param className The full qualified name of the class
    */
-  public Class findClass(String className)
+  public Class<?> findClass(String className)
   {
-    Class clazz = null;
+    Class<?> clazz = null;
 
     if (className == null)
     {
@@ -262,9 +263,10 @@ public class ReflectUtil
    * @return The new created instance or null if no matching constructor can be found 
    * @throws ReflectionException A runtime exception that wraps the original exception.
    */
+  @SuppressWarnings("unchecked")
   public <T> T createInstanceOfType(Class<T> type, String className, Object caller, Object... params)
   {
-    Class callerClass;
+    Class<?> callerClass;
     Class<T> aClass;
 
     if (className == null)
@@ -298,7 +300,7 @@ public class ReflectUtil
    * as those that are only indirectly implemented by extension.
    * If no interface is found an empty array will be returned. 
    */
-  public Class[] getInterfacesOf(Object object)
+  public Class<?>[] getInterfacesOf(Object object)
   {
     if (object == null)
     {
@@ -315,11 +317,11 @@ public class ReflectUtil
    * as those that are only indirectly implemented by extension. 
    * If no interface is found an empty array will be returned. 
    */
-  public Class[] getInterfacesOf(Class aClass)
+  public Class<?>[] getInterfacesOf(Class<?> aClass)
   {
-    Set result;
+    Set<Class<?>> result;
 
-    result = new HashSet(20);
+    result = new HashSet<Class<?>>(20);
     if (aClass != null)
     {
       this.collectInterfaces(result, aClass);
@@ -328,7 +330,7 @@ public class ReflectUtil
     {
       return EMPTY_CLASS_ARRAY;
     }
-    return (Class[])result.toArray(new Class[result.size()]);
+    return result.toArray(new Class<?>[result.size()]);
   } // getInterfacesOf() 
 
   // -------------------------------------------------------------------------
@@ -347,13 +349,13 @@ public class ReflectUtil
    * @see #getMethod(Object, String, Class[])
    * @see #findMethod(Class, String, Class[])
    */
-  public Method findMethod(Class aClass, String methodName, Class[] paramTypes, int modifiers)
+  public Method findMethod(Class<?> aClass, String methodName, Class<?>[] paramTypes, int modifiers)
   {
     Method method = null;
     Method[] methods = null;
-    Class[] types = null;
-    Class[] lookupParamTypes = null;
-    Class superclass = null;
+    Class<?>[] types = null;
+    Class<?>[] lookupParamTypes = null;
+    Class<?> superclass = null;
     int index = 0;
 
     if (paramTypes == null)
@@ -401,7 +403,7 @@ public class ReflectUtil
    * @return The method or null if not found
    * @see #getMethod(Object, String, Class[])
    */
-  public Method findMethod(Class aClass, String methodName, Class... paramTypes)
+  public Method findMethod(Class<?> aClass, String methodName, Class<?>... paramTypes)
   {
     return this.findMethod(aClass, methodName, paramTypes, 0);
   } // findMethod() 
@@ -419,9 +421,9 @@ public class ReflectUtil
    * @return The method or null if not found
    * @see #findMethod(Class, String, Class[])
    */
-  public Method getMethod(Object object, String methodName, Class... paramTypes)
+  public Method getMethod(Object object, String methodName, Class<?>... paramTypes)
   {
-    Class clazz;
+    Class<?> clazz;
 
     if (object == null)
     {
@@ -429,7 +431,7 @@ public class ReflectUtil
     }
     if (object instanceof Class)
     {
-      clazz = (Class)object;
+      clazz = (Class<?>)object;
     }
     else
     {
@@ -448,9 +450,9 @@ public class ReflectUtil
    * @param obj The object of which to get the methods 
    * @return A List of java.lang.reflect.Method
    */
-  public List getMethodsOf(Object obj)
+  public List<Method> getMethodsOf(Object obj)
   {
-    Class aClass;
+    Class<?> aClass;
 
     aClass = obj.getClass();
     return this.getMethodsOf(aClass);
@@ -466,9 +468,9 @@ public class ReflectUtil
    * @param aClass The class of which to get the methods 
    * @return A List of java.lang.reflect.Method
    */
-  public List getMethodsOf(Class aClass)
+  public List<Method> getMethodsOf(Class<?>aClass)
   {
-    List methods = new ArrayList(40);
+    List<Method> methods = new ArrayList<Method>(40);
 
     this.addInheritedMethods(methods, aClass.getSuperclass());
     this.addMethodsToList(methods, aClass.getDeclaredMethods());
@@ -486,7 +488,8 @@ public class ReflectUtil
    * @param object The object of which to get the constructors 
    * @return A List of java.lang.reflect.Constructor
    */
-  public List getConstructorsOf(Object object)
+  @SuppressWarnings("rawtypes")
+  public List<Constructor> getConstructorsOf(Object object)
   {
     return this.getConstructorsOf(object.getClass());
   } // getConstructorsOf() 
@@ -502,9 +505,10 @@ public class ReflectUtil
    * @param aClass The class of which to get the constructors 
    * @return A List of java.lang.reflect.Constructor
    */
-  public List getConstructorsOf(Class aClass)
+  @SuppressWarnings("rawtypes")
+  public List<Constructor> getConstructorsOf(Class<?> aClass)
   {
-    List constructors = new ArrayList(10);
+    List<Constructor> constructors = new ArrayList<Constructor>(10);
     Constructor[] constructorArray;
 
     constructorArray = aClass.getDeclaredConstructors();
@@ -525,9 +529,9 @@ public class ReflectUtil
    * @param obj The object to get the fields from
    * @return A List of java.lang.reflect.Field
    */
-  public List getFieldsOf(Object obj)
+  public List<Field> getFieldsOf(Object obj)
   {
-    Class aClass = null;
+    Class<?> aClass;
 
     aClass = obj.getClass();
     return this.getFieldsOf(aClass);
@@ -536,6 +540,39 @@ public class ReflectUtil
   // --------------------------------------------------------------------------
 
   /**
+   * Returns a list of all properties the given objects contains.
+   * This includes all inherited fields, regardless their visibility or
+   * other modifier states.
+   * 
+   * @param object The object to get the fields from.
+   * @return A List of object properties that correspond to the declared fields of the given object.
+   */
+  public List<IObjectProperty> getObjectPropertiesOf(Object object)
+  {
+    return this.asObjectProperties(this.getFieldsOf(object));
+  } 
+  
+  // --------------------------------------------------------------------------
+  
+  /**
+   * Returns a list of all properties the given objects contains and that match
+   * the specified filter criteria.
+   * 
+   * @param object The object to get the fields from (must not be null).
+   * @param filter The filter criteria the object properties must match (must not be null).
+   * @return A List of filtered object properties.
+   */
+  public List<IObjectProperty> getObjectPropertiesOf(Object object, IObjectPropertyFilter filter)
+  {
+    List<IObjectProperty> result;
+    
+    result = this.getObjectPropertiesOf(object);
+    return this.onlyMatching(result, filter);
+  } 
+  
+  // --------------------------------------------------------------------------
+  
+  /**
    * Returns a list of all fields the given class contains.
    * This includes all inherited fields, regardless their visibility or
    * other modifier states.
@@ -543,17 +580,50 @@ public class ReflectUtil
    * @param aClass The class to get the fields from
    * @return A List of java.lang.reflect.Field
    */
-  public List getFieldsOf(Class aClass)
+  public List<Field> getFieldsOf(Class<?> aClass)
   {
-    List fields = new ArrayList(30);
+    List<Field> fields = new ArrayList<Field>(30);
 
     this.addInheritedFields(fields, aClass.getSuperclass());
     this.addFieldsToList(fields, aClass.getDeclaredFields());
     return fields;
-  } // getFieldsOf() 
+  } 
 
   // --------------------------------------------------------------------------
 
+  /**
+   * Returns a list of all properties the given objects contains.
+   * This includes all inherited fields, regardless their visibility or
+   * other modifier states.
+   * 
+   * @param aClass The class to get the fields from
+   * @return A List of object properties that correspond to the declared fields of the given object.
+   */
+  public List<IObjectProperty> getObjectPropertiesOf(Class<?> aClass)
+  {
+    return this.asObjectProperties(this.getFieldsOf(aClass));
+  } 
+  
+  // --------------------------------------------------------------------------
+  
+  /**
+   * Returns a list of all properties of the given class and that match
+   * the specified filter criteria.
+   * 
+   * @param aClass The class to get the fields from (must not be null).
+   * @param filter The filter criteria the object properties must match (must not be null).
+   * @return A List of filtered object properties.
+   */
+  public List<IObjectProperty> getObjectPropertiesOf(Class<?> aClass, IObjectPropertyFilter filter)
+  {
+    List<IObjectProperty> result;
+    
+    result = this.getObjectPropertiesOf(aClass);
+    return this.onlyMatching(result, filter);
+  } 
+  
+  // --------------------------------------------------------------------------
+  
   /**
    * Returns the field with the specified name in the given class and all
    * the specified modifiers set.
@@ -565,10 +635,10 @@ public class ReflectUtil
    * 
    * @throws IllegalArgumentException If aClass or name is null
    */
-  public Field findField(Class aClass, String name, int modifiers)
+  public Field findField(Class<?> aClass, String name, int modifiers)
   {
-    List fields;
-    Iterator iter;
+    List<Field> fields;
+    Iterator<Field> iter;
     Field field;
 
     if ((aClass == null) || (name == null))
@@ -580,7 +650,7 @@ public class ReflectUtil
     iter = fields.iterator();
     while (iter.hasNext())
     {
-      field = (Field)iter.next();
+      field = iter.next();
       if (name.equals(field.getName()))
       {
         if ((field.getModifiers() & modifiers) == modifiers)
@@ -602,7 +672,7 @@ public class ReflectUtil
    * @param name The name of the field to look for
    * @throws IllegalArgumentException If aClass or name is null
    */
-  public Field findField(Class aClass, String name)
+  public Field findField(Class<?> aClass, String name)
   {
     return this.findField(aClass, name, 0);
   } // findField() 
@@ -622,7 +692,7 @@ public class ReflectUtil
    */
   public Field getField(Object object, String name)
   {
-    Class clazz;
+    Class<?> clazz;
 
     if ((object == null) || (name == null))
     {
@@ -630,7 +700,7 @@ public class ReflectUtil
     }
     if (object instanceof Class)
     {
-      clazz = (Class)object;
+      clazz = (Class<?>)object;
     }
     else
     {
@@ -658,7 +728,9 @@ public class ReflectUtil
 
     field = this.getField(obj, name);
     if (field == null)
+    {
       throw new NoSuchFieldException("Field name: " + name);
+    }
 
     saveAccessibility = field.isAccessible();
     field.setAccessible(true);
@@ -688,15 +760,15 @@ public class ReflectUtil
    * Sets the value of the field with the specified name to the 
    * given value.
    * 
-   * @param obj The object that contains the field
-   * @param name The name of the field to set
-   * @param value The value to assign to the field
-   * @throws NoSuchFieldException If the field is unknown in the given object
-   * @throws IllegalArgumentException If obj or name is null
+   * @param targetObject The object that contains the field.
+   * @param name The name of the field to set.
+   * @param value The value to assign to the field.
+   * @throws NoSuchFieldException If the field is unknown in the given object.
+   * @throws IllegalArgumentException If obj or name is null.
    */
-  public void setValueOf(Object obj, String name, Object value) throws NoSuchFieldException
+  public void setValueOf(Object targetObject, String name, Object value) throws NoSuchFieldException
   {
-    this.setValueOf(obj, name, value, false);
+    this.setValueOf(targetObject, name, value, false);
   } // setValueOf() 
 
   // --------------------------------------------------------------------------
@@ -847,7 +919,7 @@ public class ReflectUtil
    * 
    * @return true if the method was found and is public
    */
-  public boolean hasPublicMethod(Class aClass, String methodName, Class... paramTypes)
+  public boolean hasPublicMethod(Class<?> aClass, String methodName, Class<?>... paramTypes)
   {
     Method method;
 
@@ -871,7 +943,7 @@ public class ReflectUtil
    * 
    * @return true if the method was found and is public
    */
-  public boolean hasPublicMethod(Object obj, String methodName, Class... paramTypes)
+  public boolean hasPublicMethod(Object obj, String methodName, Class<?>... paramTypes)
   {
     if (obj == null)
     {
@@ -1045,7 +1117,7 @@ public class ReflectUtil
     Constructor<T> constructor;
     boolean accessible;
     Exception ex = null;
-    Class[] paramTypes;
+    Class<?>[] paramTypes;
 
     paramTypes = this.getTypesFromParameters(params);
     constructor = this.findConstructor(aClass, paramTypes);
@@ -1146,7 +1218,7 @@ public class ReflectUtil
    */
   public Object newInstance(String className, Object[] params)
   {
-    Class clazz = null;
+    Class<?> clazz = null;
 
     try
     {
@@ -1171,11 +1243,12 @@ public class ReflectUtil
    * @return A constructor or null
    * @see #newInstance(Class)
    */
-  public <T> Constructor<T> findConstructor(final Class<T> aClass, final Class[] paramTypes)
+  @SuppressWarnings("unchecked")
+  public <T> Constructor<T> findConstructor(final Class<T> aClass, final Class<?>[] paramTypes)
   {
     Constructor<T>[] constructors;
-    Class[] types;
-    Class[] expectedTypes;
+    Class<?>[] types;
+    Class<?>[] expectedTypes;
 
     expectedTypes = (paramTypes == null) ? new Class[0] : paramTypes;
 
@@ -1200,9 +1273,9 @@ public class ReflectUtil
    * @param params The parameters to derive the types from (may be null)
    * @return The types or an empty array if params == null
    */
-  public Class[] getTypesFromParameters(Object... params)
+  public Class<?>[] getTypesFromParameters(Object... params)
   {
-    Class[] types;
+    Class<?>[] types;
 
     if (params == null)
     {
@@ -1225,7 +1298,7 @@ public class ReflectUtil
    * 
    * @param object The object of which to determine the type 
    */
-  public Class getTypeOf(Object object)
+  public Class<?> getTypeOf(Object object)
   {
     if (object == null)
     {
@@ -1260,9 +1333,10 @@ public class ReflectUtil
    * 
    * @param object The object to derive all types of
    */
+  @SuppressWarnings("rawtypes")
   public List<Class> getAllTypesOf(Object object)
   {
-    Class baseType;
+    Class<?> baseType;
     List<Class> types;
 
     types = new ArrayList<Class>();
@@ -1284,7 +1358,7 @@ public class ReflectUtil
   /**
    * Returns true if the given class is found in the provided class array.
    */
-  public boolean contains(Class[] classes, Class aClass)
+  public boolean contains(Class<?>[] classes, Class<?> aClass)
   {
     return this.indexOf(classes, aClass) >= 0;
   } // contains() 
@@ -1295,7 +1369,7 @@ public class ReflectUtil
    * Returns the index of the given class in the provided class array or -1
    * if the class is not in the array.
    */
-  public int indexOf(Class[] classes, Class aClass)
+  public int indexOf(Class<?>[] classes, Class<?> aClass)
   {
     if (this.isNullOrEmpty(classes) || (aClass == null))
     {
@@ -1317,7 +1391,7 @@ public class ReflectUtil
    * Returns true if the class of the given object implements the 
    * specified interfaceType.
    */
-  public boolean implementsInterface(Object object, Class anInterface)
+  public boolean implementsInterface(Object object, Class<?> anInterface)
   {
     if ((object == null) || (anInterface == null))
     {
@@ -1331,9 +1405,9 @@ public class ReflectUtil
   /**
    * Returns true if the given class implements the specified interfaceType.
    */
-  public boolean implementsInterface(Class aClass, Class anInterface)
+  public boolean implementsInterface(Class<?> aClass, Class<?> anInterface)
   {
-    Class[] interfaces;
+    Class<?>[] interfaces;
 
     if ((aClass == null) || (anInterface == null))
     {
@@ -1359,11 +1433,12 @@ public class ReflectUtil
    * @param elementType The type of the elements returned by the method and of the elements in the return array
    * @return Returns an array of the specified elementType or null if the given collection is null. 
    */
-  public <T> T[] toArray(Collection coll, String methodName, Class<T> elementType)
+  @SuppressWarnings("unchecked")
+  public <T> T[] toArray(Collection<?> coll, String methodName, Class<T> elementType)
   {
     T[] objects;
     Object element;
-    Iterator iter;
+    Iterator<?> iter;
     int i = 0;
 
     if (coll == null)
@@ -1400,7 +1475,7 @@ public class ReflectUtil
    * This method must have no argument and must return a string.
    * @return Returns a string array or null if the given collection is null. 
    */
-  public String[] toStringArray(Collection coll, String methodName)
+  public String[] toStringArray(Collection<?> coll, String methodName)
   {
     return this.toArray(coll, methodName, String.class);
   } // toStringArray() 
@@ -1411,11 +1486,11 @@ public class ReflectUtil
    * Tries to find the annotation of the specified type and return its "value"
    * as String.
    * 
-   * @param aClass The potentionally annotated class
+   * @param aClass The potentially annotated class
    * @param annotationType The annotation to look for
    * @return The value string of the annotation of null if not found
    */
-  public String getAnnotationValueFrom(Class aClass, Class<? extends Annotation> annotationType)
+  public String getAnnotationValueFrom(Class<?> aClass, Class<? extends Annotation> annotationType)
   {
     Annotation annotation;
 
@@ -1429,10 +1504,49 @@ public class ReflectUtil
 
   // -------------------------------------------------------------------------
 
+  public IObjectProperty asObjectProperty(Field field)
+  {
+    return new ObjectField(field);
+  } 
+  
+  public List<IObjectProperty> asObjectProperties(List<Field> fields)
+  {
+    List<IObjectProperty> objectProperties;
+    
+    objectProperties = new ArrayList<IObjectProperty>(fields.size());
+    for (Field field : fields)
+    {
+      objectProperties.add(new ObjectField(field));
+    }
+    return objectProperties;
+  } 
+
+  /**
+   * Returns a list of all object properties that match the given filter criteria. 
+   * 
+   * @param properties The list of properties to be filtered (must not be null).
+   * @param filter The filter that decides which property goes into the result list (must not be null).
+   * @return A List of object properties that correspond to the declared fields of the given object.
+   */
+  public List<IObjectProperty> onlyMatching(final List<IObjectProperty> properties, final IObjectPropertyFilter filter)
+  {
+    List<IObjectProperty> result;
+    
+    result = new ArrayList<IObjectProperty>(properties.size());
+    for (IObjectProperty objectProperty : properties)
+    {
+      if (filter.matches(objectProperty))
+      {
+        result.add(objectProperty);
+      }
+    }
+    return result;
+  } 
+  
   // =========================================================================
   // PROTECTED INSTANCE METHODS
   // =========================================================================
-  protected void addMethodsToList(List methodList, Method[] methods)
+  protected void addMethodsToList(List<Method> methodList, Method[] methods)
   {
     for (int i = 0; i < methods.length; i++)
     {
@@ -1442,7 +1556,7 @@ public class ReflectUtil
 
   // --------------------------------------------------------------------------
 
-  protected void addInheritedMethods(List methods, Class aClass) throws SecurityException
+  protected void addInheritedMethods(List<Method> methods, Class<?> aClass) throws SecurityException
   {
     if (aClass != null)
     {
@@ -1453,7 +1567,7 @@ public class ReflectUtil
 
   // --------------------------------------------------------------------------
 
-  protected void addFieldsToList(List fieldList, Field[] fields)
+  protected void addFieldsToList(List<Field> fieldList, Field[] fields)
   {
     for (int i = 0; i < fields.length; i++)
     {
@@ -1463,7 +1577,7 @@ public class ReflectUtil
 
   // --------------------------------------------------------------------------
 
-  protected void addInheritedFields(List fields, Class aClass) throws SecurityException
+  protected void addInheritedFields(List<Field> fields, Class<?> aClass) throws SecurityException
   {
     if (aClass != null)
     {
@@ -1477,12 +1591,26 @@ public class ReflectUtil
   protected void setValueOf(Object obj, String name, Object value, boolean isPrimitive) throws NoSuchFieldException
   {
     Field field;
-    boolean saveAccessibility = false;
 
     field = this.getField(obj, name);
     if (field == null)
+    {
       throw new NoSuchFieldException("Field name: " + name);
+    }
+    this.setValueOf(obj, field, value, isPrimitive);
+  } 
 
+  // -------------------------------------------------------------------------
+
+  protected void setValueOf(final Object obj, final Field field, final Object value, final boolean isPrimitive)
+  {
+    boolean saveAccessibility = false;
+    
+    if (field == null)
+    {
+      throw new NullPointerException("'field' parameter is null");
+    }
+    
     saveAccessibility = field.isAccessible();
     field.setAccessible(true);
     try
@@ -1539,15 +1667,15 @@ public class ReflectUtil
     {
       field.setAccessible(saveAccessibility);
     }
-  } // setValueOf() 
-
+  }
+  
   // -------------------------------------------------------------------------
-
+  
   /**
    * Returns true if the types of the first array are assignable to the 
    * types of the second array. The second array is immutable.
    */
-  protected boolean compatibleTypes(Class[] paramTypes, Class[] signatureTypes)
+  protected boolean compatibleTypes(Class<?>[] paramTypes, Class<?>[] signatureTypes)
   {
     if (paramTypes == null)
     {
@@ -1574,9 +1702,9 @@ public class ReflectUtil
 
   // -------------------------------------------------------------------------
 
-  protected void collectInterfaces(Set result, Class aClass)
+  protected void collectInterfaces(Set<Class<?>> result, Class<?> aClass)
   {
-    Class[] interfaces;
+    Class<?>[] interfaces;
 
     if (aClass == null)
     {
@@ -1606,7 +1734,7 @@ public class ReflectUtil
 
   // -------------------------------------------------------------------------
 
-  protected boolean isNullOrEmpty(Collection collection)
+  protected boolean isNullOrEmpty(Collection<?> collection)
   {
     return (collection == null) || (collection.isEmpty());
   } // isNullOrEmpty() 

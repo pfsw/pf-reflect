@@ -7,21 +7,15 @@
 //
 // Copyright (c) 2002, by Manfred Duchrow. All rights reserved.
 // ===========================================================================
-package org.pfsw.reflect.test ;
-
-import java.util.List;
-import java.util.Vector;
+package org.pfsw.reflect.testhelper ;
 
 // ===========================================================================
 // IMPORTS
 // ===========================================================================
+import java.util.List;
+import java.util.Vector;
 
-/**
- *
- *
- * @author Manfred Duchrow
- * @version 1.0
- */
+@SuppressWarnings({ "rawtypes" })
 public class Subclass2 extends Subclass1
 {
   // =========================================================================

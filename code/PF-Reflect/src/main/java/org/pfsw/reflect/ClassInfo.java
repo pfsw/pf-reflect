@@ -85,7 +85,7 @@ public class ClassInfo<T>
    * 
    * @param aClass The class the new object should represent.
    */
-  public ClassInfo(Class aClass)
+  public ClassInfo(Class<T> aClass)
   {
     super();
     this.setClassObject(aClass);
@@ -99,7 +99,7 @@ public class ClassInfo<T>
    * @param aClass The class the new object should represent.
    * @param singleton if true method getInstance() will return always the identical instance
    */
-  public ClassInfo(Class aClass, boolean singleton)
+  public ClassInfo(Class<T> aClass, boolean singleton)
   {
     this(aClass);
     this.setIsSingleton(singleton);
@@ -121,7 +121,7 @@ public class ClassInfo<T>
    * 
    * @param type the Class object to be checked
    */
-  public boolean isAssignableFrom(Class type)
+  public boolean isAssignableFrom(Class<?> type)
   {
     if (type == null)
     {
@@ -138,16 +138,16 @@ public class ClassInfo<T>
 
   /**
    * Determines if the class or interface represented by the specified class parameter is 
-   * either the same as, or is a superclass or superinterface of, the class 
+   * either the same as, or is a superclass or super interface of, the class 
    * or interface represented by this ClassInfo object. 
    * It returns true if so; otherwise it returns false. 
    * If specified class parameter is a primitive type, this method returns 
-   * true if this ClassInfo object rerpresents exactly the same Class object; 
+   * true if this ClassInfo object represents exactly the same Class object; 
    * otherwise it returns false.
    * 
    * @param type the Class object to be checked
    */
-  public boolean isAssignableTo(Class type)
+  public boolean isAssignableTo(Class<?> type)
   {
     if (type == null)
     {
@@ -322,6 +322,7 @@ public class ClassInfo<T>
    * @throws IllegalArgumentException if componentType is Void.TYPE
    * @throws NegativeArraySizeException if the specified length is negative
    */
+  @SuppressWarnings("unchecked")
   public T[] newArray(int size)
   {
     if (this.getClassObject() != null)
@@ -347,11 +348,12 @@ public class ClassInfo<T>
   // =========================================================================
   // PROTECTED INSTANCE METHODS
   // =========================================================================
+  @SuppressWarnings("unchecked")
   protected void initClassObject()
   {
-    Class aClass;
+    Class<T> aClass;
 
-    aClass = ReflectUtil.current().findClass(this.getClassName());
+    aClass = (Class<T>)ReflectUtil.current().findClass(this.getClassName());
     if (aClass != null)
     {
       this.classObject(aClass);

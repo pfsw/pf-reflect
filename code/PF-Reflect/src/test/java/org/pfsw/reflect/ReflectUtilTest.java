@@ -12,6 +12,8 @@ package org.pfsw.reflect;
 // ===========================================================================
 // IMPORTS
 // ===========================================================================
+import static org.junit.Assert.*;
+
 import java.awt.BorderLayout;
 import java.io.OutputStream;
 import java.io.Serializable;
@@ -42,20 +44,15 @@ import java.util.jar.JarEntry;
 import javax.swing.JScrollPane;
 import javax.swing.plaf.ComponentUI;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.pfsw.reflect.ReflectUtil;
-import org.pfsw.reflect.ReflectionException;
-import org.pfsw.reflect.test.DummyClass1;
-import org.pfsw.reflect.test.ExternalTypeId;
-import org.pfsw.reflect.test.IGalacticalCollection;
-import org.pfsw.reflect.test.OtherClass;
-import org.pfsw.reflect.test.PersonData;
-import org.pfsw.reflect.test.Subclass1;
-import org.pfsw.reflect.test.Subclass2;
-import org.pfsw.reflect.test.Superclass;
+import org.junit.Test;
+import org.pfsw.reflect.testhelper.DummyClass1;
+import org.pfsw.reflect.testhelper.ExternalTypeId;
+import org.pfsw.reflect.testhelper.IGalacticalCollection;
+import org.pfsw.reflect.testhelper.OtherClass;
+import org.pfsw.reflect.testhelper.PersonData;
+import org.pfsw.reflect.testhelper.Subclass1;
+import org.pfsw.reflect.testhelper.Subclass2;
+import org.pfsw.reflect.testhelper.Superclass;
 
 /**
  * Test class for corresponding business class.
@@ -63,7 +60,8 @@ import org.pfsw.reflect.test.Superclass;
  * @author Manfred Duchrow
  * @version 1.0
  */
-public class ReflectUtilTest extends TestCase
+@SuppressWarnings({ "unchecked", "rawtypes" })
+public class ReflectUtilTest
 {
   // =========================================================================
   // CONSTANTS
@@ -71,32 +69,9 @@ public class ReflectUtilTest extends TestCase
   protected static final ReflectUtil util = ReflectUtil.current();
 
   // =========================================================================
-  // INSTANCE VARIABLES
-  // =========================================================================
-
-  // =========================================================================
-  // CONSTRUCTORS
-  // =========================================================================
-  /**
-   * Initialize the new instance with default values.
-   */
-  public ReflectUtilTest(String name)
-  {
-    super(name);
-  } // ReflectUtilTest() 
-
-  // =========================================================================
-  // PUBLIC INSTANCE METHODS
-  // =========================================================================
-  public static Test suite()
-  {
-    return new TestSuite(ReflectUtilTest.class);
-  } // suite() 
-
-  // =========================================================================
   // TEST METHODS
   // =========================================================================
-
+  @Test
   public void test_findMethod_1()
   {
     Method method;
@@ -110,6 +85,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findMethod_2()
   {
     Method method;
@@ -124,6 +100,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findMethod_3()
   {
     Method method;
@@ -137,6 +114,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findMethod_4()
   {
     Method method;
@@ -151,6 +129,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findMethod_5()
   {
     Method method;
@@ -163,6 +142,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findMethod_6()
   {
     Method method;
@@ -175,6 +155,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findMethod_7()
   {
     Method method;
@@ -189,6 +170,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findMethod_8()
   {
     Method method;
@@ -203,6 +185,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findMethod_9()
   {
     Method method;
@@ -217,6 +200,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findMethod_10()
   {
     Method method;
@@ -231,6 +215,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findMethod_11()
   {
     Method method;
@@ -245,6 +230,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findMethod_12()
   {
     Method method;
@@ -259,6 +245,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findMethod_13()
   {
     Method method;
@@ -273,6 +260,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findMethod_14()
   {
     Method method;
@@ -287,6 +275,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findMethod_15()
   {
     Method method;
@@ -301,6 +290,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findMethod_16()
   {
     Method method;
@@ -315,6 +305,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findMethod_17()
   {
     Method method;
@@ -329,6 +320,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findMethod_18()
   {
     Method method;
@@ -343,6 +335,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findMethod_19()
   {
     Method method;
@@ -357,6 +350,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findMethod_20()
   {
     Method method;
@@ -371,6 +365,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findMethod_21()
   {
     assertNotNull(util.findMethod(Subclass1.class, "dummy6", new Class[] { Boolean.TYPE }));
@@ -379,13 +374,15 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findClass_1()
   {
-    assertNotNull(util.findClass("org.pfsw.reflect.test.PersonData"));
+    assertNotNull(util.findClass("org.pfsw.reflect.testhelper.PersonData"));
   } // test_findClass_1() 
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findClass_2()
   {
     assertNotNull(util.findClass("java.io.PrintStream"));
@@ -393,6 +390,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findClass_3()
   {
     assertNull(util.findClass("java.io.Unknown"));
@@ -400,6 +398,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findClass_4()
   {
     assertNull(util.findClass("java/io\\Un-�known"));
@@ -407,26 +406,29 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findClass_5()
   {
     ReflectUtil reflectUtil;
 
     reflectUtil = new ReflectUtil(this.getClass().getClassLoader());
     assertNotNull(reflectUtil.findClass("java.util.Date"));
-    assertNotNull(reflectUtil.findClass("org.pfsw.reflect.test.OtherClass"));
+    assertNotNull(reflectUtil.findClass("org.pfsw.reflect.testhelper.OtherClass"));
     assertNull(reflectUtil.findClass("org.pffff.reflect.test.OtherClass"));
     assertNull(reflectUtil.findClass(null));
   } // test_findClass_5() 
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_classExists_1()
   {
-    assertTrue(util.classExists("org.pfsw.reflect.test.OtherClass"));
+    assertTrue(util.classExists("org.pfsw.reflect.testhelper.OtherClass"));
   } // test_classExists_1() 
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_classExists_2()
   {
     assertFalse(util.classExists("org.pffff.reflect.test.OtherClass"));
@@ -434,6 +436,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findField_1() throws Exception
   {
     assertNotNull(util.findField(Subclass2.class, "name"));
@@ -441,6 +444,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findField_2() throws Exception
   {
     assertNull(util.findField(Subclass2.class, "noname"));
@@ -448,6 +452,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findField_3() throws Exception
   {
     assertNotNull(util.findField(Subclass2.class, "var_1_2"));
@@ -456,6 +461,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findField_4() throws Exception
   {
     assertNotNull(util.findField(Subclass2.class, "myClass", Modifier.PUBLIC));
@@ -468,6 +474,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findField_5() throws Exception
   {
     assertNotNull(util.findField(Subclass2.class, "var_1_1", Modifier.PUBLIC));
@@ -478,6 +485,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getFieldsOf_1() throws Exception
   {
     Superclass obj = new Superclass();
@@ -493,6 +501,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getFieldsOf_class_1() throws Exception
   {
     List fields;
@@ -507,6 +516,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getFieldsOf_2() throws Exception
   {
     Subclass1 obj = new Subclass1();
@@ -522,6 +532,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getFieldsOf_class_2() throws Exception
   {
     List fields;
@@ -536,6 +547,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getFieldsOf_3() throws Exception
   {
     Subclass2 obj = new Subclass2();
@@ -552,6 +564,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getFieldsOf_class_3() throws Exception
   {
     List fields;
@@ -567,6 +580,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getField_1() throws Exception
   {
     Subclass2 obj = new Subclass2();
@@ -581,6 +595,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getField_2() throws Exception
   {
     Subclass1 obj = new Subclass1();
@@ -592,6 +607,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getField_of_class() throws Exception
   {
     Subclass1 obj = new Subclass1();
@@ -604,6 +620,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_setField_1() throws Exception
   {
     String varName = "var_1_2";
@@ -617,6 +634,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_setField_2() throws Exception
   {
     String varName = "var_1_1";
@@ -630,6 +648,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_setField_3() throws Exception
   {
     String varName = "var_1_4";
@@ -643,6 +662,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_setField_4() throws Exception
   {
     String varName = "unknown";
@@ -651,16 +671,17 @@ public class ReflectUtilTest extends TestCase
     try
     {
       util.setValueOf(obj, varName, "Test");
-      this.fail("Expected a NoSuchFieldException");
+      fail("Expected a NoSuchFieldException");
     }
-    catch (NoSuchFieldException e)
+    catch (Exception e)
     {
-      // Correct reaction
+      assertTrue(e instanceof NoSuchFieldException);
     }
-  } // test_setField_4() 
+  }
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_setField_static_with_class() throws NoSuchFieldException
   {
     DummyClass1.label = "unset";
@@ -670,6 +691,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getValueOf_1() throws Exception
   {
     Subclass2 obj = new Subclass2();
@@ -683,6 +705,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getValueOf_2() throws Exception
   {
     Subclass2 obj = new Subclass2();
@@ -696,6 +719,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getValueOf_3() throws Exception
   {
     Subclass2 obj = new Subclass2();
@@ -707,6 +731,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getValueOf_4() throws Exception
   {
     Subclass2 obj = new Subclass2();
@@ -720,6 +745,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getValueOf_5() throws Exception
   {
     Subclass2 obj = new Subclass2();
@@ -733,6 +759,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getValueOf_6()
   {
     Subclass2 obj = new Subclass2();
@@ -751,6 +778,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_isDefaultVisibility_1() throws Exception
   {
     int modifiers = Modifier.TRANSIENT | Modifier.STATIC;
@@ -760,6 +788,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_isDefaultVisibility_2() throws Exception
   {
     int modifiers;
@@ -776,6 +805,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getMethod_1()
   {
     assertNull(util.getMethod(null, "getId"));
@@ -783,6 +813,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getMethod_of_class()
   {
     assertNotNull(util.getMethod(Subclass1.class, "setName", new Class[] { String.class }));
@@ -790,6 +821,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getMethodsOf_1()
   {
     List methods;
@@ -807,6 +839,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getMethodsOf_class_1() throws Exception
   {
     List methods;
@@ -823,6 +856,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getMethodsOf_2() throws Exception
   {
     List methods;
@@ -840,6 +874,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getMethodsOf_class_2() throws Exception
   {
     List methods;
@@ -856,6 +891,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getInterfacesOf_class_1()
   {
     Class[] interfaces;
@@ -870,6 +906,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getInterfacesOf_class_2()
   {
     Class[] interfaces;
@@ -880,6 +917,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getInterfacesOf_1()
   {
     Class[] interfaces;
@@ -896,6 +934,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getInterfacesOf_2()
   {
     Class[] interfaces;
@@ -906,6 +945,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getConstructorsOf_1()
   {
     List constructors;
@@ -916,12 +956,13 @@ public class ReflectUtilTest extends TestCase
     assertEquals(1, constructors.size());
     constructor = (Constructor)constructors.get(0);
     assertEquals(Subclass1.class, constructor.getDeclaringClass());
-    assertEquals("org.pfsw.reflect.test.Subclass1", constructor.getName());
+    assertEquals("org.pfsw.reflect.testhelper.Subclass1", constructor.getName());
     assertEquals(0, constructor.getParameterTypes().length);
   } // test_getConstructorsOf_1() 
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getConstructorsOf_2()
   {
     List constructors;
@@ -932,11 +973,12 @@ public class ReflectUtilTest extends TestCase
     assertEquals(5, constructors.size());
     constructor = (Constructor)constructors.get(0);
     assertEquals(DummyClass1.class, constructor.getDeclaringClass());
-    assertEquals("org.pfsw.reflect.test.DummyClass1", constructor.getName());
+    assertEquals("org.pfsw.reflect.testhelper.DummyClass1", constructor.getName());
   } // test_getConstructorsOf_2() 
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getConstructorsOf_class_1() throws Exception
   {
     List constructors;
@@ -946,12 +988,13 @@ public class ReflectUtilTest extends TestCase
     assertEquals(1, constructors.size());
     constructor = (Constructor)constructors.get(0);
     assertEquals(Subclass1.class, constructor.getDeclaringClass());
-    assertEquals("org.pfsw.reflect.test.Subclass1", constructor.getName());
+    assertEquals("org.pfsw.reflect.testhelper.Subclass1", constructor.getName());
     assertEquals(0, constructor.getParameterTypes().length);
   } // test_getConstructorsOf_class_1() 
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getConstructorsOf_class_2() throws Exception
   {
     List constructors;
@@ -961,11 +1004,12 @@ public class ReflectUtilTest extends TestCase
     assertEquals(4, constructors.size());
     constructor = (Constructor)constructors.get(0);
     assertEquals(Subclass2.class, constructor.getDeclaringClass());
-    assertEquals("org.pfsw.reflect.test.Subclass2", constructor.getName());
+    assertEquals("org.pfsw.reflect.testhelper.Subclass2", constructor.getName());
   } // test_getConstructorsOf_class_2() 
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getConstructorsOf_class_3() throws Exception
   {
     List constructors;
@@ -975,12 +1019,13 @@ public class ReflectUtilTest extends TestCase
     assertEquals(1, constructors.size());
     constructor = (Constructor)constructors.get(0);
     assertEquals(OtherClass.class, constructor.getDeclaringClass());
-    assertEquals("org.pfsw.reflect.test.OtherClass", constructor.getName());
+    assertEquals("org.pfsw.reflect.testhelper.OtherClass", constructor.getName());
     assertEquals(0, constructor.getParameterTypes().length);
   } // test_getConstructorsOf_class_3() 
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getVisibility_1() throws Exception
   {
     assertEquals("private", util.getVisibility(Modifier.PRIVATE + Modifier.TRANSIENT));
@@ -988,6 +1033,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getVisibility_2() throws Exception
   {
     assertEquals("protected", util.getVisibility(Modifier.PROTECTED + Modifier.VOLATILE));
@@ -995,6 +1041,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getVisibility_3() throws Exception
   {
     assertEquals("public", util.getVisibility(Modifier.PUBLIC + Modifier.STATIC));
@@ -1002,6 +1049,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getVisibility_4() throws Exception
   {
     assertEquals("", util.getVisibility(Modifier.FINAL));
@@ -1009,6 +1057,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_newInstance_1() throws Exception
   {
     DummyClass1 object;
@@ -1021,6 +1070,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_newInstance_2() throws Exception
   {
     DummyClass1 object;
@@ -1034,6 +1084,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_newInstance_3() throws Exception
   {
     DummyClass1 object;
@@ -1049,6 +1100,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_newInstance_4() throws Exception
   {
     DummyClass1 object;
@@ -1064,6 +1116,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_newInstance_5() throws Exception
   {
     DummyClass1 object;
@@ -1080,6 +1133,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_newInstance_6() throws Exception
   {
     DummyClass1 object;
@@ -1092,11 +1146,12 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_newInstance_className_1() throws Exception
   {
     DummyClass1 object;
 
-    object = (DummyClass1)util.newInstance("org.pfsw.reflect.test.DummyClass1");
+    object = (DummyClass1)util.newInstance("org.pfsw.reflect.testhelper.DummyClass1");
     assertEquals(1, object.getType());
     assertEquals(0, object.intValue);
     assertNull(object.strValue);
@@ -1104,12 +1159,13 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_newInstance_className_2() throws Exception
   {
     DummyClass1 object;
     Object[] params = { new Integer(8) };
 
-    object = (DummyClass1)util.newInstance("org.pfsw.reflect.test.DummyClass1", params);
+    object = (DummyClass1)util.newInstance("org.pfsw.reflect.testhelper.DummyClass1", params);
     assertEquals(2, object.getType());
     assertEquals(8, object.intValue);
     assertNull(object.strValue);
@@ -1117,12 +1173,13 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_newInstance_className_3() throws Exception
   {
     DummyClass1 object;
     Object[] params = { new Integer(126), "Kansas" };
 
-    object = (DummyClass1)util.newInstance("org.pfsw.reflect.test.DummyClass1", params);
+    object = (DummyClass1)util.newInstance("org.pfsw.reflect.testhelper.DummyClass1", params);
     assertEquals(3, object.getType());
     assertEquals(126, object.intValue);
     assertEquals("Kansas", object.strValue);
@@ -1132,12 +1189,13 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_newInstance_className_4() throws Exception
   {
     DummyClass1 object;
     Object[] params = { new Integer(77), new Float(1.62f) };
 
-    object = (DummyClass1)util.newInstance("org.pfsw.reflect.test.DummyClass1", params);
+    object = (DummyClass1)util.newInstance("org.pfsw.reflect.testhelper.DummyClass1", params);
     assertEquals(4, object.getType());
     assertEquals(77, object.intValue);
     assertNull(object.strValue);
@@ -1147,13 +1205,14 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_newInstance_className_5() throws Exception
   {
     DummyClass1 object;
     List list = new Vector();
     Object[] params = { new Integer(200), "Lynyrd Skynyrd", list };
 
-    object = (DummyClass1)util.newInstance("org.pfsw.reflect.test.DummyClass1", params);
+    object = (DummyClass1)util.newInstance("org.pfsw.reflect.testhelper.DummyClass1", params);
     assertEquals(5, object.getType());
     assertEquals(200, object.intValue);
     assertEquals("Lynyrd Skynyrd", object.strValue);
@@ -1163,46 +1222,50 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_newInstance_className_6() throws Exception
   {
     Object object;
     List list = new Vector();
     Object[] params = { "Lynyrd Skynyrd", list, Boolean.FALSE };
 
-    object = util.newInstance("org.pfsw.reflect.test.DummyClass1", params);
+    object = util.newInstance("org.pfsw.reflect.testhelper.DummyClass1", params);
     assertNull(object);
   } // test_newInstance_className_6() 
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_newInstance_className_7() throws Exception
   {
     Object object;
 
-    object = util.newInstance("org.pfsw.reflect.test.Subclass2", "Doobie Brothers");
+    object = util.newInstance("org.pfsw.reflect.testhelper.Subclass2", "Doobie Brothers");
     assertNotNull(object);
     assertTrue(object instanceof Subclass2);
   } // test_newInstance_className_7() 
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_newInstance_className_8() throws Exception
   {
     Object object;
     List list = new Vector();
 
-    object = util.newInstance("org.pfsw.reflect.test.Subclass2", "Doobie Brothers", list);
+    object = util.newInstance("org.pfsw.reflect.testhelper.Subclass2", "Doobie Brothers", list);
     assertNotNull(object);
     assertTrue(object instanceof Subclass2);
   } // test_newInstance_className_8() 
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_newInstance_className_9() throws Exception
   {
     try
     {
-      util.newInstance("org.pfsw.reflect.test.Subclass2", "bad");
+      util.newInstance("org.pfsw.reflect.testhelper.Subclass2", "bad");
       fail("ReflectionException must have been thrown!");
     }
     catch (ReflectionException e)
@@ -1213,6 +1276,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_newInstance_class_1() throws Exception
   {
     Object object;
@@ -1223,6 +1287,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_newInstance_class_2() throws Exception
   {
     Object object;
@@ -1233,6 +1298,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_hasPublicMethod_1() throws Exception
   {
     assertTrue(util.hasPublicMethod(Subclass2.class, "name"));
@@ -1240,6 +1306,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_hasPublicMethod_2() throws Exception
   {
     assertTrue(!util.hasPublicMethod(Subclass2.class, "noname"));
@@ -1247,6 +1314,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_hasPublicMethod_3() throws Exception
   {
     assertTrue(!util.hasPublicMethod(Subclass2.class, "dummy1", (Class[])null));
@@ -1254,6 +1322,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_hasPublicMethod_4() throws Exception
   {
     assertTrue(!util.hasPublicMethod(Subclass2.class, "dummy3"));
@@ -1261,6 +1330,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_hasPublicMethod_5() throws Exception
   {
     assertNotNull(util.findMethod(Subclass2.class, "dummy4", new Class[] { Long.TYPE }));
@@ -1269,6 +1339,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_hasPublicMethod_6() throws Exception
   {
     assertTrue(!util.hasPublicMethod(Superclass.class, "dummy7", new Class[] { String.class }));
@@ -1278,6 +1349,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_hasPublicMethod_7() throws Exception
   {
     assertTrue(!util.hasPublicMethod(new Superclass(), "dummy7", new Class[] { String.class }));
@@ -1287,6 +1359,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_hasPublicMethod_8() throws Exception
   {
     assertTrue(!util.hasPublicMethod(null, "dummy7", new Class[] { String.class }));
@@ -1296,6 +1369,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findClass_primitive_1()
   {
     assertTrue(Boolean.TYPE == util.findClass(Boolean.TYPE.toString()));
@@ -1303,6 +1377,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findClass_primitive_2()
   {
     assertTrue(Integer.TYPE == util.findClass(Integer.TYPE.toString()));
@@ -1310,6 +1385,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findClass_primitive_3()
   {
     assertTrue(Long.TYPE == util.findClass("long"));
@@ -1317,6 +1393,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findClass_primitive_4()
   {
     assertTrue(Short.TYPE == util.findClass(Short.TYPE.toString()));
@@ -1324,6 +1401,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findClass_primitive_5()
   {
     assertTrue(Byte.TYPE == util.findClass(Byte.TYPE.toString()));
@@ -1331,6 +1409,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findClass_primitive_6()
   {
     assertTrue(Character.TYPE == util.findClass("char"));
@@ -1338,6 +1417,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findClass_primitive_7()
   {
     assertTrue(Float.TYPE == util.findClass(Float.TYPE.toString()));
@@ -1345,6 +1425,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findClass_primitive_8()
   {
     assertTrue(Double.TYPE == util.findClass(Double.TYPE.toString()));
@@ -1352,6 +1433,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_compatibleTypes_1()
   {
     Class[] types1 = { Integer.class, String.class };
@@ -1362,6 +1444,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_compatibleTypes_2()
   {
     Class[] types1 = { Integer.class, String.class };
@@ -1372,6 +1455,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_compatibleTypes_3()
   {
     Class[] types1 = null;
@@ -1382,6 +1466,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_compatibleTypes_4()
   {
     Class[] types1 = null;
@@ -1392,6 +1477,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_compatibleTypes_5()
   {
     Class[] types1 = {};
@@ -1402,6 +1488,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_implementsInterface_1()
   {
     Object object = new LinkedHashMap();
@@ -1420,6 +1507,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_implementsInterface_2()
   {
     Object object;
@@ -1452,6 +1540,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_implementsInterface_class_1()
   {
     assertTrue(util.implementsInterface(Vector.class, List.class));
@@ -1464,6 +1553,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_toStringArray_1()
   {
     ArrayList list = new ArrayList();
@@ -1481,6 +1571,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_toStringArray_2()
   {
     ArrayList list = new ArrayList();
@@ -1498,6 +1589,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_toStringArray_null()
   {
     String[] names;
@@ -1508,6 +1600,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_createInstanceOf_null()
   {
     Object object;
@@ -1518,6 +1611,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_createInstanceOf_unoknon_class()
   {
     Object object;
@@ -1528,6 +1622,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_createInstanceOf_no_empty_constructor()
   {
     Object object;
@@ -1540,6 +1635,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_createInstanceOf_with_no_argument()
   {
     Object object;
@@ -1550,6 +1646,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_createInstanceOf_with_one_argument()
   {
     Object object;
@@ -1560,6 +1657,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getAnnotationValueFrom_PersonData()
   {
     String name;
@@ -1570,6 +1668,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getAnnotationValueFrom_null()
   {
     String name;
@@ -1580,6 +1679,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findClasses_null() throws ClassNotFoundException
   {
     Class[] classes;
@@ -1590,6 +1690,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findClasses_empty() throws ClassNotFoundException
   {
     Class[] classes;
@@ -1600,11 +1701,12 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_findClasses_some() throws ClassNotFoundException
   {
     Class[] classes;
 
-    classes = util.findClasses("org.pfsw.reflect.test.PersonData", "java.lang.Override", "java.util.Map", "java.lang.Integer");
+    classes = util.findClasses("org.pfsw.reflect.testhelper.PersonData", "java.lang.Override", "java.util.Map", "java.lang.Integer");
     assertEquals(4, classes.length);
     assertEquals(PersonData.class, classes[0]);
     assertEquals(Override.class, classes[1]);
@@ -1615,13 +1717,14 @@ public class ReflectUtilTest extends TestCase
   // -------------------------------------------------------------------------
 
   @SuppressWarnings("unused")
+  @Test
   public void test_findClasses_unknown_class()
   {
     Class[] classes;
 
     try
     {
-      classes = util.findClasses("org.pfsw.reflect.test.PersonData", "com.java.language.Unknown", "java.util.Map");
+      classes = util.findClasses("org.pfsw.reflect.testhelper.PersonData", "com.java.language.Unknown", "java.util.Map");
       fail("Expected ClassNotFoundException!");
     }
     catch (ClassNotFoundException ex)
@@ -1632,6 +1735,7 @@ public class ReflectUtilTest extends TestCase
 
   // -------------------------------------------------------------------------
 
+  @Test
   public void test_getAllTypesOf_1()
   {
     Collection<Class> types;
@@ -1645,25 +1749,110 @@ public class ReflectUtilTest extends TestCase
     assertTrue(types.contains(Cloneable.class));
     assertTrue(types.contains(Serializable.class));
     assertTrue(types.contains(Iterable.class));
-  } // test_getAllTypesOf_1() 
+  } 
 
-  // -------------------------------------------------------------------------
+  @Test
+  public void test_getObjectProperties_of_object()
+  {
+    List<IObjectProperty> objectProperties;
+    IObjectProperty property;
+    
+    objectProperties = util.getObjectPropertiesOf(new PersonData());
+    assertTrue(objectProperties.size() >= 5); // Code coverage is weaving extra attributes into the class!
+    property = objectProperties.get(0);
+    assertEquals("firstName", property.getName());
+    assertEquals(String.class, property.getType());
+    assertTrue(property.getModifiers().isPrivate());
+    assertFalse(property.getModifiers().isStatic());
+    assertFalse(property.getModifiers().isFinal());
+  } 
+  
+  @Test
+  public void test_getObjectProperties_of_object_filtered()
+  {
+    List<IObjectProperty> objectProperties;
+    IObjectProperty property;
+    IObjectPropertyFilter filter;
+    
+    filter = new IObjectPropertyFilter()
+    {
+      @Override
+      public boolean matches(IObjectProperty objectProperty)
+      {
+        return !objectProperty.getModifiers().isPublic();
+      }
+    };
+    
+    objectProperties = util.getObjectPropertiesOf(new DummyClass1(100), filter);
+    assertTrue(objectProperties.size() >= 1); // Code coverage is weaving extra attributes into the class!
+    assertTrue(objectProperties.size() <= 2); // Code coverage is weaving extra attributes into the class!
+    property = objectProperties.get(0);
+    assertEquals("type", property.getName());
+    assertEquals(Integer.TYPE, property.getType());
+  } 
+  
+  @Test
+  public void test_getObjectProperties_of_class()
+  {
+    List<IObjectProperty> objectProperties;
+    IObjectProperty property;
+    
+    objectProperties = util.getObjectPropertiesOf(DummyClass1.class);
+    assertTrue(objectProperties.size() >= 6); // Code coverage is weaving extra attributes into the class!
+    property = objectProperties.get(0);
+    assertEquals("label", property.getName());
+    assertEquals(String.class, property.getType());
+    assertTrue(property.getModifiers().isPublic());
+    assertTrue(property.getModifiers().isStatic());
+    assertFalse(property.getModifiers().isFinal());
 
+    property = objectProperties.get(1);
+    assertEquals("type", property.getName());
+    assertEquals(Integer.TYPE, property.getType());
+    assertTrue(property.getModifiers().isPrivate());
+    assertFalse(property.getModifiers().isStatic());
+    assertFalse(property.getModifiers().isFinal());
+  } 
+  
+  @Test
+  public void test_getObjectProperties_of_class_filtered()
+  {
+    List<IObjectProperty> objectProperties;
+    IObjectProperty property;
+    IObjectPropertyFilter filter;
+    
+    filter = new IObjectPropertyFilter()
+    {
+      @Override
+      public boolean matches(IObjectProperty objectProperty)
+      {
+        return !objectProperty.getType().isPrimitive();
+      }
+    };
+    
+    objectProperties = util.getObjectPropertiesOf(DummyClass1.class, filter);
+    assertTrue(objectProperties.size() >= 3); // Code coverage is weaving extra attributes into the class!
+    assertTrue(objectProperties.size() <= 4); // Code coverage is weaving extra attributes into the class!
+    property = objectProperties.get(0);
+    assertEquals("label", property.getName());
+    assertEquals(String.class, property.getType());
+    
+    property = objectProperties.get(1);
+    assertEquals("strValue", property.getName());
+    assertEquals(String.class, property.getType());
+    
+    property = objectProperties.get(2);
+    assertEquals("collValue", property.getName());
+    assertEquals(Collection.class, property.getType());
+  } 
+  
   // =========================================================================
   // PROTECTED INSTANCE METHODS
   // =========================================================================
   protected void assertModifier(int expected, int modifiers)
   {
     assertEquals((modifiers & expected), expected);
-  } // assertModifier() 
-
-  // -------------------------------------------------------------------------
-
-  @Override
-  protected void setUp() throws Exception
-  {
-    super.setUp();
-  } // setUp() 
+  } 
 
   // -------------------------------------------------------------------------
 
@@ -1677,10 +1866,12 @@ public class ReflectUtilTest extends TestCase
     {
       field = (Field)iter.next();
       if (name.equals(field.getName()))
+      {
         return true;
+      }
     }
     return false;
-  } // containsField() 
+  }
 
   // -------------------------------------------------------------------------
 
@@ -1697,8 +1888,6 @@ public class ReflectUtilTest extends TestCase
         return true;
     }
     return false;
-  } // containsMethod() 
+  } 
 
-  // -------------------------------------------------------------------------
-
-} // class ReflectUtilTest 
+} 

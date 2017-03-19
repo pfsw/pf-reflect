@@ -15,8 +15,8 @@ package org.pfsw.reflect ;
 import junit.framework.TestCase;
 
 import org.pfsw.reflect.ObjectAccessWrapper;
-import org.pfsw.reflect.test.OtherClass;
-import org.pfsw.reflect.test.Subclass1;
+import org.pfsw.reflect.testhelper.OtherClass;
+import org.pfsw.reflect.testhelper.Subclass1;
 
 /**
  * Test class for corresponding business class.

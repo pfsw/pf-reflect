@@ -1,7 +1,7 @@
 /*
  * Created on 14.01.2012
  */
-package org.pfsw.reflect.test;
+package org.pfsw.reflect.testhelper;
 
 import java.io.File;
 import java.io.IOException;

@@ -24,4 +24,14 @@ public class ReflectionException extends RuntimeException
   {
     super(rootCause);
   }
+
+  public ReflectionException(Throwable rootCause, String message, Object...args)
+  {
+    super(String.format(message, args), rootCause);
+  }
+  
+  public ReflectionException(String message, Object...args)
+  {
+    super(String.format(message, args));
+  }
 }

@@ -21,8 +21,8 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.pfsw.reflect.XmlReflection;
-import org.pfsw.reflect.test.PersonData;
-import org.pfsw.reflect.test.UnitTestHelper;
+import org.pfsw.reflect.testhelper.PersonData;
+import org.pfsw.reflect.testhelper.UnitTestHelper;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;

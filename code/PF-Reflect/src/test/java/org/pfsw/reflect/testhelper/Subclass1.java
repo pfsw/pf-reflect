@@ -7,7 +7,7 @@
 //
 // Copyright (c) 2002, by Manfred Duchrow. All rights reserved.
 // ===========================================================================
-package org.pfsw.reflect.test ;
+package org.pfsw.reflect.testhelper ;
 
 // ===========================================================================
 // IMPORTS
@@ -15,8 +15,6 @@ package org.pfsw.reflect.test ;
 import java.util.Date;
 
 /**
- *
- *
  * @author Manfred Duchrow
  * @version 1.0
  */

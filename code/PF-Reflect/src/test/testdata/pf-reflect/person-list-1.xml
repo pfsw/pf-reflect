@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <People>
-  <Person class="org.pfsw.reflect.test.PersonData">
+  <Person class="org.pfsw.reflect.testhelper.PersonData">
     <Field Name="firstName" Value="Freddy"/>
     <Field Name="lastName" Value="Mercury"/>
     <Field Name="numberOfChildren" Value="0"/>
     <Field Name="female" Value="false"/>
     <Field Name="zipCode" Value="11111"/>
   </Person>
-  <Person class="org.pfsw.reflect.test.PersonData">
+  <Person class="org.pfsw.reflect.testhelper.PersonData">
     <Field Name="firstName" Value="Brian"/>
     <Field Name="lastName" Value="May"/>
     <Field Name="numberOfChildren" Value="2"/>
     <Field Name="female" Value="false"/>
     <Field Name="zipCode" Value="22222"/>
   </Person>
-  <Person class="org.pfsw.reflect.test.PersonData">
+  <Person class="org.pfsw.reflect.testhelper.PersonData">
     <Field Name="firstName" Value="John"/>
     <Field Name="lastName" Value="Deacon"/>
     <Field Name="numberOfChildren" Value="7"/>
     <Field Name="female" Value="false"/>
     <Field Name="zipCode" Value="33333"/>
   </Person>
-  <Person class="org.pfsw.reflect.test.PersonData">
+  <Person class="org.pfsw.reflect.testhelper.PersonData">
     <Field Name="firstName" Value="Roger"/>
     <Field Name="lastName" Value="Taylor"/>
     <Field Name="numberOfChildren" Value="1"/>
     <Field Name="female" Value="false"/>
     <Field Name="zipCode" Value="44444"/>
   </Person>
-  <Person class="org.pfsw.reflect.test.PersonData">
+  <Person class="org.pfsw.reflect.testhelper.PersonData">
     <Field Name="firstName" Value="Angelica"/>
     <Field Name="lastName" Value="Huston"/>
     <Field Name="numberOfChildren" Value="3"/>

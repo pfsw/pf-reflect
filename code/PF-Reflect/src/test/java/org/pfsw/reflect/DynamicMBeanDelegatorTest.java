@@ -20,7 +20,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.pfsw.reflect.DynamicMBeanDelegator;
-import org.pfsw.reflect.test.PersonData;
+import org.pfsw.reflect.testhelper.PersonData;
 
 /**
  * Test class for corresponding business class.
