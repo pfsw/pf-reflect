@@ -28,7 +28,6 @@ import org.pfsw.reflect.testhelper.Superclass;
  * Test class for corresponding business class.
  *
  * @author Manfred Duchrow
- * @version 1.0
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class ClassInfoTest
@@ -44,7 +43,7 @@ public class ClassInfoTest
     str = (String)ci.createInstance();
     assertNotNull(str);
     assertEquals("", str);
-  } // test_createInstance_1() 
+  } 
 
   // -------------------------------------------------------------------------
 
@@ -391,5 +390,34 @@ public class ClassInfoTest
 
     classInfo = new ClassInfo("org.pf.text.StringUtil");
     assertEquals("org.pfsw.reflect.ClassInfo(org.pf.text.StringUtil)", classInfo.toString());
+  } 
+
+  @Test public void test_createSingleton()
+  {
+    ClassInfo<String> classInfo;
+    String singleObject = "alpha";
+    
+    classInfo = ClassInfo.createSingleton(singleObject);
+    assertEquals("java.lang.String", classInfo.getClassName());
+    assertSame(String.class, classInfo.getClassObject());
+    for (int i = 0; i < 10; i++)
+    {      
+      String string = classInfo.getInstance();
+      assertEquals(String.format("%d : Value is '%s'", i, string), singleObject, string);
+    }
+    assertTrue(classInfo.isSingleton());
+  } 
+  
+  @Test public void test_createSingleton_null()
+  {
+    try
+    {
+      ClassInfo.createSingleton(null);
+      fail("Expected IllegalArgumentException");
+    }
+    catch (Exception e)
+    {
+      assertTrue(e instanceof IllegalArgumentException);
+    }
   } 
 } 

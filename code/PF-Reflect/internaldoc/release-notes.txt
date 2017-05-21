@@ -5,7 +5,7 @@ Copyright (c) 2002-2017, by Manfred Duchrow. All rights reserved.
 
 -----------------------------------------------------------------------
 
-VERSION 4.1.0 (19/03/2017) - 268 Unit Tests
+VERSION 4.1.0 (21/05/2017) - 270 Unit Tests
 
 * New interfaces and classes
   > IObjectProperty
@@ -27,6 +27,10 @@ VERSION 4.1.0 (19/03/2017) - 268 Unit Tests
   > Added constructors
     - public ReflectionException(String message, Object...args)
     - public ReflectionException(Throwable rootCause, String message, Object...args)
+
+* ClassInfo
+  > Added
+    - public static <T> ClassInfo<T> createSingleton(T instance)
 
 -----------------------------------------------------------------------
 

@@ -1,14 +1,15 @@
 // ===========================================================================
 // CONTENT  : CLASS ClassInfo
 // AUTHOR   : Manfred Duchrow
-// VERSION  : 1.4 - 17/11/2010
+// VERSION  : 1.5 - 21/05/2017
 // HISTORY  :
 //  25/01/2003  mdu  CREATED
 //	27/02/2007	mdu		adedd		-->	isAssignableFrom(), isAssignableTo(), isInstance()
 //	16/11/2007	mdu		added		-->	getInstance()
 //	17/11/2010	mdu	changed		-->	to generic type
+//  21/05/2017  mdu   added   --> createSingleton(T instance)
 //
-// Copyright (c) 2003-2010, by Manfred Duchrow. All rights reserved.
+// Copyright (c) 2003-2017, by Manfred Duchrow. All rights reserved.
 // ===========================================================================
 package org.pfsw.reflect ;
 
@@ -22,7 +23,7 @@ import java.lang.reflect.Array;
  * instances.
  *
  * @author Manfred Duchrow
- * @version 1.4
+ * @version 1.5
  */
 public class ClassInfo<T>
 {
@@ -49,6 +50,30 @@ public class ClassInfo<T>
   private T soleInstance = null ;
   protected T getSoleInstance() { return soleInstance ; }
   protected void setSoleInstance( T newValue ) { soleInstance = newValue ; }
+  
+  // =========================================================================
+  // CLASS METHODS
+  // =========================================================================
+  /**
+   * Creates a new instance with a singleton.
+   * 
+   * @param instance The instance to be used as singleton (must not be null).
+   * @throws IllegalArgumentException If the given instance is null.
+   */
+  @SuppressWarnings("unchecked")
+  public static <T> ClassInfo<T> createSingleton(T instance)
+  {
+    ClassInfo<T> info;
+    
+    if (instance == null)
+    {
+      throw new IllegalArgumentException("No null value allowed here");
+    }
+    info = new ClassInfo<T>((Class<T>)instance.getClass(), true);
+    info.setSoleInstance(instance);
+    return info;
+  }
+  
   // =========================================================================
   // CONSTRUCTORS
   // =========================================================================
@@ -61,9 +86,7 @@ public class ClassInfo<T>
   {
     super();
     this.setClassName(className);
-  } // ClassInfo() 
-
-  // -------------------------------------------------------------------------
+  } 
 
   /**
    * Initialize the new instance with a class name and a flag if it is a
@@ -76,9 +99,7 @@ public class ClassInfo<T>
   {
     this(className);
     this.setIsSingleton(singleton);
-  } // ClassInfo() 
-
-  // -------------------------------------------------------------------------
+  } 
 
   /**
    * Initialize the new instance with a class.
@@ -89,9 +110,7 @@ public class ClassInfo<T>
   {
     super();
     this.setClassObject(aClass);
-  } // ClassInfo() 
-
-  // -------------------------------------------------------------------------
+  } 
 
   /**
    * Initialize the new instance with a class.
@@ -103,9 +122,7 @@ public class ClassInfo<T>
   {
     this(aClass);
     this.setIsSingleton(singleton);
-  } // ClassInfo() 
-
-  // -------------------------------------------------------------------------
+  } 
 
   // =========================================================================
   // PUBLIC INSTANCE METHODS
@@ -343,8 +360,6 @@ public class ClassInfo<T>
     return this.getClass().getName() + "(" + this.getClassName() + ")";
   } // toString() 
 
-  // -------------------------------------------------------------------------
-
   // =========================================================================
   // PROTECTED INSTANCE METHODS
   // =========================================================================
@@ -365,8 +380,5 @@ public class ClassInfo<T>
   protected void handleException(Exception exception) 
   {
     // Currently nothing - just ignore
-  } // handleException()
-  
-  // -------------------------------------------------------------------------
-  
-} // class ClassInfo 
+  }
+} 
