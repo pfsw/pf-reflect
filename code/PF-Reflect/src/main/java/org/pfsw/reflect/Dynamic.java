@@ -36,16 +36,8 @@ import java.lang.reflect.Method;
  * @version 1.5
  * @see java.lang.reflect.ReflectPermission
  */
-abstract public class Dynamic
+public abstract class Dynamic
 {
-  // =========================================================================
-  // CONSTANTS
-  // =========================================================================
-
-  // =========================================================================
-  // INSTANCE VARIABLES
-  // =========================================================================
-
   // =========================================================================
   // CLASS METHODS
   // =========================================================================
@@ -70,9 +62,7 @@ abstract public class Dynamic
       result = ex;
     }
     return result;
-  } // invoke() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Executes the named method on the given object with one none primitive argument.
@@ -96,9 +86,7 @@ abstract public class Dynamic
       result = ex;
     }
     return result;
-  } // invoke() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Executes the named method on the given object with one integer argument.
@@ -122,9 +110,7 @@ abstract public class Dynamic
       result = ex;
     }
     return result;
-  } // invoke() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Executes the named method on the given object with one boolean argument.
@@ -148,9 +134,7 @@ abstract public class Dynamic
       result = ex;
     }
     return result;
-  } // invoke() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Executes the named method on the given object with several arguments.   <br>
@@ -184,9 +168,7 @@ abstract public class Dynamic
       result = ex;
     }
     return result;
-  } // invoke() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Executes the named method on the given object with several arguments.   <br>
@@ -213,9 +195,7 @@ abstract public class Dynamic
       result = ex;
     }
     return result;
-  } // invoke() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Executes the given method on the given object with the specified arguments.   <br>
@@ -239,9 +219,7 @@ abstract public class Dynamic
       result = ex;
     }
     return result;
-  } // invoke() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Executes the named method on the given object and without any arguments.
@@ -253,9 +231,7 @@ abstract public class Dynamic
   public static Object perform(Object receiver, String methodName) throws Exception
   {
     return perform(receiver, methodName, new Object[0], new Class[0]);
-  } // perform() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Executes the named method on the given object with one none primitive argument.
@@ -270,9 +246,7 @@ abstract public class Dynamic
     Object[] args = { arg };
     Class<?>[] types = { getTypeOf(arg) };
     return perform(receiver, methodName, args, types);
-  } // perform() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Executes the named method on the given object with one integer argument.
@@ -287,9 +261,7 @@ abstract public class Dynamic
     Object[] args = { new Integer(arg) };
     Class<?>[] types = { Integer.TYPE };
     return perform(receiver, methodName, args, types);
-  } // perform() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Executes the named method on the given object with one boolean argument.
@@ -304,9 +276,7 @@ abstract public class Dynamic
     Object[] args = { arg ? Boolean.TRUE : Boolean.FALSE };
     Class<?>[] types = { Boolean.TYPE };
     return perform(receiver, methodName, args, types);
-  } // perform() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Executes the named method on the given object with several arguments.   <br>
@@ -335,9 +305,7 @@ abstract public class Dynamic
       types[i] = getTypeOf(args[i]);
     }
     return perform(receiver, methodName, args, types);
-  } // perform() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * This method allows direct dynamic execution of JMX MBean method invocations.
@@ -365,9 +333,7 @@ abstract public class Dynamic
       }
     }
     return Dynamic.perform(receiver, methodName, args, paramTypes);
-  } // perform()
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Executes the named method on the given object with several arguments.   <br>
@@ -419,9 +385,7 @@ abstract public class Dynamic
       throw (new Exception(msg.toString()));
     }
     return perform(receiver, method, args);
-  } // perform() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Executes the given method on the given object with the specified arguments.   <br>
@@ -457,9 +421,7 @@ abstract public class Dynamic
     }
 
     return result;
-  } // perform() 
-
-  // -------------------------------------------------------------------------
+  }
 
   // =========================================================================
   // PROTECTED CLASS METHODS
@@ -471,22 +433,16 @@ abstract public class Dynamic
       throw new NullPointerException("Type of null value cannot be determined");
     }
     return ReflectUtil.current().getTypeOf(object);
-  } // getTypeOf() 
-
-  // -------------------------------------------------------------------------
+  }
 
   protected static Method findMethod(Class<?> aClass, String methodName, Class<?>[] paramTypes)
   {
     return ReflectUtil.current().findMethod(aClass, methodName, paramTypes);
-  } // findMethod() 
-
-  // -------------------------------------------------------------------------
+  }
 
   private static boolean isNullOrEmpty(String[] strings)
   {
     return (strings == null) || (strings.length == 0);
-  } // isNullOrEmpty()
+  }
 
-  // -------------------------------------------------------------------------
-
-} // class Dynamic 
+}

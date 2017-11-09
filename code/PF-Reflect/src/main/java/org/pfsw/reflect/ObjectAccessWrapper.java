@@ -46,7 +46,7 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
   {
     super();
     this.setObject(object);
-  } // ObjectAccessWrapper() 
+  }
 
   // =========================================================================
   // PUBLIC INSTANCE METHODS
@@ -69,9 +69,7 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
       this.handleException(e);
       return null;
     }
-  } // get() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Invokes the setter method of the given field name and passes the
@@ -90,9 +88,7 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
     {
       this.handleException(e);
     }
-  } // set() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns the value of the field with the given field name or
@@ -109,9 +105,7 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
       this.handleException(e);
     }
     return null;
-  } // getValueOfField() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Modifies the field with the given name directly to the specified value
@@ -127,9 +121,7 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
     {
       this.handleException(e);
     }
-  } // setValueOfField() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns the current value of the attribute (field) with the given name.
@@ -141,9 +133,7 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
   public Object getAttributeValue(String name) throws NoSuchFieldException
   {
     return RU.getValueOf(this.getObject(), name);
-  } // getAttributeValue() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Sets the current value of the attribute (field) with the given name.    <br>
@@ -156,9 +146,7 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
   public void setAttributeValue(String name, Object value) throws NoSuchFieldException
   {
     RU.setValueOf(this.getObject(), name, value);
-  } // setAttributeValue() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns the names of all attributes that can be accessed by the
@@ -179,16 +167,12 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
       return EMPTY_STRING_ARRAY;
     }
     return ReflectUtil.current().toStringArray(fields, "getName");
-  } // getAttributeNames() 
-
-  // -------------------------------------------------------------------------
+  }
 
   public Object getObject()
   {
     return object;
-  } // getObject() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Set the underlying object.
@@ -197,9 +181,7 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
   public void setObject(Object object)
   {
     this.object = object;
-  } // setObject() 
-
-  // -------------------------------------------------------------------------
+  }
 
   // =========================================================================
   // PROTECTED INSTANCE METHODS
@@ -207,16 +189,12 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
   protected String makeGetterName(String fieldName)
   {
     return this.makeAccessMethodName("get", fieldName);
-  } // makeGetterName() 
-
-  // -------------------------------------------------------------------------
+  }
 
   protected String makeSetterName(String fieldName)
   {
     return this.makeAccessMethodName("set", fieldName);
-  } // makeSetterName() 
-
-  // -------------------------------------------------------------------------
+  }
 
   protected String makeAccessMethodName(final String prefix, final String fieldName)
   {
@@ -227,9 +205,7 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
     methodName.append(fieldName.substring(0, 1).toUpperCase());
     methodName.append(fieldName.substring(1));
     return methodName.toString();
-  } // makeAccessMethodName() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Handles all exceptions that might occur due to reflection access.
@@ -238,5 +214,5 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
   protected void handleException(Exception e)
   {
     // Nothing to do here
-  } 
+  }
 }

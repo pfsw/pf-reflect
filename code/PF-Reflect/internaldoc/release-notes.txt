@@ -5,7 +5,7 @@ Copyright (c) 2002-2017, by Manfred Duchrow. All rights reserved.
 
 -----------------------------------------------------------------------
 
-VERSION 4.1.0 (21/05/2017) - 270 Unit Tests
+VERSION 4.1.0 (09/11/2017) - 270 Unit Tests
 
 * New interfaces and classes
   > IObjectProperty

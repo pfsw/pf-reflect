@@ -32,6 +32,6 @@ public class UnitTestHelper
 	  builderFactory.setCoalescing(true);
     document = builderFactory.newDocumentBuilder().parse(file);
     return document;
-  } // readXmlFile() 
+  }
 
-} // class UnitTestHelper
+}

@@ -11,7 +11,7 @@
 //
 // Copyright (c) 2003-2017, by Manfred Duchrow. All rights reserved.
 // ===========================================================================
-package org.pfsw.reflect ;
+package org.pfsw.reflect;
 
 // ===========================================================================
 // IMPORTS
@@ -30,27 +30,16 @@ public class ClassInfo<T>
   // =========================================================================
   // CONSTANTS
   // =========================================================================
-	public static final Object[] EMPTY_OBJECT_ARRAY = new Object[0] ; 
+  public static final Object[] EMPTY_OBJECT_ARRAY = new Object[0];
 
   // =========================================================================
   // INSTANCE VARIABLES
   // =========================================================================
-  private String className = null ;
-  protected String className() { return className ; }
-  protected void className( String newValue ) { className = newValue ; }
-  
-	private Class<T> classObject = null ;
-  protected Class<T> classObject() { return classObject ; }
-  protected void classObject( Class<T> newValue ) { classObject = newValue ; }
-    
-  private boolean isSingleton = false ;
-  public boolean isSingleton() { return isSingleton ; }
-  public void setIsSingleton( boolean newValue ) { isSingleton = newValue ; }
-  
-  private T soleInstance = null ;
-  protected T getSoleInstance() { return soleInstance ; }
-  protected void setSoleInstance( T newValue ) { soleInstance = newValue ; }
-  
+  private String className = null;
+  private Class<T> classObject = null;
+  private boolean isSingleton = false;
+  private T soleInstance = null;
+
   // =========================================================================
   // CLASS METHODS
   // =========================================================================
@@ -64,7 +53,7 @@ public class ClassInfo<T>
   public static <T> ClassInfo<T> createSingleton(T instance)
   {
     ClassInfo<T> info;
-    
+
     if (instance == null)
     {
       throw new IllegalArgumentException("No null value allowed here");
@@ -73,7 +62,7 @@ public class ClassInfo<T>
     info.setSoleInstance(instance);
     return info;
   }
-  
+
   // =========================================================================
   // CONSTRUCTORS
   // =========================================================================
@@ -86,7 +75,7 @@ public class ClassInfo<T>
   {
     super();
     this.setClassName(className);
-  } 
+  }
 
   /**
    * Initialize the new instance with a class name and a flag if it is a
@@ -99,7 +88,7 @@ public class ClassInfo<T>
   {
     this(className);
     this.setIsSingleton(singleton);
-  } 
+  }
 
   /**
    * Initialize the new instance with a class.
@@ -110,7 +99,7 @@ public class ClassInfo<T>
   {
     super();
     this.setClassObject(aClass);
-  } 
+  }
 
   /**
    * Initialize the new instance with a class.
@@ -122,7 +111,17 @@ public class ClassInfo<T>
   {
     this(aClass);
     this.setIsSingleton(singleton);
-  } 
+  }
+
+  public boolean isSingleton()
+  {
+    return this.isSingleton;
+  }
+
+  public void setIsSingleton(boolean newValue)
+  {
+    this.isSingleton = newValue;
+  }
 
   // =========================================================================
   // PUBLIC INSTANCE METHODS
@@ -149,9 +148,7 @@ public class ClassInfo<T>
       return false;
     }
     return this.getClassObject().isAssignableFrom(type);
-  } // isAssignableFrom() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Determines if the class or interface represented by the specified class parameter is 
@@ -175,9 +172,7 @@ public class ClassInfo<T>
       return false;
     }
     return type.isAssignableFrom(this.getClassObject());
-  } // isAssignableTo() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Determines if the specified Object is assignment-compatible with the object 
@@ -200,9 +195,7 @@ public class ClassInfo<T>
       return false;
     }
     return this.getClassObject().isInstance(object);
-  } // isInstance() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns the name of the class, this object represents.
@@ -210,9 +203,7 @@ public class ClassInfo<T>
   public String getClassName()
   {
     return this.className();
-  } // getClassName() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Set the name of the class this object should represent.
@@ -227,9 +218,7 @@ public class ClassInfo<T>
       this.className(className);
       this.classObject(null);
     }
-  } // setClassName() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns the the class object.
@@ -242,9 +231,7 @@ public class ClassInfo<T>
       this.initClassObject();
     }
     return this.classObject();
-  } // getClassObject() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Set the class object. The name will be set automatically to the given
@@ -259,9 +246,7 @@ public class ClassInfo<T>
       this.classObject(aClass);
       this.className(aClass.getName());
     }
-  } // setClassObject() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns either a new instance of the underlying class or always the 
@@ -282,9 +267,7 @@ public class ClassInfo<T>
       return this.getSoleInstance();
     }
     return this.createInstance();
-  } // getInstance()
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns a new instance of the class or null in any case of error.
@@ -304,9 +287,7 @@ public class ClassInfo<T>
       this.handleException(ex);
     }
     return null;
-  } // createInstance() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns a new instance of the class.
@@ -325,9 +306,7 @@ public class ClassInfo<T>
       throw new ClassNotFoundException(this.className());
     }
     return aClass.newInstance();
-  } // newInstance() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns a new array of the type represented by this ClassInfo. Returns
@@ -347,9 +326,7 @@ public class ClassInfo<T>
       return (T[])Array.newInstance(this.getClassObject(), size);
     }
     return (T[])EMPTY_OBJECT_ARRAY;
-  } // newArray()
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * @see java.lang.Object#toString()
@@ -358,7 +335,7 @@ public class ClassInfo<T>
   public String toString()
   {
     return this.getClass().getName() + "(" + this.getClassName() + ")";
-  } // toString() 
+  }
 
   // =========================================================================
   // PROTECTED INSTANCE METHODS
@@ -373,12 +350,41 @@ public class ClassInfo<T>
     {
       this.classObject(aClass);
     }
-  } // initClassObject() 
+  }
 
-  // -------------------------------------------------------------------------
-
-  protected void handleException(Exception exception) 
+  protected void handleException(Exception exception)
   {
     // Currently nothing - just ignore
   }
-} 
+
+  protected String className()
+  {
+    return this.className;
+  }
+
+  protected void className(String newValue)
+  {
+    this.className = newValue;
+  }
+
+  protected Class<T> classObject()
+  {
+    return this.classObject;
+  }
+
+  protected void classObject(Class<T> newValue)
+  {
+    this.classObject = newValue;
+  }
+
+  protected T getSoleInstance()
+  {
+    return this.soleInstance;
+  }
+
+  protected void setSoleInstance(T newValue)
+  {
+    this.soleInstance = newValue;
+  }
+
+}

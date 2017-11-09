@@ -7,7 +7,7 @@
 //
 // Copyright (c) 2002, by Manfred Duchrow. All rights reserved.
 // ===========================================================================
-package org.pfsw.reflect.testhelper ;
+package org.pfsw.reflect.testhelper;
 
 // ===========================================================================
 // IMPORTS
@@ -26,14 +26,13 @@ public class Superclass
   // CONSTANTS
   // =========================================================================
 
-
   // =========================================================================
   // INSTANCE VARIABLES
   // =========================================================================
-	private String name 		= "Superclass" ;
-	protected boolean flag1	= true ;
-	public Class<?> myClass		= this.getClass() ;
-	Long ident							= new Long(27883783L) ;
+  private String name = "Superclass";
+  protected boolean flag1 = true;
+  public Class<?> myClass = this.getClass();
+  Long ident = new Long(27883783L);
 
   // =========================================================================
   // CLASS METHODS
@@ -47,84 +46,76 @@ public class Superclass
    */
   public Superclass()
   {
-    super() ;
+    super();
     this.dummy3();
-    this.dummy6(true) ;
-  } // Superclass() 
+    this.dummy6(true);
+  }
 
+  // Getter for fields
 
-	// -------------------------------------------------------------------------
-	// Getter for fields
-	// -------------------------------------------------------------------------
-	public String name() { return name ; }
-	public boolean flag1() { return flag1 ; }
-	public Class<?> myClass() { return myClass ; }
-	public Long ident() { return ident ; }
+  public String name()
+  {
+    return name;
+  }
+  public boolean flag1()
+  {
+    return flag1;
+  }
+  public Class<?> myClass()
+  {
+    return myClass;
+  }
+  public Long ident()
+  {
+    return ident;
+  }
 
-	// -------------------------------------------------------------------------
-	// Methods for test cases in ReflectUtilTest that use findMethod()
-	// -------------------------------------------------------------------------
+  // Methods for test cases in ReflectUtilTest that use findMethod()
 
   protected void dummy1()
-	{		
+  {
     // Just for testing
-	} // dummy1() 
+  }
 
-	// -------------------------------------------------------------------------
-	
   void dummy2()
-	{		
+  {
     // Just for testing
-	} // dummy2() 
+  }
 
-	// -------------------------------------------------------------------------
-	
   private void dummy3()
-	{		
+  {
     // Just for testing
-	} // dummy3() 
+  }
 
-	// -------------------------------------------------------------------------
-	
-  protected void dummy4( long x )
-	{		
+  protected void dummy4(long x)
+  {
     // Just for testing
-	} // dummy4() 
+  }
 
-	// -------------------------------------------------------------------------
-	
-  void dummy5( String s, Date d)
-	{		
+  void dummy5(String s, Date d)
+  {
     // Just for testing
-	} // dummy5() 
+  }
 
-	// -------------------------------------------------------------------------
-	
-  private void dummy6( boolean b )
-	{		
+  private void dummy6(boolean b)
+  {
     // Just for testing
-	} // dummy6() 
+  }
 
-	// -------------------------------------------------------------------------
-	
   @SuppressWarnings("hiding")
-  protected String dummy7( String name )
-  {		
-  	return "X:" + name ;
-  } // dummy7() 
+  protected String dummy7(String name)
+  {
+    return "X:" + name;
+  }
 
+  public String getName()
+  {
+    return name;
+  }
 
-	public String getName()
-	{
-		return name;
-	}
+  public void setName(String name)
+  {
+    this.name = name;
+  }
 
-
-	public void setName( String name )
-	{
-		this.name = name;
-	}
-  
-  // -------------------------------------------------------------------------
-  
-} // class Superclass 
+}

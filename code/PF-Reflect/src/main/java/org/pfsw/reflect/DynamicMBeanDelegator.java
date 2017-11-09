@@ -7,7 +7,7 @@
 //
 // Copyright (c) 2012, by MDCS. All rights reserved.
 // ===========================================================================
-package org.pfsw.reflect ;
+package org.pfsw.reflect;
 
 // ===========================================================================
 // IMPORTS
@@ -39,18 +39,14 @@ public class DynamicMBeanDelegator<TRECEIVER> implements DynamicMBean
   // =========================================================================
   // CONSTANTS
   // =========================================================================
-	private static final ReflectUtil RU = ReflectUtil.current();
+  private static final ReflectUtil RU = ReflectUtil.current();
 
   // =========================================================================
   // INSTANCE VARIABLES
   // =========================================================================
-  private TRECEIVER receiver = null ;
-  public TRECEIVER getReceiver() { return receiver ; }
-  public void setReceiver( TRECEIVER newValue ) { receiver = newValue ; }
-  
-  private MBeanInfo managedBeanInfo = null ;
-  protected MBeanInfo getManagedBeanInfo() { return managedBeanInfo ; }
-  public void setManagedBeanInfo( MBeanInfo newValue ) { managedBeanInfo = newValue ; }
+  private TRECEIVER receiver = null;
+  private MBeanInfo managedBeanInfo = null;
+
   // =========================================================================
   // CONSTRUCTORS
   // =========================================================================
@@ -59,9 +55,9 @@ public class DynamicMBeanDelegator<TRECEIVER> implements DynamicMBean
    */
   public DynamicMBeanDelegator(TRECEIVER receiver)
   {
-    super() ;
+    super();
     this.setReceiver(receiver);
-  } // DynamicMBeanDelegator()
+  }
 
   // =========================================================================
   // PUBLIC INSTANCE METHODS
@@ -69,156 +65,161 @@ public class DynamicMBeanDelegator<TRECEIVER> implements DynamicMBean
   /**
    * Executes the methods that are supported via JMX.
    */
-	@Override
-  public Object invoke(String methodName, Object[] params, String[] signature)
-		throws MBeanException, javax.management.ReflectionException
-	{
-		Class<?>[] paramTypes = null;
-		Object result;
+  @Override
+  public Object invoke(String methodName, Object[] params, String[] signature) throws MBeanException, javax.management.ReflectionException
+  {
+    Class<?>[] paramTypes = null;
+    Object result;
 
-		try
-		{
-			if ((signature != null) && (signature.length > 0))
-			{
-				paramTypes = RU.findClasses(signature);
-			}
-			result = Dynamic.perform(this.getReceiver(), methodName, params, paramTypes);
-		}
-		catch (Exception e)
-		{
-			throw new javax.management.ReflectionException(e, "Failed to dynamically invoke MBean method: " + methodName);
-		}
-		if (result instanceof Exception)
-		{
-			throw new MBeanException((Exception)result, "MBean method invocation returned exception.");
-		}
-		return result;
-	} // invoke() 
-  
-  // -------------------------------------------------------------------------
-  
-	/**
-	 * Returns the value of the attribute with the given name.
-	 * 
-	 * @param attrName The name of the attribute to be returned
-	 * @throws AttributeNotFoundException if the attribute with the given name cannot be found.
-	 */
-	@Override
+    try
+    {
+      if ((signature != null) && (signature.length > 0))
+      {
+        paramTypes = RU.findClasses(signature);
+      }
+      result = Dynamic.perform(this.getReceiver(), methodName, params, paramTypes);
+    }
+    catch (Exception e)
+    {
+      throw new javax.management.ReflectionException(e, "Failed to dynamically invoke MBean method: " + methodName);
+    }
+    if (result instanceof Exception)
+    {
+      throw new MBeanException((Exception)result, "MBean method invocation returned exception.");
+    }
+    return result;
+  }
+
+  /**
+   * Returns the value of the attribute with the given name.
+   * 
+   * @param attrName The name of the attribute to be returned
+   * @throws AttributeNotFoundException if the attribute with the given name cannot be found.
+   */
+  @Override
   public Object getAttribute(String attrName) throws AttributeNotFoundException, MBeanException, ReflectionException
-	{
-		try
-		{
-			return RU.getValueOf(this.getReceiver(), attrName);
-		}
-		catch (NoSuchFieldException ex)
-		{
-			throw new AttributeNotFoundException(attrName);
-		}
-	} // getAttribute() 
+  {
+    try
+    {
+      return RU.getValueOf(this.getReceiver(), attrName);
+    }
+    catch (NoSuchFieldException ex)
+    {
+      throw new AttributeNotFoundException(attrName);
+    }
+  }
 
-	// -------------------------------------------------------------------------
+  /**
+   * Sets the specified attribute.
+   * 
+   * @param attr The attribute with name and value.
+   * @throws AttributeNotFoundException if the attribute with the given name cannot be found.
+   */
+  @Override
+  public void setAttribute(Attribute attr) throws AttributeNotFoundException, InvalidAttributeValueException, MBeanException, ReflectionException
+  {
+    try
+    {
+      RU.setValueOf(this.getReceiver(), attr.getName(), attr.getValue());
+    }
+    catch (NoSuchFieldException ex)
+    {
+      throw new AttributeNotFoundException(attr.getName());
+    }
+  }
 
-	/**
-	 * Sets the specified attribute.
-	 * 
-	 * @param attr The attribute with name and value.
-	 * @throws AttributeNotFoundException if the attribute with the given name cannot be found.
-	 */
-	@Override
-  public void setAttribute(Attribute attr)
-		throws AttributeNotFoundException, InvalidAttributeValueException, MBeanException, ReflectionException
-	{
-		try
-		{
-			RU.setValueOf(this.getReceiver(), attr.getName(), attr.getValue());
-		}
-		catch (NoSuchFieldException ex)
-		{
-			throw new AttributeNotFoundException(attr.getName());
-		}
-	} // setAttribute() 
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Returns all the attributes with the specified names.
-	 * 
-	 * @throws IllegalArgument In any case of problem setting one of the attributes.
-	 * The original exception will be available via getCause(). 
-	 */
-	@Override
+  /**
+   * Returns all the attributes with the specified names.
+   * 
+   * @throws IllegalArgument In any case of problem setting one of the attributes.
+   * The original exception will be available via getCause(). 
+   */
+  @Override
   public AttributeList getAttributes(String[] attrNames)
-	{
-		AttributeList attrList;
-		Attribute attr;
-		Object value;
-		
-		attrList = new AttributeList(attrNames.length);
-		for (String attrName : attrNames)
-		{
-			try
-			{
-				value = this.getAttribute(attrName);
-			}
-			catch (Exception ex)
-			{
-				throw new IllegalArgumentException(ex);
-			}
-			attr = new Attribute(attrName, value);
-			attrList.add(attr);
-		}
-		return attrList;
-	} // getAttributes() 
+  {
+    AttributeList attrList;
+    Attribute attr;
+    Object value;
 
-	// -------------------------------------------------------------------------
+    attrList = new AttributeList(attrNames.length);
+    for (String attrName : attrNames)
+    {
+      try
+      {
+        value = this.getAttribute(attrName);
+      }
+      catch (Exception ex)
+      {
+        throw new IllegalArgumentException(ex);
+      }
+      attr = new Attribute(attrName, value);
+      attrList.add(attr);
+    }
+    return attrList;
+  }
 
-	/**
-	 * Sets all specified attributes.
-	 * 
-	 * @throws IllegalArgument In any case of problem setting one of the attributes.
-	 * The original exception will be available via getCause(). 
-	 */
-	@Override
+  /**
+   * Sets all specified attributes.
+   * 
+   * @throws IllegalArgument In any case of problem setting one of the attributes.
+   * The original exception will be available via getCause(). 
+   */
+  @Override
   public AttributeList setAttributes(AttributeList attributes)
-	{
-		Attribute attr;
-		
-		for (Object object : attributes)
-		{
-			if (object instanceof Attribute)
-			{
-				attr = (Attribute)object;
-				try
-				{
-					this.setAttribute(attr);
-				}
-				catch (Exception ex)
-				{
-					throw new IllegalArgumentException(ex);
-				}
-			}
-		}
-		return attributes;
-	} // setAttributes() 
+  {
+    Attribute attr;
 
-	// -------------------------------------------------------------------------
+    for (Object object : attributes)
+    {
+      if (object instanceof Attribute)
+      {
+        attr = (Attribute)object;
+        try
+        {
+          this.setAttribute(attr);
+        }
+        catch (Exception ex)
+        {
+          throw new IllegalArgumentException(ex);
+        }
+      }
+    }
+    return attributes;
+  }
 
-	/**
-	 * Returns the meta data describing the supported attributes and methods.
-	 * Subclasses may override this method if necessary, otherwise the 
-	 * {@link #setManagedBeanInfo(MBeanInfo)} method can be used to set the
-	 * meta data.
-	 */
-	@Override
+  /**
+   * Returns the meta data describing the supported attributes and methods.
+   * Subclasses may override this method if necessary, otherwise the 
+   * {@link #setManagedBeanInfo(MBeanInfo)} method can be used to set the
+   * meta data.
+   */
+  @Override
   public MBeanInfo getMBeanInfo()
-	{
-		return this.getManagedBeanInfo();
-	} // getMBeanInfo() 
+  {
+    return this.getManagedBeanInfo();
+  }
 
-	// -------------------------------------------------------------------------
+  public TRECEIVER getReceiver()
+  {
+    return this.receiver;
+  }
+
+  public void setReceiver(TRECEIVER newValue)
+  {
+    this.receiver = newValue;
+  }
+
+  public void setManagedBeanInfo(MBeanInfo newValue)
+  {
+    this.managedBeanInfo = newValue;
+  }
 
   // =========================================================================
   // PROTECTED INSTANCE METHODS
   // =========================================================================
-  
-} // class DynamicMBeanDelegator
+  protected MBeanInfo getManagedBeanInfo()
+  {
+    return this.managedBeanInfo;
+  }
+
+}

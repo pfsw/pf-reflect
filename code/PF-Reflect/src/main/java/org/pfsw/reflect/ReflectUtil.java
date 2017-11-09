@@ -97,7 +97,7 @@ public class ReflectUtil
   public static ReflectUtil current()
   {
     return currentInstance;
-  } // current() 
+  }
 
   // =========================================================================
   // CONSTRUCTORS
@@ -108,9 +108,7 @@ public class ReflectUtil
   protected ReflectUtil()
   {
     super();
-  } // ReflectUtil() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Initialize the new instance with a different class loader.
@@ -121,9 +119,7 @@ public class ReflectUtil
   {
     super();
     this.loader = classLoader;
-  } // ReflectUtil() 
-
-  // -------------------------------------------------------------------------
+  }
 
   // =========================================================================
   // PUBLIC INSTANCE METHODS
@@ -135,9 +131,7 @@ public class ReflectUtil
   public boolean classExists(String className)
   {
     return (this.findClass(className) != null);
-  } // classExists() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns the classes corresponding to the given (full qualified) class names.
@@ -167,9 +161,7 @@ public class ReflectUtil
       classes[i] = clazz;
     }
     return classes;
-  } // findClasses()
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns the class object corresponding to the given class name or null,
@@ -229,9 +221,7 @@ public class ReflectUtil
       return null;
     }
     return clazz;
-  } // findClass() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Tries to create an instance of the class with the given name. It uses the
@@ -247,9 +237,7 @@ public class ReflectUtil
   public Object createInstanceOf(String className, Object caller, Object... params)
   {
     return this.createInstanceOfType(Object.class, className, caller, params);
-  } // createInstanceOf() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Tries to create an instance of the class with the given name. It uses the
@@ -290,9 +278,7 @@ public class ReflectUtil
       return null;
     }
     return this.newInstanceOf(aClass, params);
-  } // createInstanceOf() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns all interfaces the given object's class implements.
@@ -307,9 +293,7 @@ public class ReflectUtil
       return EMPTY_CLASS_ARRAY;
     }
     return this.getInterfacesOf(object.getClass());
-  } // getInterfacesOf() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns all interfaces the given class implements.
@@ -331,9 +315,7 @@ public class ReflectUtil
       return EMPTY_CLASS_ARRAY;
     }
     return result.toArray(new Class<?>[result.size()]);
-  } // getInterfacesOf() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns the method with the specified name if it exists in the given
@@ -382,16 +364,14 @@ public class ReflectUtil
           }
         }
       }
-    } // for
+    }
     superclass = aClass.getSuperclass();
     if (superclass != null)
     {
       method = this.findMethod(superclass, methodName, lookupParamTypes, modifiers);
     }
     return method;
-  } // findMethod() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns the method with the specified name if it exists in the given
@@ -406,9 +386,7 @@ public class ReflectUtil
   public Method findMethod(Class<?> aClass, String methodName, Class<?>... paramTypes)
   {
     return this.findMethod(aClass, methodName, paramTypes, 0);
-  } // findMethod() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns the method with the specified name if it exists in the class
@@ -438,9 +416,7 @@ public class ReflectUtil
       clazz = object.getClass();
     }
     return this.findMethod(clazz, methodName, paramTypes);
-  } // getMethod() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns a list of all methods the given objects contains.
@@ -456,9 +432,7 @@ public class ReflectUtil
 
     aClass = obj.getClass();
     return this.getMethodsOf(aClass);
-  } // getMethodsOf() 
-
-  // --------------------------------------------------------------------------
+  }
 
   /**
    * Returns a list of all methods the given class contains.
@@ -468,16 +442,14 @@ public class ReflectUtil
    * @param aClass The class of which to get the methods 
    * @return A List of java.lang.reflect.Method
    */
-  public List<Method> getMethodsOf(Class<?>aClass)
+  public List<Method> getMethodsOf(Class<?> aClass)
   {
     List<Method> methods = new ArrayList<Method>(40);
 
     this.addInheritedMethods(methods, aClass.getSuperclass());
     this.addMethodsToList(methods, aClass.getDeclaredMethods());
     return methods;
-  } // getMethodsOf() 
-
-  // --------------------------------------------------------------------------
+  }
 
   /**
    * Returns a list of all constructors the class of the given object contains.
@@ -492,9 +464,7 @@ public class ReflectUtil
   public List<Constructor> getConstructorsOf(Object object)
   {
     return this.getConstructorsOf(object.getClass());
-  } // getConstructorsOf() 
-
-  // --------------------------------------------------------------------------
+  }
 
   /**
    * Returns a list of all constructors the given class contains.
@@ -517,9 +487,7 @@ public class ReflectUtil
       constructors.add(constructorArray[i]);
     }
     return constructors;
-  } // getConstructorsOf() 
-
-  // --------------------------------------------------------------------------
+  }
 
   /**
    * Returns a list of all fields the given objects contains.
@@ -535,9 +503,7 @@ public class ReflectUtil
 
     aClass = obj.getClass();
     return this.getFieldsOf(aClass);
-  } // getFieldsOf() 
-
-  // --------------------------------------------------------------------------
+  }
 
   /**
    * Returns a list of all properties the given objects contains.
@@ -550,10 +516,8 @@ public class ReflectUtil
   public List<IObjectProperty> getObjectPropertiesOf(Object object)
   {
     return this.asObjectProperties(this.getFieldsOf(object));
-  } 
-  
-  // --------------------------------------------------------------------------
-  
+  }
+
   /**
    * Returns a list of all properties the given objects contains and that match
    * the specified filter criteria.
@@ -565,13 +529,11 @@ public class ReflectUtil
   public List<IObjectProperty> getObjectPropertiesOf(Object object, IObjectPropertyFilter filter)
   {
     List<IObjectProperty> result;
-    
+
     result = this.getObjectPropertiesOf(object);
     return this.onlyMatching(result, filter);
-  } 
-  
-  // --------------------------------------------------------------------------
-  
+  }
+
   /**
    * Returns a list of all fields the given class contains.
    * This includes all inherited fields, regardless their visibility or
@@ -587,9 +549,7 @@ public class ReflectUtil
     this.addInheritedFields(fields, aClass.getSuperclass());
     this.addFieldsToList(fields, aClass.getDeclaredFields());
     return fields;
-  } 
-
-  // --------------------------------------------------------------------------
+  }
 
   /**
    * Returns a list of all properties the given objects contains.
@@ -602,10 +562,8 @@ public class ReflectUtil
   public List<IObjectProperty> getObjectPropertiesOf(Class<?> aClass)
   {
     return this.asObjectProperties(this.getFieldsOf(aClass));
-  } 
-  
-  // --------------------------------------------------------------------------
-  
+  }
+
   /**
    * Returns a list of all properties of the given class and that match
    * the specified filter criteria.
@@ -617,13 +575,11 @@ public class ReflectUtil
   public List<IObjectProperty> getObjectPropertiesOf(Class<?> aClass, IObjectPropertyFilter filter)
   {
     List<IObjectProperty> result;
-    
+
     result = this.getObjectPropertiesOf(aClass);
     return this.onlyMatching(result, filter);
-  } 
-  
-  // --------------------------------------------------------------------------
-  
+  }
+
   /**
    * Returns the field with the specified name in the given class and all
    * the specified modifiers set.
@@ -660,9 +616,7 @@ public class ReflectUtil
       }
     }
     return null;
-  } // findField() 
-
-  // -------------------------------------------------------------------------	
+  }
 
   /**
    * Returns the field with the specified name in the given class.
@@ -675,9 +629,7 @@ public class ReflectUtil
   public Field findField(Class<?> aClass, String name)
   {
     return this.findField(aClass, name, 0);
-  } // findField() 
-
-  // -------------------------------------------------------------------------	
+  }
 
   /**
    * Returns the field with the specified name in the given object.
@@ -707,9 +659,7 @@ public class ReflectUtil
       clazz = object.getClass();
     }
     return this.findField(clazz, name);
-  } // getField() 
-
-  // -------------------------------------------------------------------------	
+  }
 
   /**
    * Returns the current value of the field with the specified name in the 
@@ -752,9 +702,7 @@ public class ReflectUtil
     }
 
     return value;
-  } // getValueOf() 
-
-  // --------------------------------------------------------------------------
+  }
 
   /**
    * Sets the value of the field with the specified name to the 
@@ -769,9 +717,7 @@ public class ReflectUtil
   public void setValueOf(Object targetObject, String name, Object value) throws NoSuchFieldException
   {
     this.setValueOf(targetObject, name, value, false);
-  } // setValueOf() 
-
-  // --------------------------------------------------------------------------
+  }
 
   /**
    * Sets the value of the field with the specified name to the 
@@ -786,9 +732,7 @@ public class ReflectUtil
   public void setValueOf(Object obj, String name, char value) throws NoSuchFieldException
   {
     this.setValueOf(obj, name, new Character(value), true);
-  } // setValueOf() 
-
-  // --------------------------------------------------------------------------
+  }
 
   /**
    * Sets the value of the field with the specified name to the 
@@ -803,9 +747,7 @@ public class ReflectUtil
   public void setValueOf(Object obj, String name, int value) throws NoSuchFieldException
   {
     this.setValueOf(obj, name, new Integer(value), true);
-  } // setValueOf() 
-
-  // --------------------------------------------------------------------------
+  }
 
   /**
    * Sets the value of the field with the specified name to the 
@@ -820,9 +762,7 @@ public class ReflectUtil
   public void setValueOf(Object obj, String name, byte value) throws NoSuchFieldException
   {
     this.setValueOf(obj, name, new Byte(value), true);
-  } // setValueOf() 
-
-  // --------------------------------------------------------------------------
+  }
 
   /**
    * Sets the value of the field with the specified name to the 
@@ -837,9 +777,7 @@ public class ReflectUtil
   public void setValueOf(Object obj, String name, boolean value) throws NoSuchFieldException
   {
     this.setValueOf(obj, name, value ? Boolean.TRUE : Boolean.FALSE, true);
-  } // setValueOf() 
-
-  // --------------------------------------------------------------------------
+  }
 
   /**
    * Sets the value of the field with the specified name to the 
@@ -854,9 +792,7 @@ public class ReflectUtil
   public void setValueOf(Object obj, String name, long value) throws NoSuchFieldException
   {
     this.setValueOf(obj, name, new Long(value), true);
-  } // setValueOf() 
-
-  // --------------------------------------------------------------------------
+  }
 
   /**
    * Sets the value of the field with the specified name to the 
@@ -871,9 +807,7 @@ public class ReflectUtil
   public void setValueOf(Object obj, String name, short value) throws NoSuchFieldException
   {
     this.setValueOf(obj, name, new Short(value), true);
-  } // setValueOf() 
-
-  // --------------------------------------------------------------------------
+  }
 
   /**
    * Sets the value of the field with the specified name to the 
@@ -888,9 +822,7 @@ public class ReflectUtil
   public void setValueOf(Object obj, String name, double value) throws NoSuchFieldException
   {
     this.setValueOf(obj, name, new Double(value), true);
-  } // setValueOf() 
-
-  // --------------------------------------------------------------------------
+  }
 
   /**
    * Sets the value of the field with the specified name to the 
@@ -905,9 +837,7 @@ public class ReflectUtil
   public void setValueOf(Object obj, String name, float value) throws NoSuchFieldException
   {
     this.setValueOf(obj, name, new Float(value), true);
-  } // setValueOf() 
-
-  // --------------------------------------------------------------------------
+  }
 
   /**
    * Returns true if a public method with the specified name exists in
@@ -929,9 +859,7 @@ public class ReflectUtil
     }
     method = this.findMethod(aClass, methodName, paramTypes, Modifier.PUBLIC);
     return (method != null);
-  } // hasPublicMethod() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns true if a public method with the specified name exists in the class
@@ -950,9 +878,7 @@ public class ReflectUtil
       return false;
     }
     return this.hasPublicMethod(obj.getClass(), methodName, paramTypes);
-  } // hasPublicMethod() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns true if the given field is not null and is package visible.
@@ -964,9 +890,7 @@ public class ReflectUtil
       return false;
     }
     return this.isDefaultVisibility(field.getModifiers());
-  } // isPackageVisible() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns true if the given method is not null and is package visible.
@@ -978,9 +902,7 @@ public class ReflectUtil
       return false;
     }
     return this.isDefaultVisibility(method.getModifiers());
-  } // isPackageVisible() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns true, if the visibility defined by the given modifiers
@@ -991,9 +913,7 @@ public class ReflectUtil
     final int explicitVisibility = Modifier.PUBLIC | Modifier.PROTECTED | Modifier.PRIVATE;
 
     return ((modifiers & explicitVisibility) == 0);
-  } // isDefaultVisibility() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns the visibility defined by the given modifiers as string.
@@ -1015,9 +935,7 @@ public class ReflectUtil
       return "private";
     }
     return "";
-  } // getVisibility() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * If the given class has a constructor without parameters it will be used
@@ -1032,9 +950,7 @@ public class ReflectUtil
   public <T> T newInstance(Class<T> aClass)
   {
     return this.newInstance(aClass, null);
-  } // newInstance() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * If the given class has a constructor with one parameter type matching the
@@ -1051,9 +967,7 @@ public class ReflectUtil
   public <T> T newInstance(Class<T> aClass, Object param)
   {
     return this.newInstance(aClass, new Object[] { param });
-  } // newInstance() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * If the given class has a constructor with two parameter type matching the
@@ -1071,9 +985,7 @@ public class ReflectUtil
   public <T> T newInstance(Class<T> aClass, Object param1, Object param2)
   {
     return this.newInstance(aClass, new Object[] { param1, param2 });
-  } // newInstance() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * If the given class has a constructor with types corresponding to the given
@@ -1093,9 +1005,7 @@ public class ReflectUtil
   public <T> T newInstance(Class<T> aClass, Object[] params)
   {
     return this.newInstanceOf(aClass, params);
-  } // newInstance() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * If the given class has a constructor with types corresponding to the given
@@ -1140,9 +1050,7 @@ public class ReflectUtil
       throw new ReflectionException(ex);
     }
     return null;
-  } // newInstanceOf() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Tries to find the class with the given name and to create an instance of it.
@@ -1158,9 +1066,7 @@ public class ReflectUtil
   public Object newInstance(String className)
   {
     return this.newInstance(className, null);
-  } // newInstance() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Tries to find the class with the given name and to create an instance of it.
@@ -1178,9 +1084,7 @@ public class ReflectUtil
   public Object newInstance(String className, Object param)
   {
     return this.newInstance(className, new Object[] { param });
-  } // newInstance() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Tries to find the class with the given name and to create an instance of it.
@@ -1199,9 +1103,7 @@ public class ReflectUtil
   public Object newInstance(String className, Object param1, Object param2)
   {
     return this.newInstance(className, new Object[] { param1, param2 });
-  } // newInstance() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Tries to find the class with the given name and to create an instance of it.
@@ -1229,9 +1131,7 @@ public class ReflectUtil
       throw new ReflectionException(e);
     }
     return this.newInstance(clazz, params);
-  } // newInstance() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns the constructor of the given class for the specified parameter
@@ -1262,9 +1162,7 @@ public class ReflectUtil
       }
     }
     return null;
-  } // findConstructor() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns an array of the types (classes) corresponding to the parameter
@@ -1287,9 +1185,7 @@ public class ReflectUtil
       types[i] = this.getTypeOf(params[i]);
     }
     return types;
-  } // getTypesFromParameters() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns the type of the given object. For the special objects like
@@ -1322,9 +1218,7 @@ public class ReflectUtil
       return Byte.TYPE;
 
     return object.getClass();
-  } // getTypeOf() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns all types of the given object or an empty collection if the object is null.
@@ -1351,9 +1245,7 @@ public class ReflectUtil
       types.addAll(Arrays.asList(this.getInterfacesOf(object.getClass())));
     }
     return types;
-  } // getAllTypesOf()
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns true if the given class is found in the provided class array.
@@ -1361,9 +1253,7 @@ public class ReflectUtil
   public boolean contains(Class<?>[] classes, Class<?> aClass)
   {
     return this.indexOf(classes, aClass) >= 0;
-  } // contains() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns the index of the given class in the provided class array or -1
@@ -1383,9 +1273,7 @@ public class ReflectUtil
       }
     }
     return NOT_FOUND;
-  } // indexOf() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns true if the class of the given object implements the 
@@ -1398,9 +1286,7 @@ public class ReflectUtil
       return false;
     }
     return this.implementsInterface(object.getClass(), anInterface);
-  } // implementsInterface() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns true if the given class implements the specified interfaceType.
@@ -1419,9 +1305,7 @@ public class ReflectUtil
     }
     interfaces = this.getInterfacesOf(aClass);
     return this.contains(interfaces, anInterface);
-  } // implementsInterface() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns an array containing all objects that are returned by the specified
@@ -1462,9 +1346,7 @@ public class ReflectUtil
       i++;
     }
     return objects;
-  } // toArray() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns a string array containing all objects that are returned by the specified
@@ -1478,9 +1360,7 @@ public class ReflectUtil
   public String[] toStringArray(Collection<?> coll, String methodName)
   {
     return this.toArray(coll, methodName, String.class);
-  } // toStringArray() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Tries to find the annotation of the specified type and return its "value"
@@ -1500,26 +1380,24 @@ public class ReflectUtil
       return null;
     }
     return (String)Dynamic.invoke(annotation, "value");
-  } // getAnnotationValueFrom()
-
-  // -------------------------------------------------------------------------
+  }
 
   public IObjectProperty asObjectProperty(Field field)
   {
     return new ObjectField(field);
-  } 
-  
+  }
+
   public List<IObjectProperty> asObjectProperties(List<Field> fields)
   {
     List<IObjectProperty> objectProperties;
-    
+
     objectProperties = new ArrayList<IObjectProperty>(fields.size());
     for (Field field : fields)
     {
       objectProperties.add(new ObjectField(field));
     }
     return objectProperties;
-  } 
+  }
 
   /**
    * Returns a list of all object properties that match the given filter criteria. 
@@ -1531,7 +1409,7 @@ public class ReflectUtil
   public List<IObjectProperty> onlyMatching(final List<IObjectProperty> properties, final IObjectPropertyFilter filter)
   {
     List<IObjectProperty> result;
-    
+
     result = new ArrayList<IObjectProperty>(properties.size());
     for (IObjectProperty objectProperty : properties)
     {
@@ -1541,8 +1419,8 @@ public class ReflectUtil
       }
     }
     return result;
-  } 
-  
+  }
+
   // =========================================================================
   // PROTECTED INSTANCE METHODS
   // =========================================================================
@@ -1552,9 +1430,7 @@ public class ReflectUtil
     {
       methodList.add(methods[i]);
     }
-  } // addMethodsToList() 
-
-  // --------------------------------------------------------------------------
+  }
 
   protected void addInheritedMethods(List<Method> methods, Class<?> aClass) throws SecurityException
   {
@@ -1563,9 +1439,7 @@ public class ReflectUtil
       this.addInheritedMethods(methods, aClass.getSuperclass());
       this.addMethodsToList(methods, aClass.getDeclaredMethods());
     }
-  } // addInheritedMethods() 
-
-  // --------------------------------------------------------------------------
+  }
 
   protected void addFieldsToList(List<Field> fieldList, Field[] fields)
   {
@@ -1573,9 +1447,7 @@ public class ReflectUtil
     {
       fieldList.add(fields[i]);
     }
-  } // addFieldsToList() 
-
-  // --------------------------------------------------------------------------
+  }
 
   protected void addInheritedFields(List<Field> fields, Class<?> aClass) throws SecurityException
   {
@@ -1584,9 +1456,7 @@ public class ReflectUtil
       this.addInheritedFields(fields, aClass.getSuperclass());
       this.addFieldsToList(fields, aClass.getDeclaredFields());
     }
-  } // addInheritedFields() 
-
-  // --------------------------------------------------------------------------
+  }
 
   protected void setValueOf(Object obj, String name, Object value, boolean isPrimitive) throws NoSuchFieldException
   {
@@ -1598,19 +1468,17 @@ public class ReflectUtil
       throw new NoSuchFieldException("Field name: " + name);
     }
     this.setValueOf(obj, field, value, isPrimitive);
-  } 
-
-  // -------------------------------------------------------------------------
+  }
 
   protected void setValueOf(final Object obj, final Field field, final Object value, final boolean isPrimitive)
   {
     boolean saveAccessibility = false;
-    
+
     if (field == null)
     {
       throw new NullPointerException("'field' parameter is null");
     }
-    
+
     saveAccessibility = field.isAccessible();
     field.setAccessible(true);
     try
@@ -1668,9 +1536,7 @@ public class ReflectUtil
       field.setAccessible(saveAccessibility);
     }
   }
-  
-  // -------------------------------------------------------------------------
-  
+
   /**
    * Returns true if the types of the first array are assignable to the 
    * types of the second array. The second array is immutable.
@@ -1698,9 +1564,7 @@ public class ReflectUtil
       }
     }
     return true;
-  } // compatibleTypes() 
-
-  // -------------------------------------------------------------------------
+  }
 
   protected void collectInterfaces(Set<Class<?>> result, Class<?> aClass)
   {
@@ -1723,23 +1587,17 @@ public class ReflectUtil
     {
       this.collectInterfaces(result, interfaces[i]);
     }
-  } // collectInterfaces() 
-
-  // -------------------------------------------------------------------------
+  }
 
   protected boolean isNullOrEmpty(Object[] objects)
   {
     return (objects == null) || (objects.length == 0);
-  } // isNullOrEmpty() 
-
-  // -------------------------------------------------------------------------
+  }
 
   protected boolean isNullOrEmpty(Collection<?> collection)
   {
     return (collection == null) || (collection.isEmpty());
-  } // isNullOrEmpty() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns the externally assigned class loader or if not present the class
@@ -1752,8 +1610,6 @@ public class ReflectUtil
       return loader;
     }
     return this.getClass().getClassLoader();
-  } // getLoader() 
+  }
 
-  // -------------------------------------------------------------------------
-
-} // class ReflectUtil 
+}

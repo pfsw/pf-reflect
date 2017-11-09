@@ -9,10 +9,6 @@
 // ===========================================================================
 package org.pfsw.reflect;
 
-// ===========================================================================
-// IMPORTS
-// ===========================================================================
-
 /**
  * Specifies the methods an object must implement to provide generic write 
  * access to its attributes.<br>
@@ -24,9 +20,6 @@ package org.pfsw.reflect;
  */
 public interface AttributeReadWriteAccess extends AttributeReadAccess
 {
-  // =========================================================================
-  // PUBLIC INSTANCE METHODS
-  // =========================================================================
   /**
    * Sets the current value of the attribute with the given name.    <br>
    *
@@ -36,6 +29,4 @@ public interface AttributeReadWriteAccess extends AttributeReadAccess
    */
   public void setAttributeValue(String name, Object value) throws NoSuchFieldException;
 
-  // -------------------------------------------------------------------------
-
-} // interface AttributeReadWriteAccess 
+}

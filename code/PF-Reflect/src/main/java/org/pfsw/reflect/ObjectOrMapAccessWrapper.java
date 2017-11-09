@@ -7,7 +7,7 @@
 //
 // Copyright (c) 2009, by MDCS. All rights reserved.
 // ===========================================================================
-package org.pfsw.reflect ;
+package org.pfsw.reflect;
 
 import java.util.Map;
 
@@ -37,10 +37,8 @@ public class ObjectOrMapAccessWrapper extends ObjectAccessWrapper
   // =========================================================================
   // INSTANCE VARIABLES
   // =========================================================================
-  private boolean isMap ;
-  public boolean isMap() { return isMap ; }
-  protected void setIsMap( boolean newValue ) { isMap = newValue ; }
-  
+  private boolean isMap;
+
   // =========================================================================
   // CONSTRUCTORS
   // =========================================================================
@@ -51,11 +49,16 @@ public class ObjectOrMapAccessWrapper extends ObjectAccessWrapper
   public ObjectOrMapAccessWrapper(Object object)
   {
     super(object);
-  } // ObjectOrMapAccessWrapper() 
+  }
 
   // =========================================================================
   // PUBLIC INSTANCE METHODS
   // =========================================================================
+  public boolean isMap()
+  {
+    return this.isMap;
+  }
+
   /**
    * Returns the names of all attributes that can be accessed by the
    * method getAttributeValue().
@@ -71,9 +74,7 @@ public class ObjectOrMapAccessWrapper extends ObjectAccessWrapper
       return ReflectUtil.current().toStringArray(this.getMap().keySet(), "this");
     }
     return super.getAttributeNames();
-  } // getAttributeNames()
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns the return value of the getter method of the given field name
@@ -90,9 +91,7 @@ public class ObjectOrMapAccessWrapper extends ObjectAccessWrapper
       return this.getMap().get(fieldName);
     }
     return super.get(fieldName);
-  } // get() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Invokes the setter method of the given field name and passes the
@@ -109,9 +108,7 @@ public class ObjectOrMapAccessWrapper extends ObjectAccessWrapper
       this.getMap().put(fieldName, value);
     }
     super.set(fieldName, value);
-  } // set() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns the current value of the attribute (field) with the given name.
@@ -131,9 +128,7 @@ public class ObjectOrMapAccessWrapper extends ObjectAccessWrapper
       return this.get(name);
     }
     return super.getAttributeValue(name);
-  } // getAttributeValue() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Sets the current value of the attribute (field) with the given name.    <br>
@@ -155,9 +150,7 @@ public class ObjectOrMapAccessWrapper extends ObjectAccessWrapper
       return;
     }
     super.setAttributeValue(name, value);
-  } // setAttributeValue() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Returns the value of the field with the given field name or
@@ -179,9 +172,7 @@ public class ObjectOrMapAccessWrapper extends ObjectAccessWrapper
       return null;
     }
     return super.getValueOfField(name);
-  } // getValueOfField() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Modifies the field with the given name directly to the specified value
@@ -198,9 +189,7 @@ public class ObjectOrMapAccessWrapper extends ObjectAccessWrapper
       this.set(name, value);
     }
     super.setValueOfField(name, value);
-  } // setValueOfField() 
-
-  // -------------------------------------------------------------------------
+  }
 
   /**
    * Set the underlying object.
@@ -211,9 +200,7 @@ public class ObjectOrMapAccessWrapper extends ObjectAccessWrapper
   {
     super.setObject(object);
     this.setIsMap(object instanceof Map);
-  } // setObject() 
-
-  // -------------------------------------------------------------------------
+  }
 
   // =========================================================================
   // PROTECTED INSTANCE METHODS
@@ -222,8 +209,10 @@ public class ObjectOrMapAccessWrapper extends ObjectAccessWrapper
   protected Map<String, Object> getMap()
   {
     return (Map<String, Object>)this.getObject();
-  } // getMap() 
+  }
 
-  // -------------------------------------------------------------------------
-
-} // class ObjectOrMapAccessWrapper 
+  protected void setIsMap(boolean newValue)
+  {
+    this.isMap = newValue;
+  }
+}

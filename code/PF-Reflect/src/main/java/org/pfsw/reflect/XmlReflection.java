@@ -7,7 +7,7 @@
 //
 // Copyright (c) 2012, by MDCS. All rights reserved.
 // ===========================================================================
-package org.pfsw.reflect ;
+package org.pfsw.reflect;
 
 // ===========================================================================
 // IMPORTS
@@ -33,26 +33,16 @@ public class XmlReflection
   // =========================================================================
   // CONSTANTS
   // =========================================================================
-	private static final ReflectUtil RU = ReflectUtil.current();
+  private static final ReflectUtil RU = ReflectUtil.current();
 
   // =========================================================================
   // INSTANCE VARIABLES
   // =========================================================================
-  private String attrNameForClass = "class" ;
-  public String getAttrNameForClass() { return attrNameForClass ; }
-  public void setAttrNameForClass( String newValue ) { attrNameForClass = newValue ; }
+  private String attrNameForClass = "class";
+  private String tagNameForField = "property";
+  private String attrNameForFieldName = "name";
+  private String attrNameForFieldValue = "value";
 
-  private String tagNameForField = "property" ;
-  public String getTagNameForField() { return tagNameForField ; }
-  public void setTagNameForField( String newValue ) { tagNameForField = newValue ; }
-  
-  private String attrNameForFieldName = "name" ;
-  public String getAttrNameForFieldName() { return attrNameForFieldName ; }
-  public void setAttrNameForFieldName( String newValue ) { attrNameForFieldName = newValue ; }
-  
-  private String attrNameForFieldValue = "value" ;
-  public String getAttrNameForFieldValue() { return attrNameForFieldValue ; }
-  public void setAttrNameForFieldValue( String newValue ) { attrNameForFieldValue = newValue ; }
   // =========================================================================
   // CONSTRUCTORS
   // =========================================================================
@@ -61,189 +51,212 @@ public class XmlReflection
    */
   public XmlReflection()
   {
-    super() ;
-  } // XmlReflection() 
+    super();
+  }
 
   // =========================================================================
   // PUBLIC INSTANCE METHODS
   // =========================================================================
-  public Object createInstance(final Element xmlElement) 
+  public Object createInstance(final Element xmlElement)
   {
-  	return this.createInstance(xmlElement, Object.class);
-  } // createInstance() 
-  
-  // -------------------------------------------------------------------------
-  
-  public <T> T createInstance(final Element xmlElement, Class<T> expectedType) 
-	{
-		String className;
-		T newObject;
-		
-		className = xmlElement.getAttribute(this.getAttrNameForClass());
-		newObject = RU.createInstanceOfType(expectedType, className, this);
-		return newObject;
-	} // createInstance() 
-	
-	// -------------------------------------------------------------------------
+    return this.createInstance(xmlElement, Object.class);
+  }
 
-  public Object createInitializedInstance(final Element xmlElement) throws NoSuchFieldException 
+  public <T> T createInstance(final Element xmlElement, Class<T> expectedType)
   {
-  	return this.createInitializedInstance(xmlElement, Object.class);
-  } // createInitializedInstance() 
-  
-  // -------------------------------------------------------------------------
-  
-  public <T> T createInitializedInstance(Element xmlElement, Class<T> expectedType) throws NoSuchFieldException 
-  {
-  	T newObject;
-  	
-  	newObject = this.createInstance(xmlElement, expectedType);
-  	if (newObject == null)
-		{
-			throw new NoSuchFieldException("Attribute '" + this.getAttrNameForClass() + "' not found in XML element <" + xmlElement.getTagName() + ">");
-		}
-  	this.initProperties(xmlElement, newObject);
-  	return newObject;
-  } // createInitializedInstance() 
-  
-  // -------------------------------------------------------------------------
+    String className;
+    T newObject;
 
-  public <T> List<T> createInitializedInstances(List<Element> xmlElements, Class<T> expectedType) throws NoSuchFieldException 
+    className = xmlElement.getAttribute(this.getAttrNameForClass());
+    newObject = RU.createInstanceOfType(expectedType, className, this);
+    return newObject;
+  }
+
+  public Object createInitializedInstance(final Element xmlElement) throws NoSuchFieldException
   {
-  	List<T> result;
-  	T object;
-  	
-  	result = new ArrayList<T>(xmlElements.size());
-  	for (Element element : xmlElements)
-		{
-  		object = this.createInitializedInstance(element, expectedType);
-			result.add(object);
-		}
-  	return result;
-  } // createInitializedInstances()
-  
-  // -------------------------------------------------------------------------
-  
+    return this.createInitializedInstance(xmlElement, Object.class);
+  }
+
+  public <T> T createInitializedInstance(Element xmlElement, Class<T> expectedType) throws NoSuchFieldException
+  {
+    T newObject;
+
+    newObject = this.createInstance(xmlElement, expectedType);
+    if (newObject == null)
+    {
+      throw new NoSuchFieldException("Attribute '" + this.getAttrNameForClass() + "' not found in XML element <" + xmlElement.getTagName() + ">");
+    }
+    this.initProperties(xmlElement, newObject);
+    return newObject;
+  }
+
+  public <T> List<T> createInitializedInstances(List<Element> xmlElements, Class<T> expectedType) throws NoSuchFieldException
+  {
+    List<T> result;
+    T object;
+
+    result = new ArrayList<T>(xmlElements.size());
+    for (Element element : xmlElements)
+    {
+      object = this.createInitializedInstance(element, expectedType);
+      result.add(object);
+    }
+    return result;
+  }
+
+  public String getAttrNameForClass()
+  {
+    return this.attrNameForClass;
+  }
+
+  public void setAttrNameForClass(String newValue)
+  {
+    this.attrNameForClass = newValue;
+  }
+
+  public String getTagNameForField()
+  {
+    return this.tagNameForField;
+  }
+
+  public void setTagNameForField(String newValue)
+  {
+    this.tagNameForField = newValue;
+  }
+
+  public String getAttrNameForFieldName()
+  {
+    return this.attrNameForFieldName;
+  }
+
+  public void setAttrNameForFieldName(String newValue)
+  {
+    this.attrNameForFieldName = newValue;
+  }
+
+  public String getAttrNameForFieldValue()
+  {
+    return this.attrNameForFieldValue;
+  }
+
+  public void setAttrNameForFieldValue(String newValue)
+  {
+    this.attrNameForFieldValue = newValue;
+  }
   // =========================================================================
   // PROTECTED INSTANCE METHODS
   // =========================================================================
-  protected void initProperties(final Element xmlElement, Object object) throws NoSuchFieldException 
-	{
-		NodeList fieldTags;
-		Node node;
-		Element tag;
-		String fieldName;
-		String textValue;
-		Field field;
-		Object value;
-		
-		fieldTags = xmlElement.getElementsByTagName(this.getTagNameForField());
-		for (int i = 0; i < fieldTags.getLength(); i++)
-		{
-			node = fieldTags.item(i);
-			if (node.getNodeType() == Node.ELEMENT_NODE)
-			{				
-				tag = (Element)node;
-				fieldName = tag.getAttribute(this.getAttrNameForFieldName());
-				if (this.hasValueAttrName())
-				{
-					textValue = tag.getAttribute(this.getAttrNameForFieldValue());
-					if (textValue == null)
-					{
-						textValue = tag.getTextContent();
-					}
-				}
-				else
-				{
-					textValue = tag.getTextContent();
-				}
-				field = RU.getField(object, fieldName);
-				if (field == null)
-				{
-					throw new NoSuchFieldException("Cannot find field '" + fieldName + "' in class " + object.getClass().getName());
-				}
-				value = this.convertToType(textValue, field.getType());
-				RU.setValueOf(object, fieldName, value);
-			}
-		}
-	} // initProperties() 
-  
-  // -------------------------------------------------------------------------
-  
-  protected Object convertToType(String text, Class<?> type) 
-	{
-  	if (type == String.class)
-  	{
-  		return text;
-  	}
-		if ((type == Integer.TYPE) || (type == Integer.class))
-		{
-			return Integer.parseInt(text);
-		}
-		if ((type == Long.TYPE) || (type == Long.class))
-		{
-			return Long.parseLong(text);
-		}
-		if ((type == Byte.TYPE) || (type == Byte.class))
-		{
-			return Byte.parseByte(text);
-		}
-		if ((type == Short.TYPE) || (type == Short.class))
-		{
-			return Short.parseShort(text);
-		}
-		if ((type == Float.TYPE) || (type == Float.class))
-		{
-			return Float.parseFloat(text);
-		}
-		if ((type == Double.TYPE) || (type == Double.class))
-		{
-			return Double.parseDouble(text);
-		}
-		if ((type == Boolean.TYPE) || (type == Boolean.class))
-		{
-			return Boolean.parseBoolean(text);
-		}
-		if ((type == Character.TYPE) || (type == Character.class))
-		{
-			return text.charAt(0);
-		}
-		try
-		{
-			Constructor<?> constructor = type.getConstructor(String.class);
-			return constructor.newInstance(text);
-		}
-		catch (Exception ex)
-		{
-			ex.printStackTrace();
-			return null;
-		}
-	} // convertToType() 
-	
-	// -------------------------------------------------------------------------
-  
-	protected boolean hasValueAttrName()
-	{
-		if ((this.getAttrNameForFieldValue() == null) || (this.getAttrNameForFieldValue().length() == 0))
-		{			
-			return false;
-		}
-		char ch = this.getAttrNameForFieldValue().charAt(0);
-		if (ch < 'A')
-		{			
-			return false;
-		}
-		if (ch > 'z')
-		{			
-			return false;
-		}
-		if ((ch > 'Z') && (ch < 'a'))
-		{			
-			return false;
-		}
-		return true;
-	} // hasValueAttrName() 
-	
-	// -------------------------------------------------------------------------
-  
-} // class XmlReflection 
+  protected void initProperties(final Element xmlElement, Object object) throws NoSuchFieldException
+  {
+    NodeList fieldTags;
+    Node node;
+    Element tag;
+    String fieldName;
+    String textValue;
+    Field field;
+    Object value;
+
+    fieldTags = xmlElement.getElementsByTagName(this.getTagNameForField());
+    for (int i = 0; i < fieldTags.getLength(); i++)
+    {
+      node = fieldTags.item(i);
+      if (node.getNodeType() == Node.ELEMENT_NODE)
+      {
+        tag = (Element)node;
+        fieldName = tag.getAttribute(this.getAttrNameForFieldName());
+        if (this.hasValueAttrName())
+        {
+          textValue = tag.getAttribute(this.getAttrNameForFieldValue());
+          if (textValue == null)
+          {
+            textValue = tag.getTextContent();
+          }
+        }
+        else
+        {
+          textValue = tag.getTextContent();
+        }
+        field = RU.getField(object, fieldName);
+        if (field == null)
+        {
+          throw new NoSuchFieldException("Cannot find field '" + fieldName + "' in class " + object.getClass().getName());
+        }
+        value = this.convertToType(textValue, field.getType());
+        RU.setValueOf(object, fieldName, value);
+      }
+    }
+  }
+
+  protected Object convertToType(String text, Class<?> type)
+  {
+    if (type == String.class)
+    {
+      return text;
+    }
+    if ((type == Integer.TYPE) || (type == Integer.class))
+    {
+      return Integer.parseInt(text);
+    }
+    if ((type == Long.TYPE) || (type == Long.class))
+    {
+      return Long.parseLong(text);
+    }
+    if ((type == Byte.TYPE) || (type == Byte.class))
+    {
+      return Byte.parseByte(text);
+    }
+    if ((type == Short.TYPE) || (type == Short.class))
+    {
+      return Short.parseShort(text);
+    }
+    if ((type == Float.TYPE) || (type == Float.class))
+    {
+      return Float.parseFloat(text);
+    }
+    if ((type == Double.TYPE) || (type == Double.class))
+    {
+      return Double.parseDouble(text);
+    }
+    if ((type == Boolean.TYPE) || (type == Boolean.class))
+    {
+      return Boolean.parseBoolean(text);
+    }
+    if ((type == Character.TYPE) || (type == Character.class))
+    {
+      return text.charAt(0);
+    }
+    try
+    {
+      Constructor<?> constructor = type.getConstructor(String.class);
+      return constructor.newInstance(text);
+    }
+    catch (Exception ex)
+    {
+      ex.printStackTrace();
+      return null;
+    }
+  }
+
+  protected boolean hasValueAttrName()
+  {
+    if ((this.getAttrNameForFieldValue() == null) || (this.getAttrNameForFieldValue().length() == 0))
+    {
+      return false;
+    }
+    char ch = this.getAttrNameForFieldValue().charAt(0);
+    if (ch < 'A')
+    {
+      return false;
+    }
+    if (ch > 'z')
+    {
+      return false;
+    }
+    if ((ch > 'Z') && (ch < 'a'))
+    {
+      return false;
+    }
+    return true;
+  }
+
+}

@@ -9,10 +9,6 @@
 // ===========================================================================
 package org.pfsw.reflect;
 
-// ===========================================================================
-// IMPORTS
-// ===========================================================================
-
 /**
  * Specifies the methods an object must implement to provide generic read 
  * access to its attributes.<br>
@@ -24,26 +20,18 @@ package org.pfsw.reflect;
  */
 public interface AttributeReadAccess
 {
-  // =========================================================================
-  // PUBLIC INSTANCE METHODS
-  // =========================================================================
-	/**
-	 * Returns the current value of the attribute with the given name.
-	 *
-	 * @param name The attribute's name ( case sensitive )
-	 * @throws NoSuchFieldException If there is no attribute with the given name
-	 */
-	public Object getAttributeValue( String name )
-		throws NoSuchFieldException ;
+  /**
+   * Returns the current value of the attribute with the given name.
+   *
+   * @param name The attribute's name ( case sensitive )
+   * @throws NoSuchFieldException If there is no attribute with the given name
+   */
+  public Object getAttributeValue(String name) throws NoSuchFieldException;
 
-	// -------------------------------------------------------------------------
-	
-	/**
-	 * Returns the names of all attributes that can be accessed by the
-	 * method getAttributeValue().
-	 */
-	public String[] getAttributeNames() ;
+  /**
+   * Returns the names of all attributes that can be accessed by the
+   * method getAttributeValue().
+   */
+  public String[] getAttributeNames();
 
-	// -------------------------------------------------------------------------
-	
-} // interface AttributeReadAccess
+}

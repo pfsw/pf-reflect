@@ -41,7 +41,7 @@ public class DynamicTest
   public void setUp()
   {
     this.concatStrings("Just", "to call it");
-  } 
+  }
 
   // =========================================================================
   // TEST METHODS
@@ -56,9 +56,7 @@ public class DynamicTest
     result = Dynamic.perform(msg, "substring", args);
     assertTrue(result instanceof String);
     assertEquals("red", result);
-  } // test_perform_1() 
-
-  // -------------------------------------------------------------------------
+  }
 
   @Test
   public void test_perform_2() throws Exception
@@ -73,9 +71,7 @@ public class DynamicTest
     result = Dynamic.perform(vector, "size");
     assertTrue(result instanceof Integer);
     assertEquals(3, ((Integer)result).intValue());
-  } // test_perform_2() 
-
-  // -------------------------------------------------------------------------
+  }
 
   @Test
   public void test_perform_3()
@@ -90,9 +86,7 @@ public class DynamicTest
     {
       fail("Perform 'length()' caused exception: " + ex.toString());
     }
-  } // test_perform_3() 
-
-  // -------------------------------------------------------------------------
+  }
 
   @Test
   public void test_perform_4()
@@ -105,9 +99,7 @@ public class DynamicTest
     {
       fail("Perform 'startsWith()' caused exception: " + ex.toString());
     }
-  } 
-
-  // -------------------------------------------------------------------------
+  }
 
   @Test
   public void test_perform_5() throws Exception
@@ -118,9 +110,7 @@ public class DynamicTest
     menu = new JMenu();
     separator = new JSeparator();
     Dynamic.perform(menu, "add", separator);
-  } // test_perform_5() 
-
-  // -------------------------------------------------------------------------
+  }
 
   @Test
   public void test_perform_6() throws Exception
@@ -138,9 +128,7 @@ public class DynamicTest
       // Works as expected
       assertEquals("No such method: org.pfsw.reflect.testhelper.DummyClass1.calc(int,boolean)", e.getMessage());
     }
-  } // test_perform_6() 
-
-  // -------------------------------------------------------------------------
+  }
 
   @Test
   public void test_perform_7() throws Exception
@@ -158,9 +146,7 @@ public class DynamicTest
       // Works as expected
       assertEquals("No such method: org.pfsw.reflect.testhelper.DummyClass1.calc()", e.getMessage());
     }
-  } // test_perform_7() 
-
-  // -------------------------------------------------------------------------
+  }
 
   @Test
   public void test_performPrim()
@@ -178,9 +164,7 @@ public class DynamicTest
     {
       fail("Perform 'substring()' caused exception: " + ex.toString());
     }
-  }  
-
-  // -------------------------------------------------------------------------
+  }
 
   @Test
   public void test_invoke_1()
@@ -189,17 +173,13 @@ public class DynamicTest
     Object[] args = { new Character('o'), new Character('i') };
 
     assertEquals("Micrisift", Dynamic.invoke(str, "replace", args));
-  } // test_invoke_1() 
-
-  // -------------------------------------------------------------------------
+  }
 
   @Test
   public void test_invoke_2()
   {
     assertEquals("java.lang.String", Dynamic.invoke(String.class, "getName"));
-  } // test_invoke_2() 
-
-  // -------------------------------------------------------------------------
+  }
 
   @Test
   public void test_invoke_3()
@@ -208,9 +188,7 @@ public class DynamicTest
 
     result = Dynamic.invoke(this, "getProgrammingLanguage");
     assertEquals("Smalltalk", result);
-  } // test_invoke_3() 
-
-  // -------------------------------------------------------------------------
+  }
 
   @Test
   public void test_invoke_4()
@@ -223,9 +201,7 @@ public class DynamicTest
 
     result = Dynamic.invoke(this, "concatStrings", args);
     assertEquals("Sitting Bull", result);
-  } // test_invoke_4() 
-
-  // -------------------------------------------------------------------------
+  }
 
   @Test
   public void test_invoke_5() throws Exception
@@ -244,9 +220,7 @@ public class DynamicTest
     result = Dynamic.invoke(this, methodName, args); // Must throw an exception internally (NPE)
     assertTrue(result instanceof NullPointerException);
     assertTrue(!method.isAccessible());
-  } // test_invoke_5() 
-
-  // -------------------------------------------------------------------------
+  }
 
   @Test
   public void test_invoke_6() throws Exception
@@ -259,9 +233,7 @@ public class DynamicTest
     method = ReflectUtil.current().getMethod(receiver, "dummy7", new Class[] { String.class });
     result = Dynamic.invoke(receiver, method, new Object[] { "Test" });
     assertEquals("AAA: Test", result);
-  } // test_invoke_6() 
-
-  // -------------------------------------------------------------------------
+  }
 
   @Test
   public void test_invoke_7() throws Exception
@@ -274,9 +246,7 @@ public class DynamicTest
     assertEquals(9, ((Integer)result).intValue());
     result = Dynamic.invoke(receiver, "changeType", new Object[] { new Integer(2), Boolean.FALSE }, new Class[] { Integer.TYPE, Boolean.TYPE });
     assertEquals(4, ((Integer)result).intValue());
-  } // test_invoke_7() 
-
-  // -------------------------------------------------------------------------
+  }
 
   @Test
   public void test_invoke_8() throws Exception
@@ -285,9 +255,7 @@ public class DynamicTest
 
     ch = (Character)Dynamic.invoke("Madness", "charAt", 3);
     assertEquals(new Character('n'), ch);
-  } // test_invoke_8() 
-
-  // -------------------------------------------------------------------------
+  }
 
   @Test
   public void test_invoke_9() throws Exception
@@ -296,9 +264,7 @@ public class DynamicTest
 
     result = Dynamic.invoke("Madness", "charAt", 53);
     assertTrue(result instanceof Exception);
-  } // test_invoke_9() 
-
-  // -------------------------------------------------------------------------
+  }
 
   @Test
   public void test_invoke_10() throws Exception
@@ -307,9 +273,7 @@ public class DynamicTest
 
     result = Dynamic.invoke("Madness", "charAt", true);
     assertTrue(result instanceof Exception);
-  } // test_invoke_10() 
-
-  // -------------------------------------------------------------------------
+  }
 
   @Test
   public void test_invoke_11() throws Exception
@@ -318,9 +282,7 @@ public class DynamicTest
 
     result = Dynamic.invoke("Madness", "size");
     assertTrue(result instanceof Exception);
-  } // test_invoke_11() 
-
-  // -------------------------------------------------------------------------
+  }
 
   @Test
   public void test_invoke_12() throws Exception
@@ -329,9 +291,7 @@ public class DynamicTest
 
     result = Dynamic.invoke("Madness", "charAt", new ArrayList());
     assertTrue(result instanceof Exception);
-  } // test_invoke_12() 
-
-  // -------------------------------------------------------------------------
+  }
 
   @Test
   public void test_invoke__with_varargs_and_not_exact_types() throws Exception
@@ -351,9 +311,7 @@ public class DynamicTest
     args[1] = new String[] { "is", "chief" };
     result = Dynamic.invoke(this, methodName, args);
     assertEquals("Sitting Bull is chief", result);
-  } // test_invoke__with_varargs_and_not_exact_types() 
-
-  // -------------------------------------------------------------------------
+  }
 
   @Test
   public void test_perform_with_not_exact_types() throws Exception
@@ -366,9 +324,7 @@ public class DynamicTest
     args[1] = 5;
     result = (String)Dynamic.perform(receiver, "process", args);
     assertEquals("Subclass2_5", result);
-  } // test_invoke_with_not_exact_types()
-
-  // -------------------------------------------------------------------------
+  }
 
   @Test
   public void test_perform_ValidSignature() throws Exception
@@ -380,9 +336,7 @@ public class DynamicTest
     result = Dynamic.perform(msg, "replace", args, signature);
     assertTrue(result instanceof String);
     assertEquals("The red fox is asleep", result);
-  } // test_perform_ValidSignature()
-
-  // -------------------------------------------------------------------------
+  }
 
   @Test
   public void test_perform_InalidSignature() throws Exception
@@ -399,9 +353,7 @@ public class DynamicTest
     {
       // Nothing more to do
     }
-  } // test_perform_InalidSignature()
-
-  // -------------------------------------------------------------------------
+  }
 
   @Test
   public void test_perform_UnknownClassInSignature()
@@ -418,9 +370,7 @@ public class DynamicTest
     {
       assertTrue(e instanceof ClassNotFoundException);
     }
-  } // test_perform_UnknownClassInSignature()
-
-  // -------------------------------------------------------------------------
+  }
 
   @Test
   public void test_perform_EmptySignature() throws Exception
@@ -438,7 +388,7 @@ public class DynamicTest
   protected String getProgrammingLanguage()
   {
     return "Smalltalk";
-  } 
+  }
 
   // =========================================================================
   // PRIVATE INSTANCE METHODS
@@ -448,9 +398,7 @@ public class DynamicTest
   private String concatStrings(String str1, String str2)
   {
     return (str1 + str2);
-  } // concatStrings() 
-
-  // -------------------------------------------------------------------------
+  }
 
   // This dummy method must be here because it is used in a test
   protected String concatStrings(Collection<String> strings1, String... strings2)
@@ -466,6 +414,6 @@ public class DynamicTest
       result = result + string + " ";
     }
     return result.trim();
-  } 
+  }
 
-} 
+}
