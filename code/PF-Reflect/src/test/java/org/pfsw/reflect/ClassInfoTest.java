@@ -29,7 +29,7 @@ import org.pfsw.reflect.testhelper.Superclass;
  *
  * @author Manfred Duchrow
  */
-@SuppressWarnings({ "unchecked", "rawtypes" })
+@SuppressWarnings({ "unchecked", "rawtypes", "unused" })
 public class ClassInfoTest
 {
   // =========================================================================

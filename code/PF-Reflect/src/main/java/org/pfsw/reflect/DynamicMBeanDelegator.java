@@ -103,7 +103,7 @@ public class DynamicMBeanDelegator<TRECEIVER> implements DynamicMBean
     {
       return RU.getValueOf(this.getReceiver(), attrName);
     }
-    catch (NoSuchFieldException ex)
+    catch (@SuppressWarnings("unused") NoSuchFieldException ex)
     {
       throw new AttributeNotFoundException(attrName);
     }
@@ -122,7 +122,7 @@ public class DynamicMBeanDelegator<TRECEIVER> implements DynamicMBean
     {
       RU.setValueOf(this.getReceiver(), attr.getName(), attr.getValue());
     }
-    catch (NoSuchFieldException ex)
+    catch (@SuppressWarnings("unused") NoSuchFieldException ex)
     {
       throw new AttributeNotFoundException(attr.getName());
     }

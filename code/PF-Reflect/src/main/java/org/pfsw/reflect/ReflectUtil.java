@@ -56,6 +56,8 @@ public class ReflectUtil
   // =========================================================================
   // CONSTANTS
   // =========================================================================
+  private static final boolean DEBUG = "true".equals(System.getProperty("org.pfsw.reflect.debug", "false"));
+  
   /**
    *  A reusable empty array of type Class[]
    */
@@ -218,6 +220,10 @@ public class ReflectUtil
     }
     catch (ClassNotFoundException e)
     {
+      if (DEBUG)
+      {
+        e.printStackTrace();
+      }
       return null;
     }
     return clazz;
@@ -273,8 +279,12 @@ public class ReflectUtil
     {
       aClass = (Class<T>)callerClass.forName(className);
     }
-    catch (ClassNotFoundException ex)
+    catch (ClassNotFoundException e)
     {
+      if (DEBUG)
+      {
+        e.printStackTrace();
+      }
       return null;
     }
     return this.newInstanceOf(aClass, params);
@@ -688,9 +698,13 @@ public class ReflectUtil
     {
       value = field.get(obj);
     }
-    catch (NullPointerException ex)
+    catch (RuntimeException e)
     {
       // Ignore this, because null values are allowed !
+      if (DEBUG)
+      {
+        e.printStackTrace();
+      }
     }
     catch (IllegalAccessException ex1)
     {
@@ -1523,9 +1537,13 @@ public class ReflectUtil
         field.set(obj, value);
       }
     }
-    catch (NullPointerException ex)
+    catch (RuntimeException e)
     {
       // Ignore this, because null values are allowed !
+      if (DEBUG)
+      {
+        e.printStackTrace();
+      }
     }
     catch (IllegalAccessException ex1)
     {

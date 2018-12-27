@@ -85,9 +85,9 @@ public class ObjectOrMapAccessWrapperTest extends CommonObjectAccessWrapperTestC
       assertNull(oaw.getAttributeValue("omega"));
       fail("NoSuchFieldException expected!");
     }
-    catch (NoSuchFieldException ex)
+    catch (Exception e)
     {
-      // Expected
+      assertTrue(e instanceof NoSuchFieldException);
     }
   }
 

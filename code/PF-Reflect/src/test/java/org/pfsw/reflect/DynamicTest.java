@@ -338,21 +338,14 @@ public class DynamicTest
     assertEquals("The red fox is asleep", result);
   }
 
-  @Test
+  @Test(expected=Exception.class)
   public void test_perform_InalidSignature() throws Exception
   {
     String msg = "The red fox is tired";
     String[] args = { "tired", "asleep" };
     String[] signature = { "java.lang.CharSequence", "java.lang.Integer" };
-    try
-    {
-      Dynamic.perform(msg, "replace", args, signature);
-      fail("Exception expected");
-    }
-    catch (Exception e)
-    {
-      // Nothing more to do
-    }
+
+    Dynamic.perform(msg, "replace", args, signature);
   }
 
   @Test

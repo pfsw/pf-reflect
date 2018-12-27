@@ -1092,9 +1092,9 @@ public class ReflectUtilTest
       util.newInstance("org.pfsw.reflect.testhelper.Subclass2", "bad");
       fail("ReflectionException must have been thrown!");
     }
-    catch (ReflectionException e)
+    catch (RuntimeException e)
     {
-      // Fine, works as expected!
+      assertTrue(e instanceof ReflectionException);
     }
   }
 

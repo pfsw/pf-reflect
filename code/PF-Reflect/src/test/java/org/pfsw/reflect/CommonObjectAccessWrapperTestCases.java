@@ -104,9 +104,9 @@ public abstract class CommonObjectAccessWrapperTestCases
       oaw.setAttributeValue("xxxxx", new Long(123L));
       fail("Expected NoSuchFieldException");
     }
-    catch (NoSuchFieldException e)
+    catch (Exception e)
     {
-      // as expected
+      assertTrue(e instanceof NoSuchFieldException);
     }
   }
 
