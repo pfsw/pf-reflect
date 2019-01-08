@@ -675,28 +675,47 @@ public class ReflectUtil
    * Returns the current value of the field with the specified name in the 
    * given object.
    * 
-   * @param obj The object that contains the field
-   * @param name The name of the field to look for
-   * @throws NoSuchFieldException If the field is unknown in the given object
-   * @throws IllegalArgumentException If obj or name is null
+   * @param obj The object that contains the field (must not be null).
+   * @param name The name of the field to look for (must not be null).
+   * @throws NoSuchFieldException If the field is unknown in the given object.
+   * @throws IllegalArgumentException If obj or name is null.
    */
-  public Object getValueOf(Object obj, String name) throws NoSuchFieldException
+  public <T> T getValueOf(Object obj, String name) throws NoSuchFieldException
   {
     Field field;
-    Object value = null;
-    boolean saveAccessibility = false;
 
     field = this.getField(obj, name);
     if (field == null)
     {
       throw new NoSuchFieldException("Field name: " + name);
     }
+    return getValueOf(obj, field);
+  }
 
+  /**
+   * Returns the current value of the field in the given object.
+   * 
+   * @param obj The object that contains the field (must not be null).
+   * @param field The field to look for (must not be null).
+   * @throws NoSuchFieldException If the field is unknown in the given object.
+   * @throws IllegalArgumentException If obj or name is null.
+   */
+  @SuppressWarnings("unchecked")
+  public <T> T getValueOf(final Object obj, final Field field)
+  {
+    T value = null;
+    boolean saveAccessibility = false;
+    
+    if (field == null)
+    {
+      throw new IllegalArgumentException("Field must not be null");
+    }
+    
     saveAccessibility = field.isAccessible();
     field.setAccessible(true);
     try
     {
-      value = field.get(obj);
+      value = (T)field.get(obj);
     }
     catch (RuntimeException e)
     {
@@ -714,10 +733,10 @@ public class ReflectUtil
     {
       field.setAccessible(saveAccessibility);
     }
-
+    
     return value;
   }
-
+  
   /**
    * Sets the value of the field with the specified name to the 
    * given value.
@@ -853,6 +872,18 @@ public class ReflectUtil
     this.setValueOf(obj, name, new Float(value), true);
   }
 
+  /**
+   * Sets the specified field of the given object to the provided value.
+   * 
+   * @param obj The object that contains the field (must not be null).
+   * @param field The field to be modified (must not be null).
+   * @param value The new value to assign to the field (may be null).
+   */
+  public void setValueOf(final Object obj, final Field field, final Object value)
+  {
+    this.setValueOf(obj, field, value, field.getType().isPrimitive());
+  }
+  
   /**
    * Returns true if a public method with the specified name exists in
    * the given class or any of its superclasses.

@@ -5,6 +5,7 @@ package org.pfsw.reflect.testhelper;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -34,4 +35,19 @@ public class UnitTestHelper
     return document;
   }
 
+  public static PersonData createPerson1() 
+  {
+    PersonData person = new PersonData();
+    
+    person.setFemale(true);
+    person.setFirstName("Mary");
+    person.setLastName("Poppins");
+    person.setNumberOfChildren((byte)2);
+    person.setZipCode(12345);
+    person.setVatId(Integer.valueOf(678));
+    person.setTransactions(100L);
+    person.setCash(new BigDecimal("320.00"));
+    
+    return person;
+  }
 }

@@ -8,6 +8,9 @@
 // Copyright (c) 2012, by MDCS. All rights reserved.
 // ===========================================================================
 package org.pfsw.reflect.testhelper ;
+
+import java.math.BigDecimal;
+
 @ExternalTypeId("person")
 public class PersonData
 {
@@ -16,6 +19,9 @@ public class PersonData
 	private int zipCode;
 	private boolean female;
 	private byte numberOfChildren;	
+	private Integer vatId;
+	private long transactions;
+	private BigDecimal cash;
 	
   public PersonData()
   {
@@ -77,5 +83,35 @@ public class PersonData
 		this.setFirstName(givenName);
 		this.setLastName(surName);
 		this.setFemale(isFemale);
-	} 
+	}
+
+  public Integer getVatId()
+  {
+    return this.vatId;
+  }
+
+  public void setVatId(Integer vatId)
+  {
+    this.vatId = vatId;
+  }
+
+  public long getTransactions()
+  {
+    return this.transactions;
+  }
+
+  public void setTransactions(long transactions)
+  {
+    this.transactions = transactions;
+  }
+
+  public BigDecimal getCash()
+  {
+    return this.cash;
+  }
+
+  public void setCash(BigDecimal cash)
+  {
+    this.cash = cash;
+  } 
 } // class PersonData

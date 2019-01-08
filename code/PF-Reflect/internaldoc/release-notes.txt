@@ -1,13 +1,26 @@
 Reflection Release-Notes
 Author: Manfred Duchrow
-Copyright (c) 2002-2018, by Manfred Duchrow. All rights reserved.
+Copyright (c) 2002-2019, by Manfred Duchrow. All rights reserved.
 =======================================================================
 
 -----------------------------------------------------------------------
 
-VERSION 4.2.0 (27/12/2018) - 270 Unit Tests
+VERSION 4.2.0 (07/01/2019) - 293 Unit Tests
 
 * Clean code
+
+* ReflectUtil
+  > Added
+    - public <T> T getValueOf(final Object obj, final Field field)
+    - public void setValueOf(final Object obj, final Field field, final Object value)
+
+* New classes
+  > IValueHolder
+  > FieldProxy
+  > NumericFieldProxy
+  > IntegerFieldProxy
+  > LongFieldProxy
+  > BigDecimalFieldProxy
 
 -----------------------------------------------------------------------
 
