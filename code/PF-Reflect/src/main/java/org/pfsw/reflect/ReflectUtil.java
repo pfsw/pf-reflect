@@ -1,7 +1,7 @@
 // ===========================================================================
 // CONTENT  : CLASS ReflectUtil
 // AUTHOR   : Manfred Duchrow
-// VERSION  : 2.3 - 18/03/2017
+// VERSION  : 2.4 - 28/07/2019
 // HISTORY  :
 //  27/09/2002  duma  CREATED
 //	24/10/2002	duma	added		-> isDefaultVisibility()
@@ -16,8 +16,9 @@
 //	12/08/2012	mdu		added 	-> getAllTypesOf()
 //  27/07/2014  mdu   changed -> signatures of method finder methods to use varargs rather than arrays
 //  18/03/2017  mdu   added   -> asObjectProperty(), asObjectProperties()
+//  28/07/2019  mdu   added   -> RU, getEnumValueOf()
 //
-// Copyright (c) 2002-2017, by Manfred Duchrow. All rights reserved.
+// Copyright (c) 2002-2019, by Manfred Duchrow. All rights reserved.
 // ===========================================================================
 package org.pfsw.reflect;
 
@@ -39,7 +40,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * The sole instance (Singleton) of this class can be accessed by method
+ * The current instance (Singleton) of this class can be accessed by method
  * <em>current()</em>.  <p>
  * It provides convenience methods on top of the normal standard Java
  * reflection API. However, it allows access to fields, methods and constructors
@@ -49,13 +50,19 @@ import java.util.Set;
  * access to normally invisible members will cause an exception. 
  *
  * @author Manfred Duchrow
- * @version 2.3
+ * @version 2.4
  */
 public class ReflectUtil
 {
   // =========================================================================
   // CONSTANTS
   // =========================================================================
+  /**
+   * An instance of this class which can be easily included
+   * as static import and then used like <code>RU.findClass("java.util.ArrayList")</code>.
+   */
+  public static final ReflectUtil RU = new ReflectUtil();
+
   private static final boolean DEBUG = "true".equals(System.getProperty("org.pfsw.reflect.debug", "false"));
   
   /**
@@ -83,7 +90,7 @@ public class ReflectUtil
   // =========================================================================
   // CLASS VARIABLES
   // =========================================================================
-  private static ReflectUtil currentInstance = new ReflectUtil();
+  private static ReflectUtil currentInstance = RU;
 
   // =========================================================================
   // INSTANCE VARIABLES
@@ -1464,6 +1471,53 @@ public class ReflectUtil
       }
     }
     return result;
+  }
+  
+  /**
+   * A generic mechanism to get for a given name the corresponding enum constant. 
+   * 
+   * @param enumType The enum type class (must not be null).
+   * @param enumValueName The name of the enum constant to be retrieved (may be null).
+   * @return null if enumValueName is null or if no corresponding enum constant can be found,
+   *         otherwise it returns the enum constant.
+   * @throws ReflectionException If the given type is no enum type of accessing the enum constants 
+   *        caused a problem.
+   */
+  public <E> E getEnumValueOf(Class<E> enumType, String enumValueName)
+  {
+    E[] enumConstants;
+    String enumConstName;
+
+    if (enumValueName == null)
+    {
+      return null;
+    }
+    
+    if (!enumType.isEnum())
+    {
+      throw new ReflectionException("The given type %s is no enum type!", enumType.getName());
+    }
+    
+    enumConstants = enumType.getEnumConstants();
+    if ((enumConstants != null))
+    {
+      try
+      {
+        for (E enumConstant : enumConstants)
+        {
+          enumConstName = (String)Dynamic.perform(enumConstant, "name");
+          if (enumValueName.equals(enumConstName))
+          {
+            return enumConstant;
+          }
+        }
+      }
+      catch (Exception e)
+      {
+        throw new ReflectionException(e, "Failed to get enum constant for name '%s' in enum type %s", enumValueName, enumType.getName());
+      }
+    }
+    return null;
   }
 
   // =========================================================================

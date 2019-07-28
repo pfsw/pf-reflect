@@ -3,9 +3,9 @@
 // AUTHOR   : Manfred Duchrow
 // VERSION  : 1.0 - 28/09/2002
 // HISTORY  :
-//  28/09/2002  duma  CREATED
+//  28/09/2002  mdu  CREATED
 //
-// Copyright (c) 2002, by Manfred Duchrow. All rights reserved.
+// Copyright (c) 2002-2019, by Manfred Duchrow. All rights reserved.
 // ===========================================================================
 package org.pfsw.reflect;
 
@@ -23,6 +23,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Proxy;
+import java.net.Proxy.Type;
 import java.text.FieldPosition;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -58,7 +59,6 @@ import org.pfsw.reflect.testhelper.Superclass;
  * Test class for corresponding business class.
  *
  * @author Manfred Duchrow
- * @version 1.0
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class ReflectUtilTest
@@ -67,6 +67,7 @@ public class ReflectUtilTest
   // CONSTANTS
   // =========================================================================
   protected static final ReflectUtil util = ReflectUtil.current();
+  private static final Class<?> sampleEnumType = Type.class;
 
   // =========================================================================
   // TEST METHODS
@@ -1587,7 +1588,33 @@ public class ReflectUtilTest
     assertEquals("collValue", property.getName());
     assertEquals(Collection.class, property.getType());
   }
+  
+  @Test
+  public void test_getEnumValueOf_null_name() 
+  {
+    assertNull(util.getEnumValueOf(sampleEnumType, null));
+  }
 
+  @Test(expected=ReflectionException.class)
+  public void test_getEnumValueOf_no_enum_type() 
+  {
+    util.getEnumValueOf(ObjectField.class, "dummy");
+  }
+  
+  @Test
+  public void test_getEnumValueOf_name_not_found() 
+  {
+    assertNull(util.getEnumValueOf(sampleEnumType, "FTPS"));
+  }
+  
+  @Test
+  public void test_getEnumValueOf_name_found() 
+  {
+    assertTrue(Type.DIRECT == util.getEnumValueOf(sampleEnumType, "DIRECT"));
+    assertTrue(Type.HTTP == util.getEnumValueOf(sampleEnumType, "HTTP"));
+    assertTrue(Type.SOCKS == util.getEnumValueOf(sampleEnumType, "SOCKS"));
+  }
+  
   // =========================================================================
   // HELPER METHODS
   // =========================================================================

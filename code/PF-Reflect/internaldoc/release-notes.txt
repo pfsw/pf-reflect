@@ -5,6 +5,15 @@ Copyright (c) 2002-2019, by Manfred Duchrow. All rights reserved.
 
 -----------------------------------------------------------------------
 
+VERSION 4.3.0 (28/03/2019) - 297 Unit Tests
+
+* ReflectUtil
+  > Added
+    - public static final ReflectUtil RU = new ReflectUtil()
+    - public <E> E getEnumValueOf(Class<E> enumType, String enumValueName)
+
+-----------------------------------------------------------------------
+
 VERSION 4.2.0 (07/01/2019) - 293 Unit Tests
 
 * Clean code
