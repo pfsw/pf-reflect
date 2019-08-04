@@ -183,6 +183,19 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
     this.object = object;
   }
 
+  /**
+   * Returns the type of the wrapped object.
+   * In the case of null object it returns {@link Void#TYPE}.
+   */
+  public Class<?> getObjectType() 
+  {
+    if (getObject() == null)
+    {
+      return Void.TYPE;
+    }
+    return getObject().getClass();
+  }
+
   // =========================================================================
   // PROTECTED INSTANCE METHODS
   // =========================================================================
