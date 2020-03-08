@@ -1480,7 +1480,7 @@ public class ReflectUtil
    * @param enumValueName The name of the enum constant to be retrieved (may be null).
    * @return null if enumValueName is null or if no corresponding enum constant can be found,
    *         otherwise it returns the enum constant.
-   * @throws ReflectionException If the given type is no enum type of accessing the enum constants 
+   * @throws ReflectionException If the given type is no enum type or accessing the enum constants 
    *        caused a problem.
    */
   public <E> E getEnumValueOf(Class<E> enumType, String enumValueName)

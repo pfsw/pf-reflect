@@ -7,10 +7,12 @@ archivesBaseName = "pf-reflect"
 
 ext {
   javaVersion = '1.6'
+  javaModuleNameSuffix = 'reflect'
 }
 
 apply from: "${includePath}/common/ext-variables.gradle"
 apply from: "${includePath}/common/repositories.gradle"
+apply from: "${includePath}/java/java-6-compile.gradle"
 apply from: "${includePath}/java/java-compatibility.gradle"
 apply from: "${includePath}/java/publishing-java-full.gradle"
 
@@ -19,6 +21,6 @@ dependencies {
   testCompile group: 'org.mockito', name: 'mockito-core', version: '1.10.19'
 }
 
-task wrapper(type: Wrapper) { gradleVersion = '2.14.1' }
+wrapper { gradleVersion = '6.2.2' }
 
-println "${project.name} ${project.version}"
+println "${project.name} ${project.version} (autoModuleName: ${autoModuleName})"
