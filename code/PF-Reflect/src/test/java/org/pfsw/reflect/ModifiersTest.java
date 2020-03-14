@@ -1,29 +1,25 @@
 // ===========================================================================
-// CONTENT  : TEST CLASS {ClassName}
 // AUTHOR   : M.Duchrow
 // VERSION  : 1.0 - 13/01/2008
 // HISTORY  :
 //  13/01/2008  mdu  CREATED
 //
-// Copyright (c) 2008, by Manfred Duchrow. All rights reserved.
+// Copyright (c) 2008-2020, by Manfred Duchrow. All rights reserved.
 // ===========================================================================
 package org.pfsw.reflect;
 
-// ===========================================================================
-// IMPORTS
-// ===========================================================================
 import static org.junit.Assert.*;
 
 import java.lang.reflect.Modifier;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.pfsw.reflect.testhelper.Subclass1;
 
 /**
  * Test class for corresponding business class.
  *
  * @author M.Duchrow
- * @version 2.0
  */
 public class ModifiersTest
 {
@@ -338,6 +334,16 @@ public class ModifiersTest
     assertEquals("protected transient volatile", m1.toString());
   }
 
+  @Test
+  public void test_create__field()
+  {
+    Modifiers m1 = Modifiers.create(ReflectUtil.current().findField(Subclass1.class, "dummy1"));
+    
+    assertTrue(m1.isFinal());
+    assertTrue(m1.isTransient());
+    assertTrue(m1.isDefaultVisibility());
+  }
+  
   // =========================================================================
   // HELPER METHODS
   // =========================================================================

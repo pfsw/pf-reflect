@@ -10,6 +10,7 @@
 // ===========================================================================
 package org.pfsw.reflect;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 /**
@@ -57,6 +58,11 @@ public class Modifiers
   public static Modifiers create(int initialValue)
   {
     return new Modifiers(initialValue);
+  }
+
+  public static Modifiers create(Field field)
+  {
+    return create(field.getModifiers());
   }
 
   // =========================================================================
