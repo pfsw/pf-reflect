@@ -13,9 +13,6 @@
 // ===========================================================================
 package org.pfsw.reflect;
 
-// ===========================================================================
-// IMPORTS
-// ===========================================================================
 import java.lang.reflect.Array;
 
 /**
@@ -74,7 +71,7 @@ public class ClassInfo<T>
   public ClassInfo(String className)
   {
     super();
-    this.setClassName(className);
+    setClassName(className);
   }
 
   /**
@@ -87,7 +84,7 @@ public class ClassInfo<T>
   public ClassInfo(String className, boolean singleton)
   {
     this(className);
-    this.setIsSingleton(singleton);
+    setIsSingleton(singleton);
   }
 
   /**
@@ -98,7 +95,7 @@ public class ClassInfo<T>
   public ClassInfo(Class<T> aClass)
   {
     super();
-    this.setClassObject(aClass);
+    setClassObject(aClass);
   }
 
   /**
@@ -110,7 +107,7 @@ public class ClassInfo<T>
   public ClassInfo(Class<T> aClass, boolean singleton)
   {
     this(aClass);
-    this.setIsSingleton(singleton);
+    setIsSingleton(singleton);
   }
 
   public boolean isSingleton()
@@ -143,11 +140,11 @@ public class ClassInfo<T>
     {
       return false;
     }
-    if (this.getClassObject() == null)
+    if (getClassObject() == null)
     {
       return false;
     }
-    return this.getClassObject().isAssignableFrom(type);
+    return getClassObject().isAssignableFrom(type);
   }
 
   /**
@@ -167,11 +164,11 @@ public class ClassInfo<T>
     {
       return false;
     }
-    if (this.getClassObject() == null)
+    if (getClassObject() == null)
     {
       return false;
     }
-    return type.isAssignableFrom(this.getClassObject());
+    return type.isAssignableFrom(getClassObject());
   }
 
   /**
@@ -190,11 +187,11 @@ public class ClassInfo<T>
     {
       return false;
     }
-    if (this.getClassObject() == null)
+    if (getClassObject() == null)
     {
       return false;
     }
-    return this.getClassObject().isInstance(object);
+    return getClassObject().isInstance(object);
   }
 
   /**
@@ -202,7 +199,7 @@ public class ClassInfo<T>
    */
   public String getClassName()
   {
-    return this.className();
+    return className();
   }
 
   /**
@@ -215,8 +212,8 @@ public class ClassInfo<T>
   {
     if (className != null)
     {
-      this.className(className);
-      this.classObject(null);
+      className(className);
+      classObject(null);
     }
   }
 
@@ -226,11 +223,11 @@ public class ClassInfo<T>
    */
   public Class<T> getClassObject()
   {
-    if (this.classObject() == null)
+    if (classObject() == null)
     {
-      this.initClassObject();
+      initClassObject();
     }
-    return this.classObject();
+    return classObject();
   }
 
   /**
@@ -243,8 +240,8 @@ public class ClassInfo<T>
   {
     if (aClass != null)
     {
-      this.classObject(aClass);
-      this.className(aClass.getName());
+      classObject(aClass);
+      className(aClass.getName());
     }
   }
 
@@ -258,15 +255,15 @@ public class ClassInfo<T>
    */
   public T getInstance()
   {
-    if (this.isSingleton())
+    if (isSingleton())
     {
-      if (this.getSoleInstance() == null)
+      if (getSoleInstance() == null)
       {
-        this.setSoleInstance(this.createInstance());
+        setSoleInstance(createInstance());
       }
-      return this.getSoleInstance();
+      return getSoleInstance();
     }
-    return this.createInstance();
+    return createInstance();
   }
 
   /**
@@ -280,11 +277,11 @@ public class ClassInfo<T>
   {
     try
     {
-      return this.newInstance();
+      return newInstance();
     }
     catch (Exception ex)
     {
-      this.handleException(ex);
+      handleException(ex);
     }
     return null;
   }
@@ -300,10 +297,10 @@ public class ClassInfo<T>
   public T newInstance() throws ClassNotFoundException, InstantiationException, IllegalAccessException
   {
     Class<T> aClass;
-    aClass = this.getClassObject();
+    aClass = getClassObject();
     if (aClass == null)
     {
-      throw new ClassNotFoundException(this.className());
+      throw new ClassNotFoundException(className());
     }
     return aClass.newInstance();
   }
@@ -321,9 +318,9 @@ public class ClassInfo<T>
   @SuppressWarnings("unchecked")
   public T[] newArray(int size)
   {
-    if (this.getClassObject() != null)
+    if (getClassObject() != null)
     {
-      return (T[])Array.newInstance(this.getClassObject(), size);
+      return (T[])Array.newInstance(getClassObject(), size);
     }
     return (T[])EMPTY_OBJECT_ARRAY;
   }
@@ -334,7 +331,7 @@ public class ClassInfo<T>
   @Override
   public String toString()
   {
-    return this.getClass().getName() + "(" + this.getClassName() + ")";
+    return getClass().getName() + "(" + getClassName() + ")";
   }
 
   // =========================================================================
@@ -345,10 +342,10 @@ public class ClassInfo<T>
   {
     Class<T> aClass;
 
-    aClass = (Class<T>)ReflectUtil.current().findClass(this.getClassName());
+    aClass = (Class<T>)ReflectUtil.current().findClass(getClassName());
     if (aClass != null)
     {
-      this.classObject(aClass);
+      classObject(aClass);
     }
   }
 

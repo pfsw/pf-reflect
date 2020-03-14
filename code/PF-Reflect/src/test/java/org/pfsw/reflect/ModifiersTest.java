@@ -299,7 +299,7 @@ public class ModifiersTest
   @Test
   public void test_equals_1()
   {
-    Modifiers m1 = new Modifiers(Modifier.ABSTRACT | Modifier.FINAL | Modifier.PUBLIC);
+    Modifiers m1 = Modifiers.create(Modifier.ABSTRACT | Modifier.FINAL | Modifier.PUBLIC);
     Modifiers m2 = null;
 
     assertFalse(m1.equals(m2));
@@ -317,7 +317,7 @@ public class ModifiersTest
   @Test
   public void test_hashCode_1()
   {
-    Modifiers m1 = new Modifiers(Modifier.TRANSIENT | Modifier.VOLATILE | Modifier.PROTECTED);
+    Modifiers m1 = Modifiers.create(Modifier.TRANSIENT | Modifier.VOLATILE | Modifier.PROTECTED);
     Modifiers m2 = null;
 
     m2 = new Modifiers();
@@ -333,7 +333,7 @@ public class ModifiersTest
   @Test
   public void test_toString_1()
   {
-    Modifiers m1 = new Modifiers(Modifier.TRANSIENT | Modifier.VOLATILE | Modifier.PROTECTED);
+    Modifiers m1 = Modifiers.create(Modifier.TRANSIENT | Modifier.VOLATILE | Modifier.PROTECTED);
 
     assertEquals("protected transient volatile", m1.toString());
   }
@@ -344,7 +344,6 @@ public class ModifiersTest
   @Before
   public void setUp()
   {
-    this.modifiers = new Modifiers();
+    this.modifiers = Modifiers.create();
   }
-
 }

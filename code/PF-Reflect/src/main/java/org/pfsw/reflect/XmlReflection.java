@@ -9,9 +9,6 @@
 // ===========================================================================
 package org.pfsw.reflect;
 
-// ===========================================================================
-// IMPORTS
-// ===========================================================================
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -59,7 +56,7 @@ public class XmlReflection
   // =========================================================================
   public Object createInstance(final Element xmlElement)
   {
-    return this.createInstance(xmlElement, Object.class);
+    return createInstance(xmlElement, Object.class);
   }
 
   public <T> T createInstance(final Element xmlElement, Class<T> expectedType)
@@ -67,26 +64,26 @@ public class XmlReflection
     String className;
     T newObject;
 
-    className = xmlElement.getAttribute(this.getAttrNameForClass());
+    className = xmlElement.getAttribute(getAttrNameForClass());
     newObject = RU.createInstanceOfType(expectedType, className, this);
     return newObject;
   }
 
   public Object createInitializedInstance(final Element xmlElement) throws NoSuchFieldException
   {
-    return this.createInitializedInstance(xmlElement, Object.class);
+    return createInitializedInstance(xmlElement, Object.class);
   }
 
   public <T> T createInitializedInstance(Element xmlElement, Class<T> expectedType) throws NoSuchFieldException
   {
     T newObject;
 
-    newObject = this.createInstance(xmlElement, expectedType);
+    newObject = createInstance(xmlElement, expectedType);
     if (newObject == null)
     {
-      throw new NoSuchFieldException("Attribute '" + this.getAttrNameForClass() + "' not found in XML element <" + xmlElement.getTagName() + ">");
+      throw new NoSuchFieldException("Attribute '" + getAttrNameForClass() + "' not found in XML element <" + xmlElement.getTagName() + ">");
     }
-    this.initProperties(xmlElement, newObject);
+    initProperties(xmlElement, newObject);
     return newObject;
   }
 
@@ -98,7 +95,7 @@ public class XmlReflection
     result = new ArrayList<T>(xmlElements.size());
     for (Element element : xmlElements)
     {
-      object = this.createInitializedInstance(element, expectedType);
+      object = createInitializedInstance(element, expectedType);
       result.add(object);
     }
     return result;
@@ -163,10 +160,10 @@ public class XmlReflection
       if (node.getNodeType() == Node.ELEMENT_NODE)
       {
         tag = (Element)node;
-        fieldName = tag.getAttribute(this.getAttrNameForFieldName());
-        if (this.hasValueAttrName())
+        fieldName = tag.getAttribute(getAttrNameForFieldName());
+        if (hasValueAttrName())
         {
-          textValue = tag.getAttribute(this.getAttrNameForFieldValue());
+          textValue = tag.getAttribute(getAttrNameForFieldValue());
           if (textValue == null)
           {
             textValue = tag.getTextContent();
@@ -181,7 +178,7 @@ public class XmlReflection
         {
           throw new NoSuchFieldException("Cannot find field '" + fieldName + "' in class " + object.getClass().getName());
         }
-        value = this.convertToType(textValue, field.getType());
+        value = convertToType(textValue, field.getType());
         RU.setValueOf(object, fieldName, value);
       }
     }
@@ -239,11 +236,11 @@ public class XmlReflection
 
   protected boolean hasValueAttrName()
   {
-    if ((this.getAttrNameForFieldValue() == null) || (this.getAttrNameForFieldValue().length() == 0))
+    if ((getAttrNameForFieldValue() == null) || (getAttrNameForFieldValue().length() == 0))
     {
       return false;
     }
-    char ch = this.getAttrNameForFieldValue().charAt(0);
+    char ch = getAttrNameForFieldValue().charAt(0);
     if (ch < 'A')
     {
       return false;

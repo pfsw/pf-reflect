@@ -11,10 +11,6 @@ package org.pfsw.reflect;
 
 import java.util.Map;
 
-// ===========================================================================
-// IMPORTS
-// ===========================================================================
-
 /**
  * A wrapper that is capable to read and write object fields via getter and
  * setter methods or directly. The access is possible for all visibilities.
@@ -30,10 +26,6 @@ import java.util.Map;
  */
 public class ObjectOrMapAccessWrapper extends ObjectAccessWrapper
 {
-  // =========================================================================
-  // CONSTANTS
-  // =========================================================================
-
   // =========================================================================
   // INSTANCE VARIABLES
   // =========================================================================
@@ -56,7 +48,7 @@ public class ObjectOrMapAccessWrapper extends ObjectAccessWrapper
   // =========================================================================
   public boolean isMap()
   {
-    return this.isMap;
+    return isMap;
   }
 
   /**
@@ -69,9 +61,9 @@ public class ObjectOrMapAccessWrapper extends ObjectAccessWrapper
   @Override
   public String[] getAttributeNames()
   {
-    if (this.isMap())
+    if (isMap())
     {
-      return ReflectUtil.current().toStringArray(this.getMap().keySet(), "this");
+      return ReflectUtil.current().toStringArray(getMap().keySet(), "this");
     }
     return super.getAttributeNames();
   }
@@ -86,9 +78,9 @@ public class ObjectOrMapAccessWrapper extends ObjectAccessWrapper
   @Override
   public Object get(final String fieldName)
   {
-    if (this.isMap())
+    if (isMap())
     {
-      return this.getMap().get(fieldName);
+      return getMap().get(fieldName);
     }
     return super.get(fieldName);
   }
@@ -103,9 +95,9 @@ public class ObjectOrMapAccessWrapper extends ObjectAccessWrapper
   @Override
   public void set(final String fieldName, final Object value)
   {
-    if (this.isMap())
+    if (isMap())
     {
-      this.getMap().put(fieldName, value);
+      getMap().put(fieldName, value);
     }
     super.set(fieldName, value);
   }
@@ -119,13 +111,13 @@ public class ObjectOrMapAccessWrapper extends ObjectAccessWrapper
   @Override
   public Object getAttributeValue(String name) throws NoSuchFieldException
   {
-    if (this.isMap())
+    if (isMap())
     {
-      if (!this.getMap().containsKey(name))
+      if (!getMap().containsKey(name))
       {
         throw new NoSuchFieldException(name);
       }
-      return this.get(name);
+      return get(name);
     }
     return super.getAttributeValue(name);
   }
@@ -140,13 +132,13 @@ public class ObjectOrMapAccessWrapper extends ObjectAccessWrapper
   @Override
   public void setAttributeValue(String name, Object value) throws NoSuchFieldException
   {
-    if (this.isMap())
+    if (isMap())
     {
-      if (!this.getMap().containsKey(name))
+      if (!getMap().containsKey(name))
       {
         throw new NoSuchFieldException(name);
       }
-      this.set(name, value);
+      set(name, value);
       return;
     }
     super.setAttributeValue(name, value);
@@ -163,11 +155,11 @@ public class ObjectOrMapAccessWrapper extends ObjectAccessWrapper
   @Override
   public Object getValueOfField(final String name)
   {
-    if (this.isMap())
+    if (isMap())
     {
-      if (this.getMap().containsKey(name))
+      if (getMap().containsKey(name))
       {
-        return this.get(name);
+        return get(name);
       }
       return null;
     }
@@ -184,9 +176,9 @@ public class ObjectOrMapAccessWrapper extends ObjectAccessWrapper
   @Override
   public void setValueOfField(final String name, final Object value)
   {
-    if (this.isMap())
+    if (isMap())
     {
-      this.set(name, value);
+      set(name, value);
     }
     super.setValueOfField(name, value);
   }
@@ -199,7 +191,7 @@ public class ObjectOrMapAccessWrapper extends ObjectAccessWrapper
   public void setObject(Object object)
   {
     super.setObject(object);
-    this.setIsMap(object instanceof Map);
+    setIsMap(object instanceof Map);
   }
 
   // =========================================================================
@@ -208,7 +200,7 @@ public class ObjectOrMapAccessWrapper extends ObjectAccessWrapper
   @SuppressWarnings("unchecked")
   protected Map<String, Object> getMap()
   {
-    return (Map<String, Object>)this.getObject();
+    return (Map<String, Object>)getObject();
   }
 
   protected void setIsMap(boolean newValue)

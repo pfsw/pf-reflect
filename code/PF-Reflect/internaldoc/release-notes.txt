@@ -5,7 +5,7 @@ Copyright (c) 2002-2020, by Manfred Duchrow. All rights reserved.
 
 -----------------------------------------------------------------------
 
-VERSION 4.3.0 (08/03/2020) - 319 Unit Tests, 88,3% Coverage
+VERSION 4.3.0 (14/03/2020) - 319 Unit Tests, 88,5% Coverage
 
 * ReflectUtil
   > Added
@@ -15,6 +15,38 @@ VERSION 4.3.0 (08/03/2020) - 319 Unit Tests, 88,3% Coverage
 * ObjectAccessWrapper
   > Added
     - public Class<?> getObjectType() 
+    
+* Modifiers
+  > Added
+    - public static Modifiers create()
+    - public static Modifiers create(int initialValue)
+    
+  > Changed methods to return this
+    - public Modifiers reset()
+    - public Modifiers setAbstract()
+    - public Modifiers setFinal()
+    - public Modifiers setInterface()
+    - public Modifiers setNative()
+    - public Modifiers setPrivate()
+    - public Modifiers setPublic()
+    - public Modifiers setStatic()
+    - public Modifiers setStrict()
+    - public Modifiers setSynchronized()
+    - public Modifiers setTransient()
+    - public Modifiers setVolatile()
+    - public Modifiers setDefaultVisibility()
+    - public Modifiers setVisibility(String visibility)
+    - public Modifiers unsetFinal()
+    - public Modifiers unsetInterface()
+    - public Modifiers unsetNative()
+    - public Modifiers unsetPrivate()
+    - public Modifiers unsetProtected()
+    - public Modifiers unsetPublic()
+    - public Modifiers unsetStatic()
+    - public Modifiers unsetStrict()
+    - public Modifiers unsetSynchronized()
+    - public Modifiers unsetTransient()
+    - public Modifiers unsetVolatile() 
     
 * New classes
   > org.pfsw.reflect.MappedObject

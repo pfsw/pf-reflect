@@ -1,17 +1,15 @@
 // ===========================================================================
 // CONTENT  : CLASS Modifiers
 // AUTHOR   : M.Duchrow
-// VERSION  : 1.0 - 13/01/2008
+// VERSION  : 1.1 - 14/03/2020
 // HISTORY  :
 //  13/01/2008  mdu  CREATED
+//  14/03/2020  mdu   added -> create()
 //
-// Copyright (c) 2008, by Manfred Duchrow. All rights reserved.
+// Copyright (c) 2008-2020, by Manfred Duchrow. All rights reserved.
 // ===========================================================================
 package org.pfsw.reflect;
 
-// ===========================================================================
-// IMPORTS
-// ===========================================================================
 import java.lang.reflect.Modifier;
 
 /**
@@ -19,7 +17,7 @@ import java.lang.reflect.Modifier;
  * without having to fiddle around with bit logic.
  *
  * @author M.Duchrow
- * @version 1.0
+ * @version 1.1
  */
 public class Modifiers
 {
@@ -49,6 +47,19 @@ public class Modifiers
   private int bits = 0;
 
   // =========================================================================
+  // CLASS METHODS
+  // =========================================================================
+  public static Modifiers create()
+  {
+    return new Modifiers();
+  }
+
+  public static Modifiers create(int initialValue)
+  {
+    return new Modifiers(initialValue);
+  }
+
+  // =========================================================================
   // CONSTRUCTORS
   // =========================================================================
   /**
@@ -65,7 +76,7 @@ public class Modifiers
   public Modifiers(int initialValue)
   {
     super();
-    this.setBits(initialValue);
+    setBits(initialValue);
   }
 
   // =========================================================================
@@ -81,10 +92,12 @@ public class Modifiers
 
   /**
    * Resets the modifier to 0.
+   * @return 
    */
-  public void reset()
+  public Modifiers reset()
   {
-    this.setBits(0);
+    setBits(0);
+    return this;
   }
 
   /**
@@ -93,7 +106,7 @@ public class Modifiers
    */
   public boolean isAbstract()
   {
-    return Modifier.isAbstract(this.getBits());
+    return Modifier.isAbstract(getBits());
   }
 
   /**
@@ -102,7 +115,7 @@ public class Modifiers
    */
   public boolean isFinal()
   {
-    return Modifier.isFinal(this.getBits());
+    return Modifier.isFinal(getBits());
   }
 
   /**
@@ -111,7 +124,7 @@ public class Modifiers
    */
   public boolean isInterface()
   {
-    return Modifier.isInterface(this.getBits());
+    return Modifier.isInterface(getBits());
   }
 
   /**
@@ -120,7 +133,7 @@ public class Modifiers
    */
   public boolean isNative()
   {
-    return Modifier.isNative(this.getBits());
+    return Modifier.isNative(getBits());
   }
 
   /**
@@ -129,7 +142,7 @@ public class Modifiers
    */
   public boolean isPrivate()
   {
-    return Modifier.isPrivate(this.getBits());
+    return Modifier.isPrivate(getBits());
   }
 
   /**
@@ -138,7 +151,7 @@ public class Modifiers
    */
   public boolean isProtected()
   {
-    return Modifier.isProtected(this.getBits());
+    return Modifier.isProtected(getBits());
   }
 
   /**
@@ -147,7 +160,7 @@ public class Modifiers
    */
   public boolean isPublic()
   {
-    return Modifier.isPublic(this.getBits());
+    return Modifier.isPublic(getBits());
   }
 
   /**
@@ -156,7 +169,7 @@ public class Modifiers
    */
   public boolean isStatic()
   {
-    return Modifier.isStatic(this.getBits());
+    return Modifier.isStatic(getBits());
   }
 
   /**
@@ -165,7 +178,7 @@ public class Modifiers
    */
   public boolean isStrict()
   {
-    return Modifier.isStrict(this.getBits());
+    return Modifier.isStrict(getBits());
   }
 
   /**
@@ -174,7 +187,7 @@ public class Modifiers
    */
   public boolean isSynchronized()
   {
-    return Modifier.isSynchronized(this.getBits());
+    return Modifier.isSynchronized(getBits());
   }
 
   /**
@@ -183,7 +196,7 @@ public class Modifiers
    */
   public boolean isTransient()
   {
-    return Modifier.isTransient(this.getBits());
+    return Modifier.isTransient(getBits());
   }
 
   /**
@@ -192,7 +205,7 @@ public class Modifiers
    */
   public boolean isVolatile()
   {
-    return Modifier.isVolatile(this.getBits());
+    return Modifier.isVolatile(getBits());
   }
 
   /**
@@ -202,7 +215,7 @@ public class Modifiers
    */
   public boolean isDefaultVisibility()
   {
-    return !(this.isPublic() || this.isProtected() || this.isPrivate());
+    return !(isPublic() || isProtected() || isPrivate());
   }
 
   /**
@@ -211,7 +224,7 @@ public class Modifiers
   @Override
   public String toString()
   {
-    return Modifier.toString(this.getBits());
+    return Modifier.toString(getBits());
   }
 
   /**
@@ -223,7 +236,7 @@ public class Modifiers
     if (object instanceof Modifiers)
     {
       Modifiers mod = (Modifiers)object;
-      return this.getBits() == mod.getBits();
+      return getBits() == mod.getBits();
     }
     return false;
   }
@@ -234,240 +247,292 @@ public class Modifiers
   @Override
   public int hashCode()
   {
-    return this.getBits();
+    return getBits();
   }
 
   /**
    * Sets the <tt>ABSTRACT</tt> bit.
+   * @return this object.
    */
-  public void setAbstract()
+  public Modifiers setAbstract()
   {
-    this.setModifier(Modifier.ABSTRACT);
+    setModifier(Modifier.ABSTRACT);
+    return this;
   }
 
   /**
    * Sets the <tt>FINAL</tt> bit.
+   * @return this object.
    */
-  public void setFinal()
+  public Modifiers setFinal()
   {
-    this.setModifier(Modifier.FINAL);
+    setModifier(Modifier.FINAL);
+    return this;
   }
 
   /**
    * Sets the <tt>INTERFACE</tt> bit.
+   * @return this object.
    */
-  public void setInterface()
+  public Modifiers setInterface()
   {
-    this.setModifier(Modifier.INTERFACE);
+    setModifier(Modifier.INTERFACE);
+    return this;
   }
 
   /**
    * Sets the <tt>NATIVE</tt> bit.
+   * @return this object.
    */
-  public void setNative()
+  public Modifiers setNative()
   {
-    this.setModifier(Modifier.NATIVE);
+    setModifier(Modifier.NATIVE);
+    return this;
   }
 
   /**
    * Sets the <tt>PRIVATE</tt> bit.
    * This automatically unsets the <tt>PUBLIC</tt> and <tt>PROTECTED</tt> bits. 
+   * @return this object.
    */
-  public void setPrivate()
+  public Modifiers setPrivate()
   {
-    this.setDefaultVisibility();
-    this.setModifier(Modifier.PRIVATE);
+    setDefaultVisibility();
+    setModifier(Modifier.PRIVATE);
+    return this;
   }
 
   /**
    * Sets the <tt>PROTECTED</tt> bit.
    * This automatically unsets the <tt>PUBLIC</tt> and <tt>PRIVATE</tt> bits. 
+   * @return this object.
    */
-  public void setProtected()
+  public Modifiers setProtected()
   {
-    this.setDefaultVisibility();
-    this.setModifier(Modifier.PROTECTED);
+    setDefaultVisibility();
+    setModifier(Modifier.PROTECTED);
+    return this;
   }
 
   /**
    * Sets the <tt>PUBLIC</tt> bit.
    * This automatically unsets the <tt>PROTECTED</tt> and <tt>PRIVATE</tt> bits. 
+   * @return this object.
    */
-  public void setPublic()
+  public Modifiers setPublic()
   {
-    this.setDefaultVisibility();
-    this.setModifier(Modifier.PUBLIC);
+    setDefaultVisibility();
+    setModifier(Modifier.PUBLIC);
+    return this;
   }
 
   /**
    * Sets the <tt>STATIC</tt> bit.
+   * @return this object.
    */
-  public void setStatic()
+  public Modifiers setStatic()
   {
-    this.setModifier(Modifier.STATIC);
+    setModifier(Modifier.STATIC);
+    return this;
   }
 
   /**
    * Sets the <tt>STRICT</tt> bit.
+   * @return this object.
    */
-  public void setStrict()
+  public Modifiers setStrict()
   {
-    this.setModifier(Modifier.STRICT);
+    setModifier(Modifier.STRICT);
+    return this;
   }
 
   /**
    * Sets the <tt>SYNCHRONIZED</tt> bit.
+   * @return this object.
    */
-  public void setSynchronized()
+  public Modifiers setSynchronized()
   {
-    this.setModifier(Modifier.SYNCHRONIZED);
+    setModifier(Modifier.SYNCHRONIZED);
+    return this;
   }
 
   /**
    * Sets the <tt>TRANSIENT</tt> bit.
+   * @return this object.
    */
-  public void setTransient()
+  public Modifiers setTransient()
   {
-    this.setModifier(Modifier.TRANSIENT);
+    setModifier(Modifier.TRANSIENT);
+    return this;
   }
 
   /**
    * Sets the <tt>VOLATILE</tt> bit.
+   * @return this object.
    */
-  public void setVolatile()
+  public Modifiers setVolatile()
   {
-    this.setModifier(Modifier.VOLATILE);
+    setModifier(Modifier.VOLATILE);
+    return this;
   }
 
   /**
    * Sets the visibility to default that means unset
    * <tt>PUBLIC</tt>, <tt>PROTECTED</tt>, <tt>PRIVATE</tt> bits.
+   * @return this object.
    */
-  public void setDefaultVisibility()
+  public Modifiers setDefaultVisibility()
   {
-    this.unsetModifier(Modifier.PUBLIC | Modifier.PROTECTED | Modifier.PRIVATE);
+    unsetModifier(Modifier.PUBLIC | Modifier.PROTECTED | Modifier.PRIVATE);
+    return this;
   }
 
   /**
    * Sets the visibility from the given string. If the given string is not
    * one of "public", "protected", "private" the the default visibility is set.
    * 
-   *  @param visibility One of the visibility strings
+   * @param visibility One of the visibility strings
+   * @return this object.
    */
-  public void setVisibility(String visibility)
+  public Modifiers setVisibility(String visibility)
   {
     if (VIS_PUBLIC.equals(visibility))
     {
-      this.setPublic();
-      return;
+      setPublic();
     }
-    if (VIS_PROTECTED.equals(visibility))
+    else if (VIS_PROTECTED.equals(visibility))
     {
-      this.setProtected();
-      return;
+      setProtected();
     }
-    if (VIS_PRIVATE.equals(visibility))
+    else if (VIS_PRIVATE.equals(visibility))
     {
-      this.setPrivate();
-      return;
+      setPrivate();
     }
-    this.setDefaultVisibility();
+    else
+    {
+      setDefaultVisibility();
+    }
+    return this;
   }
 
   /**
    * Unsets the <tt>ABSTRACT</tt> bit.
+   * @return this object.
    */
-  public void unsetAbstract()
+  public Modifiers unsetAbstract()
   {
-    this.unsetModifier(Modifier.ABSTRACT);
+    unsetModifier(Modifier.ABSTRACT);
+    return this;
   }
 
   /**
    * Unsets the <tt>FINAL</tt> bit.
+   * @return this object.
    */
-  public void unsetFinal()
+  public Modifiers unsetFinal()
   {
-    this.unsetModifier(Modifier.FINAL);
+    unsetModifier(Modifier.FINAL);
+    return this;
   }
 
   /**
    * Unsets the <tt>INTERFACE</tt> bit.
+   * @return this object.
    */
-  public void unsetInterface()
+  public Modifiers unsetInterface()
   {
-    this.unsetModifier(Modifier.INTERFACE);
+    unsetModifier(Modifier.INTERFACE);
+    return this;
   }
 
   /**
    * Unsets the <tt>NATIVE</tt> bit.
+   * @return this object.
    */
-  public void unsetNative()
+  public Modifiers unsetNative()
   {
-    this.unsetModifier(Modifier.NATIVE);
+    unsetModifier(Modifier.NATIVE);
+    return this;
   }
 
   /**
    * Unsets the <tt>PRIVATE</tt> bit.
+   * @return this object.
    */
-  public void unsetPrivate()
+  public Modifiers unsetPrivate()
   {
-    this.unsetModifier(Modifier.PRIVATE);
+    unsetModifier(Modifier.PRIVATE);
+    return this;
   }
 
   /**
    * Unsets the <tt>PROTECTED</tt> bit.
+   * @return this object.
    */
-  public void unsetProtected()
+  public Modifiers unsetProtected()
   {
-    this.unsetModifier(Modifier.PROTECTED);
+    unsetModifier(Modifier.PROTECTED);
+    return this;
   }
 
   /**
    * Unsets the <tt>PUBLIC</tt> bit.
+   * @return this object.
    */
-  public void unsetPublic()
+  public Modifiers unsetPublic()
   {
-    this.unsetModifier(Modifier.PUBLIC);
+    unsetModifier(Modifier.PUBLIC);
+    return this;
   }
 
   /**
    * Unsets the <tt>STATIC</tt> bit.
+   * @return this object.
    */
-  public void unsetStatic()
+  public Modifiers unsetStatic()
   {
-    this.unsetModifier(Modifier.STATIC);
+    unsetModifier(Modifier.STATIC);
+    return this;
   }
 
   /**
    * Unsets the <tt>STRICT</tt> bit.
+   * @return this object.
    */
-  public void unsetStrict()
+  public Modifiers unsetStrict()
   {
-    this.unsetModifier(Modifier.STRICT);
+    unsetModifier(Modifier.STRICT);
+    return this;
   }
 
   /**
    * Unsets the <tt>SYNCHRONIZED</tt> bit.
+   * @return this object.
    */
-  public void unsetSynchronized()
+  public Modifiers unsetSynchronized()
   {
-    this.unsetModifier(Modifier.SYNCHRONIZED);
+    unsetModifier(Modifier.SYNCHRONIZED);
+    return this;
   }
 
   /**
    * Unsets the <tt>TRANSIENT</tt> bit.
+   * @return this object.
    */
-  public void unsetTransient()
+  public Modifiers unsetTransient()
   {
-    this.unsetModifier(Modifier.TRANSIENT);
+    unsetModifier(Modifier.TRANSIENT);
+    return this;
   }
 
   /**
    * Unsets the <tt>VOLATILE</tt> bit.
+   * @return this object.
    */
-  public void unsetVolatile()
+  public Modifiers unsetVolatile()
   {
-    this.unsetModifier(Modifier.VOLATILE);
+    unsetModifier(Modifier.VOLATILE);
+    return this;
   }
 
   // =========================================================================
@@ -478,7 +543,7 @@ public class Modifiers
    */
   protected void setModifier(int mod)
   {
-    this.setBits(this.getBits() | mod);
+    setBits(getBits() | mod);
   }
 
   /**
@@ -486,7 +551,7 @@ public class Modifiers
    */
   protected void unsetModifier(int mod)
   {
-    this.setBits(this.getBits() & ~mod);
+    setBits(getBits() & ~mod);
   }
 
   protected void setBits(int newValue)

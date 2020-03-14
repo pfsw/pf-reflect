@@ -9,9 +9,6 @@
 // ===========================================================================
 package org.pfsw.reflect;
 
-// ===========================================================================
-// IMPORTS
-// ===========================================================================
 import java.lang.reflect.Field;
 
 /**
@@ -22,10 +19,6 @@ import java.lang.reflect.Field;
  */
 public class ObjectField implements IObjectProperty
 {
-  // =========================================================================
-  // CONSTANTS
-  // =========================================================================
-
   // =========================================================================
   // INSTANCE VARIABLES
   // =========================================================================
@@ -47,19 +40,19 @@ public class ObjectField implements IObjectProperty
   @Override
   public Class<?> getType()
   {
-    return this.getField().getType();
+    return getField().getType();
   }
   
   @Override
   public Modifiers getModifiers()
   {
-    return new Modifiers(this.getField().getModifiers());
+    return new Modifiers(getField().getModifiers());
   }
 
   @Override
   public String toString()
   {
-    return String.format("%s(%s %s)", ObjectField.class.getSimpleName(), this.getType().getSimpleName(), this.getName());
+    return String.format("%s(%s %s)", ObjectField.class.getSimpleName(), getType().getSimpleName(), getName());
   }
   
   // =========================================================================
@@ -68,7 +61,7 @@ public class ObjectField implements IObjectProperty
   @Override
   public String getName()
   {
-    return this.getField().getName();
+    return getField().getName();
   }
   
   public Field getField()

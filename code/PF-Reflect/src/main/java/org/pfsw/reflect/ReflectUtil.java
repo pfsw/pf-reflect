@@ -139,7 +139,7 @@ public class ReflectUtil
    */
   public boolean classExists(String className)
   {
-    return (this.findClass(className) != null);
+    return (findClass(className) != null);
   }
 
   /**
@@ -162,7 +162,7 @@ public class ReflectUtil
     classes = new Class[classNames.length];
     for (int i = 0; i < classNames.length; i++)
     {
-      clazz = this.findClass(classNames[i]);
+      clazz = findClass(classNames[i]);
       if (clazz == null)
       {
         throw new ClassNotFoundException(classNames[i]);
@@ -223,7 +223,7 @@ public class ReflectUtil
 
     try
     {
-      clazz = this.getLoader().loadClass(className);
+      clazz = getLoader().loadClass(className);
     }
     catch (ClassNotFoundException e)
     {
@@ -249,7 +249,7 @@ public class ReflectUtil
    */
   public Object createInstanceOf(String className, Object caller, Object... params)
   {
-    return this.createInstanceOfType(Object.class, className, caller, params);
+    return createInstanceOfType(Object.class, className, caller, params);
   }
 
   /**
@@ -276,7 +276,7 @@ public class ReflectUtil
     }
     if (caller == null)
     {
-      callerClass = this.getClass();
+      callerClass = getClass();
     }
     else
     {
@@ -294,7 +294,7 @@ public class ReflectUtil
       }
       return null;
     }
-    return this.newInstanceOf(aClass, params);
+    return newInstanceOf(aClass, params);
   }
 
   /**
@@ -309,7 +309,7 @@ public class ReflectUtil
     {
       return EMPTY_CLASS_ARRAY;
     }
-    return this.getInterfacesOf(object.getClass());
+    return getInterfacesOf(object.getClass());
   }
 
   /**
@@ -325,7 +325,7 @@ public class ReflectUtil
     result = new HashSet<Class<?>>(20);
     if (aClass != null)
     {
-      this.collectInterfaces(result, aClass);
+      collectInterfaces(result, aClass);
     }
     if (result.isEmpty())
     {
@@ -372,7 +372,7 @@ public class ReflectUtil
       if (methods[index].getName().equals(methodName))
       {
         types = methods[index].getParameterTypes();
-        if (this.compatibleTypes(lookupParamTypes, types))
+        if (compatibleTypes(lookupParamTypes, types))
         {
           // All specified modifiers must be set
           if ((methods[index].getModifiers() & modifiers) == modifiers)
@@ -385,7 +385,7 @@ public class ReflectUtil
     superclass = aClass.getSuperclass();
     if (superclass != null)
     {
-      method = this.findMethod(superclass, methodName, lookupParamTypes, modifiers);
+      method = findMethod(superclass, methodName, lookupParamTypes, modifiers);
     }
     return method;
   }
@@ -402,7 +402,7 @@ public class ReflectUtil
    */
   public Method findMethod(Class<?> aClass, String methodName, Class<?>... paramTypes)
   {
-    return this.findMethod(aClass, methodName, paramTypes, 0);
+    return findMethod(aClass, methodName, paramTypes, 0);
   }
 
   /**
@@ -432,7 +432,7 @@ public class ReflectUtil
     {
       clazz = object.getClass();
     }
-    return this.findMethod(clazz, methodName, paramTypes);
+    return findMethod(clazz, methodName, paramTypes);
   }
 
   /**
@@ -448,7 +448,7 @@ public class ReflectUtil
     Class<?> aClass;
 
     aClass = obj.getClass();
-    return this.getMethodsOf(aClass);
+    return getMethodsOf(aClass);
   }
 
   /**
@@ -463,8 +463,8 @@ public class ReflectUtil
   {
     List<Method> methods = new ArrayList<Method>(40);
 
-    this.addInheritedMethods(methods, aClass.getSuperclass());
-    this.addMethodsToList(methods, aClass.getDeclaredMethods());
+    addInheritedMethods(methods, aClass.getSuperclass());
+    addMethodsToList(methods, aClass.getDeclaredMethods());
     return methods;
   }
 
@@ -480,7 +480,7 @@ public class ReflectUtil
   @SuppressWarnings("rawtypes")
   public List<Constructor> getConstructorsOf(Object object)
   {
-    return this.getConstructorsOf(object.getClass());
+    return getConstructorsOf(object.getClass());
   }
 
   /**
@@ -519,7 +519,7 @@ public class ReflectUtil
     Class<?> aClass;
 
     aClass = obj.getClass();
-    return this.getFieldsOf(aClass);
+    return getFieldsOf(aClass);
   }
 
   /**
@@ -532,7 +532,7 @@ public class ReflectUtil
    */
   public List<IObjectProperty> getObjectPropertiesOf(Object object)
   {
-    return this.asObjectProperties(this.getFieldsOf(object));
+    return asObjectProperties(getFieldsOf(object));
   }
 
   /**
@@ -547,8 +547,8 @@ public class ReflectUtil
   {
     List<IObjectProperty> result;
 
-    result = this.getObjectPropertiesOf(object);
-    return this.onlyMatching(result, filter);
+    result = getObjectPropertiesOf(object);
+    return onlyMatching(result, filter);
   }
 
   /**
@@ -563,8 +563,8 @@ public class ReflectUtil
   {
     List<Field> fields = new ArrayList<Field>(30);
 
-    this.addInheritedFields(fields, aClass.getSuperclass());
-    this.addFieldsToList(fields, aClass.getDeclaredFields());
+    addInheritedFields(fields, aClass.getSuperclass());
+    addFieldsToList(fields, aClass.getDeclaredFields());
     return fields;
   }
 
@@ -578,7 +578,7 @@ public class ReflectUtil
    */
   public List<IObjectProperty> getObjectPropertiesOf(Class<?> aClass)
   {
-    return this.asObjectProperties(this.getFieldsOf(aClass));
+    return asObjectProperties(getFieldsOf(aClass));
   }
 
   /**
@@ -593,8 +593,8 @@ public class ReflectUtil
   {
     List<IObjectProperty> result;
 
-    result = this.getObjectPropertiesOf(aClass);
-    return this.onlyMatching(result, filter);
+    result = getObjectPropertiesOf(aClass);
+    return onlyMatching(result, filter);
   }
 
   /**
@@ -619,7 +619,7 @@ public class ReflectUtil
       throw new IllegalArgumentException("Given class or field name is null");
     }
 
-    fields = this.getFieldsOf(aClass);
+    fields = getFieldsOf(aClass);
     iter = fields.iterator();
     while (iter.hasNext())
     {
@@ -645,7 +645,7 @@ public class ReflectUtil
    */
   public Field findField(Class<?> aClass, String name)
   {
-    return this.findField(aClass, name, 0);
+    return findField(aClass, name, 0);
   }
 
   /**
@@ -675,7 +675,7 @@ public class ReflectUtil
     {
       clazz = object.getClass();
     }
-    return this.findField(clazz, name);
+    return findField(clazz, name);
   }
 
   /**
@@ -691,7 +691,7 @@ public class ReflectUtil
   {
     Field field;
 
-    field = this.getField(obj, name);
+    field = getField(obj, name);
     if (field == null)
     {
       throw new NoSuchFieldException("Field name: " + name);
@@ -756,7 +756,7 @@ public class ReflectUtil
    */
   public void setValueOf(Object targetObject, String name, Object value) throws NoSuchFieldException
   {
-    this.setValueOf(targetObject, name, value, false);
+    setValueOf(targetObject, name, value, false);
   }
 
   /**
@@ -771,7 +771,7 @@ public class ReflectUtil
    */
   public void setValueOf(Object obj, String name, char value) throws NoSuchFieldException
   {
-    this.setValueOf(obj, name, new Character(value), true);
+    setValueOf(obj, name, new Character(value), true);
   }
 
   /**
@@ -786,7 +786,7 @@ public class ReflectUtil
    */
   public void setValueOf(Object obj, String name, int value) throws NoSuchFieldException
   {
-    this.setValueOf(obj, name, new Integer(value), true);
+    setValueOf(obj, name, new Integer(value), true);
   }
 
   /**
@@ -801,7 +801,7 @@ public class ReflectUtil
    */
   public void setValueOf(Object obj, String name, byte value) throws NoSuchFieldException
   {
-    this.setValueOf(obj, name, new Byte(value), true);
+    setValueOf(obj, name, new Byte(value), true);
   }
 
   /**
@@ -816,7 +816,7 @@ public class ReflectUtil
    */
   public void setValueOf(Object obj, String name, boolean value) throws NoSuchFieldException
   {
-    this.setValueOf(obj, name, value ? Boolean.TRUE : Boolean.FALSE, true);
+    setValueOf(obj, name, value ? Boolean.TRUE : Boolean.FALSE, true);
   }
 
   /**
@@ -831,7 +831,7 @@ public class ReflectUtil
    */
   public void setValueOf(Object obj, String name, long value) throws NoSuchFieldException
   {
-    this.setValueOf(obj, name, new Long(value), true);
+    setValueOf(obj, name, new Long(value), true);
   }
 
   /**
@@ -846,7 +846,7 @@ public class ReflectUtil
    */
   public void setValueOf(Object obj, String name, short value) throws NoSuchFieldException
   {
-    this.setValueOf(obj, name, new Short(value), true);
+    setValueOf(obj, name, new Short(value), true);
   }
 
   /**
@@ -861,7 +861,7 @@ public class ReflectUtil
    */
   public void setValueOf(Object obj, String name, double value) throws NoSuchFieldException
   {
-    this.setValueOf(obj, name, new Double(value), true);
+    setValueOf(obj, name, new Double(value), true);
   }
 
   /**
@@ -876,7 +876,7 @@ public class ReflectUtil
    */
   public void setValueOf(Object obj, String name, float value) throws NoSuchFieldException
   {
-    this.setValueOf(obj, name, new Float(value), true);
+    setValueOf(obj, name, new Float(value), true);
   }
 
   /**
@@ -888,7 +888,7 @@ public class ReflectUtil
    */
   public void setValueOf(final Object obj, final Field field, final Object value)
   {
-    this.setValueOf(obj, field, value, field.getType().isPrimitive());
+    setValueOf(obj, field, value, field.getType().isPrimitive());
   }
   
   /**
@@ -909,7 +909,7 @@ public class ReflectUtil
     {
       return false;
     }
-    method = this.findMethod(aClass, methodName, paramTypes, Modifier.PUBLIC);
+    method = findMethod(aClass, methodName, paramTypes, Modifier.PUBLIC);
     return (method != null);
   }
 
@@ -929,7 +929,7 @@ public class ReflectUtil
     {
       return false;
     }
-    return this.hasPublicMethod(obj.getClass(), methodName, paramTypes);
+    return hasPublicMethod(obj.getClass(), methodName, paramTypes);
   }
 
   /**
@@ -941,7 +941,7 @@ public class ReflectUtil
     {
       return false;
     }
-    return this.isDefaultVisibility(field.getModifiers());
+    return isDefaultVisibility(field.getModifiers());
   }
 
   /**
@@ -953,7 +953,7 @@ public class ReflectUtil
     {
       return false;
     }
-    return this.isDefaultVisibility(method.getModifiers());
+    return isDefaultVisibility(method.getModifiers());
   }
 
   /**
@@ -1001,7 +1001,7 @@ public class ReflectUtil
    */
   public <T> T newInstance(Class<T> aClass)
   {
-    return this.newInstance(aClass, null);
+    return newInstance(aClass, null);
   }
 
   /**
@@ -1018,7 +1018,7 @@ public class ReflectUtil
    */
   public <T> T newInstance(Class<T> aClass, Object param)
   {
-    return this.newInstance(aClass, new Object[] { param });
+    return newInstance(aClass, new Object[] { param });
   }
 
   /**
@@ -1036,7 +1036,7 @@ public class ReflectUtil
    */
   public <T> T newInstance(Class<T> aClass, Object param1, Object param2)
   {
-    return this.newInstance(aClass, new Object[] { param1, param2 });
+    return newInstance(aClass, new Object[] { param1, param2 });
   }
 
   /**
@@ -1056,7 +1056,7 @@ public class ReflectUtil
    */
   public <T> T newInstance(Class<T> aClass, Object[] params)
   {
-    return this.newInstanceOf(aClass, params);
+    return newInstanceOf(aClass, params);
   }
 
   /**
@@ -1081,8 +1081,8 @@ public class ReflectUtil
     Exception ex = null;
     Class<?>[] paramTypes;
 
-    paramTypes = this.getTypesFromParameters(params);
-    constructor = this.findConstructor(aClass, paramTypes);
+    paramTypes = getTypesFromParameters(params);
+    constructor = findConstructor(aClass, paramTypes);
     if (constructor != null)
     {
       accessible = constructor.isAccessible();
@@ -1117,7 +1117,7 @@ public class ReflectUtil
    */
   public Object newInstance(String className)
   {
-    return this.newInstance(className, null);
+    return newInstance(className, null);
   }
 
   /**
@@ -1135,7 +1135,7 @@ public class ReflectUtil
    */
   public Object newInstance(String className, Object param)
   {
-    return this.newInstance(className, new Object[] { param });
+    return newInstance(className, new Object[] { param });
   }
 
   /**
@@ -1154,7 +1154,7 @@ public class ReflectUtil
    */
   public Object newInstance(String className, Object param1, Object param2)
   {
-    return this.newInstance(className, new Object[] { param1, param2 });
+    return newInstance(className, new Object[] { param1, param2 });
   }
 
   /**
@@ -1176,13 +1176,13 @@ public class ReflectUtil
 
     try
     {
-      clazz = this.getLoader().loadClass(className);
+      clazz = getLoader().loadClass(className);
     }
     catch (ClassNotFoundException e)
     {
       throw new ReflectionException(e);
     }
-    return this.newInstance(clazz, params);
+    return newInstance(clazz, params);
   }
 
   /**
@@ -1208,7 +1208,7 @@ public class ReflectUtil
     for (int i = 0; i < constructors.length; i++)
     {
       types = constructors[i].getParameterTypes();
-      if (this.compatibleTypes(expectedTypes, types))
+      if (compatibleTypes(expectedTypes, types))
       {
         return constructors[i];
       }
@@ -1234,7 +1234,7 @@ public class ReflectUtil
     types = new Class[params.length];
     for (int i = 0; i < params.length; i++)
     {
-      types[i] = this.getTypeOf(params[i]);
+      types[i] = getTypeOf(params[i]);
     }
     return types;
   }
@@ -1290,11 +1290,11 @@ public class ReflectUtil
     {
       return types;
     }
-    baseType = this.getTypeOf(object);
+    baseType = getTypeOf(object);
     types.add(baseType);
     if (!baseType.isPrimitive())
     {
-      types.addAll(Arrays.asList(this.getInterfacesOf(object.getClass())));
+      types.addAll(Arrays.asList(getInterfacesOf(object.getClass())));
     }
     return types;
   }
@@ -1304,7 +1304,7 @@ public class ReflectUtil
    */
   public boolean contains(Class<?>[] classes, Class<?> aClass)
   {
-    return this.indexOf(classes, aClass) >= 0;
+    return indexOf(classes, aClass) >= 0;
   }
 
   /**
@@ -1313,7 +1313,7 @@ public class ReflectUtil
    */
   public int indexOf(Class<?>[] classes, Class<?> aClass)
   {
-    if (this.isNullOrEmpty(classes) || (aClass == null))
+    if (isNullOrEmpty(classes) || (aClass == null))
     {
       return NOT_FOUND;
     }
@@ -1337,7 +1337,7 @@ public class ReflectUtil
     {
       return false;
     }
-    return this.implementsInterface(object.getClass(), anInterface);
+    return implementsInterface(object.getClass(), anInterface);
   }
 
   /**
@@ -1355,8 +1355,8 @@ public class ReflectUtil
     {
       return false;
     }
-    interfaces = this.getInterfacesOf(aClass);
-    return this.contains(interfaces, anInterface);
+    interfaces = getInterfacesOf(aClass);
+    return contains(interfaces, anInterface);
   }
 
   /**
@@ -1411,7 +1411,7 @@ public class ReflectUtil
    */
   public String[] toStringArray(Collection<?> coll, String methodName)
   {
-    return this.toArray(coll, methodName, String.class);
+    return toArray(coll, methodName, String.class);
   }
 
   /**
@@ -1535,8 +1535,8 @@ public class ReflectUtil
   {
     if (aClass != null)
     {
-      this.addInheritedMethods(methods, aClass.getSuperclass());
-      this.addMethodsToList(methods, aClass.getDeclaredMethods());
+      addInheritedMethods(methods, aClass.getSuperclass());
+      addMethodsToList(methods, aClass.getDeclaredMethods());
     }
   }
 
@@ -1552,8 +1552,8 @@ public class ReflectUtil
   {
     if (aClass != null)
     {
-      this.addInheritedFields(fields, aClass.getSuperclass());
-      this.addFieldsToList(fields, aClass.getDeclaredFields());
+      addInheritedFields(fields, aClass.getSuperclass());
+      addFieldsToList(fields, aClass.getDeclaredFields());
     }
   }
 
@@ -1561,12 +1561,12 @@ public class ReflectUtil
   {
     Field field;
 
-    field = this.getField(obj, name);
+    field = getField(obj, name);
     if (field == null)
     {
       throw new NoSuchFieldException("Field name: " + name);
     }
-    this.setValueOf(obj, field, value, isPrimitive);
+    setValueOf(obj, field, value, isPrimitive);
   }
 
   protected void setValueOf(final Object obj, final Field field, final Object value, final boolean isPrimitive)
@@ -1683,12 +1683,12 @@ public class ReflectUtil
     }
     else
     {
-      this.collectInterfaces(result, aClass.getSuperclass());
+      collectInterfaces(result, aClass.getSuperclass());
     }
     interfaces = aClass.getInterfaces();
     for (int i = 0; i < interfaces.length; i++)
     {
-      this.collectInterfaces(result, interfaces[i]);
+      collectInterfaces(result, interfaces[i]);
     }
   }
 
@@ -1712,7 +1712,7 @@ public class ReflectUtil
     {
       return loader;
     }
-    return this.getClass().getClassLoader();
+    return getClass().getClassLoader();
   }
 
 }

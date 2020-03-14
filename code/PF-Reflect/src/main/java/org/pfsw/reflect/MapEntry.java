@@ -67,9 +67,9 @@ public class MapEntry<K, V> implements Entry<K, V>
     if (obj instanceof MapEntry)
     {
       other = (MapEntry)obj;
-      if (this.getKey() == null ? other.getKey() == null : this.getKey().equals(other.getKey()))
+      if (getKey() == null ? other.getKey() == null : getKey().equals(other.getKey()))
       {
-        if (this.getValue() == null ? other.getValue() == null : this.getValue().equals(other.getValue()))
+        if (getValue() == null ? other.getValue() == null : getValue().equals(other.getValue()))
         {
           return true;
         }

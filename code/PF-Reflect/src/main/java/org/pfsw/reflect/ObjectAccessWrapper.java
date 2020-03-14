@@ -9,9 +9,6 @@
 // ===========================================================================
 package org.pfsw.reflect;
 
-// ===========================================================================
-// IMPORTS
-// ===========================================================================
 import java.lang.reflect.Field;
 import java.util.List;
 
@@ -45,7 +42,7 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
   public ObjectAccessWrapper(Object object)
   {
     super();
-    this.setObject(object);
+    setObject(object);
   }
 
   // =========================================================================
@@ -59,14 +56,14 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
   {
     String getterName;
 
-    getterName = this.makeGetterName(fieldName);
+    getterName = makeGetterName(fieldName);
     try
     {
-      return Dynamic.perform(this.getObject(), getterName);
+      return Dynamic.perform(getObject(), getterName);
     }
     catch (Exception e)
     {
-      this.handleException(e);
+      handleException(e);
       return null;
     }
   }
@@ -79,14 +76,14 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
   {
     String setterName;
 
-    setterName = this.makeSetterName(fieldName);
+    setterName = makeSetterName(fieldName);
     try
     {
-      Dynamic.perform(this.getObject(), setterName, value);
+      Dynamic.perform(getObject(), setterName, value);
     }
     catch (Exception e)
     {
-      this.handleException(e);
+      handleException(e);
     }
   }
 
@@ -98,11 +95,11 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
   {
     try
     {
-      return this.getAttributeValue(fieldName);
+      return getAttributeValue(fieldName);
     }
     catch (NoSuchFieldException e)
     {
-      this.handleException(e);
+      handleException(e);
     }
     return null;
   }
@@ -115,11 +112,11 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
   {
     try
     {
-      this.setAttributeValue(fieldName, value);
+      setAttributeValue(fieldName, value);
     }
     catch (NoSuchFieldException e)
     {
-      this.handleException(e);
+      handleException(e);
     }
   }
 
@@ -132,7 +129,7 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
   @Override
   public Object getAttributeValue(String name) throws NoSuchFieldException
   {
-    return RU.getValueOf(this.getObject(), name);
+    return RU.getValueOf(getObject(), name);
   }
 
   /**
@@ -145,7 +142,7 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
   @Override
   public void setAttributeValue(String name, Object value) throws NoSuchFieldException
   {
-    RU.setValueOf(this.getObject(), name, value);
+    RU.setValueOf(getObject(), name, value);
   }
 
   /**
@@ -157,11 +154,11 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
   {
     List<Field> fields;
 
-    if (this.getObject() == null)
+    if (getObject() == null)
     {
       return EMPTY_STRING_ARRAY;
     }
-    fields = RU.getFieldsOf(this.getObject());
+    fields = RU.getFieldsOf(getObject());
     if (fields == null)
     {
       return EMPTY_STRING_ARRAY;
@@ -201,12 +198,12 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
   // =========================================================================
   protected String makeGetterName(String fieldName)
   {
-    return this.makeAccessMethodName("get", fieldName);
+    return makeAccessMethodName("get", fieldName);
   }
 
   protected String makeSetterName(String fieldName)
   {
-    return this.makeAccessMethodName("set", fieldName);
+    return makeAccessMethodName("set", fieldName);
   }
 
   protected String makeAccessMethodName(final String prefix, final String fieldName)
