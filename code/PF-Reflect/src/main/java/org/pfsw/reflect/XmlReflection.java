@@ -69,25 +69,25 @@ public class XmlReflection
     return newObject;
   }
 
-  public Object createInitializedInstance(final Element xmlElement) throws NoSuchFieldException
+  public Object createInitializedInstance(final Element xmlElement) throws UnknownFieldException
   {
     return createInitializedInstance(xmlElement, Object.class);
   }
 
-  public <T> T createInitializedInstance(Element xmlElement, Class<T> expectedType) throws NoSuchFieldException
+  public <T> T createInitializedInstance(Element xmlElement, Class<T> expectedType) throws UnknownFieldException
   {
     T newObject;
 
     newObject = createInstance(xmlElement, expectedType);
     if (newObject == null)
     {
-      throw new NoSuchFieldException("Attribute '" + getAttrNameForClass() + "' not found in XML element <" + xmlElement.getTagName() + ">");
+      throw new UnknownFieldException("Attribute '" + getAttrNameForClass() + "' not found in XML element <" + xmlElement.getTagName() + ">");
     }
     initProperties(xmlElement, newObject);
     return newObject;
   }
 
-  public <T> List<T> createInitializedInstances(List<Element> xmlElements, Class<T> expectedType) throws NoSuchFieldException
+  public <T> List<T> createInitializedInstances(List<Element> xmlElements, Class<T> expectedType) throws UnknownFieldException
   {
     List<T> result;
     T object;
@@ -143,7 +143,7 @@ public class XmlReflection
   // =========================================================================
   // PROTECTED INSTANCE METHODS
   // =========================================================================
-  protected void initProperties(final Element xmlElement, Object object) throws NoSuchFieldException
+  protected void initProperties(final Element xmlElement, Object object) throws UnknownFieldException
   {
     NodeList fieldTags;
     Node node;
@@ -176,7 +176,7 @@ public class XmlReflection
         field = RU.getField(object, fieldName);
         if (field == null)
         {
-          throw new NoSuchFieldException("Cannot find field '" + fieldName + "' in class " + object.getClass().getName());
+          throw new UnknownFieldException("Cannot find field '%s' in class %s", fieldName, object.getClass().getName());
         }
         value = convertToType(textValue, field.getType());
         RU.setValueOf(object, fieldName, value);

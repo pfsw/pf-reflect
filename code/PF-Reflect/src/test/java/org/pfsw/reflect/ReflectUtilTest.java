@@ -362,7 +362,7 @@ public class ReflectUtilTest
   {
     ReflectUtil reflectUtil;
 
-    reflectUtil = new ReflectUtil(this.getClass().getClassLoader());
+    reflectUtil = new ReflectUtil(getClass().getClassLoader());
     assertNotNull(reflectUtil.findClass("java.util.Date"));
     assertNotNull(reflectUtil.findClass("org.pfsw.reflect.testhelper.OtherClass"));
     assertNull(reflectUtil.findClass("org.pffff.reflect.test.OtherClass"));
@@ -582,16 +582,16 @@ public class ReflectUtilTest
     try
     {
       util.setValueOf(obj, varName, "Test");
-      fail("Expected a NoSuchFieldException");
+      fail("Expected UnknownFieldException");
     }
     catch (Exception e)
     {
-      assertTrue(e instanceof NoSuchFieldException);
+      assertTrue(e instanceof UnknownFieldException);
     }
   }
 
   @Test
-  public void test_setField_static_with_class() throws NoSuchFieldException
+  public void test_setField_static_with_class() throws UnknownFieldException
   {
     DummyClass1.label = "unset";
     util.setValueOf(DummyClass1.class, "label", "nice");
@@ -665,11 +665,11 @@ public class ReflectUtilTest
     try
     {
       value = util.getValueOf(obj, "unknown");
-      fail("Field should not have been found! Expected NoSuchFieldException" + value);
+      fail("Field should not have been found! Expected UnknownFieldException" + value);
     }
     catch (Exception e)
     {
-      assertTrue(e instanceof NoSuchFieldException);
+      assertTrue(e instanceof UnknownFieldException);
     }
   }
 
@@ -715,13 +715,13 @@ public class ReflectUtilTest
     Object obj = new Subclass1();
 
     methods = util.getMethodsOf(obj);
-    assertTrue("help", !this.containsMethod(methods, "help"));
-    assertTrue("dummy2", this.containsMethod(methods, "dummy2"));
-    assertTrue("dummy6", this.containsMethod(methods, "dummy6"));
-    assertTrue("var_1_2", this.containsMethod(methods, "var_1_2"));
-    assertTrue("var_1_4", this.containsMethod(methods, "var_1_4"));
-    assertTrue("var_2_1", !this.containsMethod(methods, "var_2_1"));
-    assertTrue("var_2_3", !this.containsMethod(methods, "var_2_3"));
+    assertTrue("help", !containsMethod(methods, "help"));
+    assertTrue("dummy2", containsMethod(methods, "dummy2"));
+    assertTrue("dummy6", containsMethod(methods, "dummy6"));
+    assertTrue("var_1_2", containsMethod(methods, "var_1_2"));
+    assertTrue("var_1_4", containsMethod(methods, "var_1_4"));
+    assertTrue("var_2_1", !containsMethod(methods, "var_2_1"));
+    assertTrue("var_2_3", !containsMethod(methods, "var_2_3"));
   }
 
   @Test
@@ -730,13 +730,13 @@ public class ReflectUtilTest
     List methods;
 
     methods = util.getMethodsOf(Subclass1.class);
-    assertTrue("help", !this.containsMethod(methods, "help"));
-    assertTrue("dummy2", this.containsMethod(methods, "dummy2"));
-    assertTrue("dummy6", this.containsMethod(methods, "dummy6"));
-    assertTrue("var_1_2", this.containsMethod(methods, "var_1_2"));
-    assertTrue("var_1_4", this.containsMethod(methods, "var_1_4"));
-    assertTrue("var_2_1", !this.containsMethod(methods, "var_2_1"));
-    assertTrue("var_2_3", !this.containsMethod(methods, "var_2_3"));
+    assertTrue("help", !containsMethod(methods, "help"));
+    assertTrue("dummy2", containsMethod(methods, "dummy2"));
+    assertTrue("dummy6", containsMethod(methods, "dummy6"));
+    assertTrue("var_1_2", containsMethod(methods, "var_1_2"));
+    assertTrue("var_1_4", containsMethod(methods, "var_1_4"));
+    assertTrue("var_2_1", !containsMethod(methods, "var_2_1"));
+    assertTrue("var_2_3", !containsMethod(methods, "var_2_3"));
   }
 
   @Test
@@ -746,13 +746,13 @@ public class ReflectUtilTest
     Object obj = new Subclass2();
 
     methods = util.getMethodsOf(obj);
-    assertTrue("unknown", !this.containsMethod(methods, "unknown"));
-    assertTrue("dummy3", this.containsMethod(methods, "dummy3"));
-    assertTrue("dummy4", this.containsMethod(methods, "dummy4"));
-    assertTrue("var_1_1", this.containsMethod(methods, "var_1_1"));
-    assertTrue("var_1_3", this.containsMethod(methods, "var_1_3"));
-    assertTrue("var_2_2", this.containsMethod(methods, "var_2_2"));
-    assertTrue("var_2_3", this.containsMethod(methods, "var_2_3"));
+    assertTrue("unknown", !containsMethod(methods, "unknown"));
+    assertTrue("dummy3", containsMethod(methods, "dummy3"));
+    assertTrue("dummy4", containsMethod(methods, "dummy4"));
+    assertTrue("var_1_1", containsMethod(methods, "var_1_1"));
+    assertTrue("var_1_3", containsMethod(methods, "var_1_3"));
+    assertTrue("var_2_2", containsMethod(methods, "var_2_2"));
+    assertTrue("var_2_3", containsMethod(methods, "var_2_3"));
   }
 
   @Test
@@ -761,13 +761,13 @@ public class ReflectUtilTest
     List methods;
 
     methods = util.getMethodsOf(Subclass2.class);
-    assertTrue("unknown", !this.containsMethod(methods, "unknown"));
-    assertTrue("dummy3", this.containsMethod(methods, "dummy3"));
-    assertTrue("dummy4", this.containsMethod(methods, "dummy4"));
-    assertTrue("var_1_1", this.containsMethod(methods, "var_1_1"));
-    assertTrue("var_1_3", this.containsMethod(methods, "var_1_3"));
-    assertTrue("var_2_2", this.containsMethod(methods, "var_2_2"));
-    assertTrue("var_2_3", this.containsMethod(methods, "var_2_3"));
+    assertTrue("unknown", !containsMethod(methods, "unknown"));
+    assertTrue("dummy3", containsMethod(methods, "dummy3"));
+    assertTrue("dummy4", containsMethod(methods, "dummy4"));
+    assertTrue("var_1_1", containsMethod(methods, "var_1_1"));
+    assertTrue("var_1_3", containsMethod(methods, "var_1_3"));
+    assertTrue("var_2_2", containsMethod(methods, "var_2_2"));
+    assertTrue("var_2_3", containsMethod(methods, "var_2_3"));
   }
 
   @Test
@@ -1296,7 +1296,7 @@ public class ReflectUtilTest
         return null;
       }
     };
-    object = Proxy.newProxyInstance(this.getClass().getClassLoader(), new Class[] { IGalacticalCollection.class }, handler);
+    object = Proxy.newProxyInstance(getClass().getClassLoader(), new Class[] { IGalacticalCollection.class }, handler);
 
     assertTrue(util.implementsInterface(object, IGalacticalCollection.class));
     assertTrue(util.implementsInterface(object, Collection.class));
@@ -1588,33 +1588,33 @@ public class ReflectUtilTest
     assertEquals("collValue", property.getName());
     assertEquals(Collection.class, property.getType());
   }
-  
+
   @Test
-  public void test_getEnumValueOf_null_name() 
+  public void test_getEnumValueOf_null_name()
   {
     assertNull(util.getEnumValueOf(sampleEnumType, null));
   }
 
-  @Test(expected=ReflectionException.class)
-  public void test_getEnumValueOf_no_enum_type() 
+  @Test(expected = ReflectionException.class)
+  public void test_getEnumValueOf_no_enum_type()
   {
     util.getEnumValueOf(ObjectField.class, "dummy");
   }
-  
+
   @Test
-  public void test_getEnumValueOf_name_not_found() 
+  public void test_getEnumValueOf_name_not_found()
   {
     assertNull(util.getEnumValueOf(sampleEnumType, "FTPS"));
   }
-  
+
   @Test
-  public void test_getEnumValueOf_name_found() 
+  public void test_getEnumValueOf_name_found()
   {
     assertTrue(Type.DIRECT == util.getEnumValueOf(sampleEnumType, "DIRECT"));
     assertTrue(Type.HTTP == util.getEnumValueOf(sampleEnumType, "HTTP"));
     assertTrue(Type.SOCKS == util.getEnumValueOf(sampleEnumType, "SOCKS"));
   }
-  
+
   // =========================================================================
   // HELPER METHODS
   // =========================================================================

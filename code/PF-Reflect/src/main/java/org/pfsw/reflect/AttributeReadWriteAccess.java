@@ -25,8 +25,8 @@ public interface AttributeReadWriteAccess extends AttributeReadAccess
    *
    * @param name The attribute's name ( case sensitive )
    * @param value The value to be put into the attributes 'slot'
-   * @throws NoSuchFieldException If there is no attribute with the given name
+   * @throws UnknownFieldException If there is no attribute with the given name
    */
-  public void setAttributeValue(String name, Object value) throws NoSuchFieldException;
+  public void setAttributeValue(String name, Object value) throws UnknownFieldException;
 
 }

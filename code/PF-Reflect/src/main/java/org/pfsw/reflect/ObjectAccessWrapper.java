@@ -97,7 +97,7 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
     {
       return getAttributeValue(fieldName);
     }
-    catch (NoSuchFieldException e)
+    catch (UnknownFieldException e)
     {
       handleException(e);
     }
@@ -114,7 +114,7 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
     {
       setAttributeValue(fieldName, value);
     }
-    catch (NoSuchFieldException e)
+    catch (UnknownFieldException e)
     {
       handleException(e);
     }
@@ -124,10 +124,10 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
    * Returns the current value of the attribute (field) with the given name.
    *
    * @param name The attribute's name ( case sensitive )
-   * @throws NoSuchFieldException If there is no attribute with the given name
+   * @throws UnknownFieldException If there is no attribute with the given name
    */
   @Override
-  public Object getAttributeValue(String name) throws NoSuchFieldException
+  public Object getAttributeValue(String name) throws UnknownFieldException
   {
     return RU.getValueOf(getObject(), name);
   }
@@ -137,10 +137,10 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
    *
    * @param name The attribute's name ( case sensitive )
    * @param value The value to be put into the attribute's 'slot'
-   * @throws NoSuchFieldException If there is no attribute with the given name
+   * @throws UnknownFieldException If there is no attribute with the given name
    */
   @Override
-  public void setAttributeValue(String name, Object value) throws NoSuchFieldException
+  public void setAttributeValue(String name, Object value) throws UnknownFieldException
   {
     RU.setValueOf(getObject(), name, value);
   }
@@ -184,7 +184,7 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
    * Returns the type of the wrapped object.
    * In the case of null object it returns {@link Void#TYPE}.
    */
-  public Class<?> getObjectType() 
+  public Class<?> getObjectType()
   {
     if (getObject() == null)
     {

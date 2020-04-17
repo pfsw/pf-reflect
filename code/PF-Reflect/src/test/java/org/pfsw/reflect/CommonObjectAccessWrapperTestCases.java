@@ -9,9 +9,6 @@
 // ===========================================================================
 package org.pfsw.reflect;
 
-// ===========================================================================
-// IMPORTS
-// ===========================================================================
 import static org.junit.Assert.*;
 
 import org.junit.Test;
@@ -33,17 +30,17 @@ public abstract class CommonObjectAccessWrapperTestCases
     Subclass1 object = new Subclass1();
     String[] names;
 
-    oaw = this.createAccessWrapper(object);
+    oaw = createAccessWrapper(object);
     names = oaw.getAttributeNames();
-    assertTrue(this.contains(names, "name"));
-    assertTrue(this.contains(names, "flag1"));
-    assertTrue(this.contains(names, "myClass"));
-    assertTrue(this.contains(names, "ident"));
-    assertTrue(this.contains(names, "var_1_1"));
-    assertTrue(this.contains(names, "var_1_2"));
-    assertTrue(this.contains(names, "var_1_3"));
-    assertTrue(this.contains(names, "var_1_4"));
-    assertFalse(this.contains(names, "var_9_9"));
+    assertTrue(contains(names, "name"));
+    assertTrue(contains(names, "flag1"));
+    assertTrue(contains(names, "myClass"));
+    assertTrue(contains(names, "ident"));
+    assertTrue(contains(names, "var_1_1"));
+    assertTrue(contains(names, "var_1_2"));
+    assertTrue(contains(names, "var_1_3"));
+    assertTrue(contains(names, "var_1_4"));
+    assertFalse(contains(names, "var_9_9"));
   }
 
   @Test
@@ -53,7 +50,7 @@ public abstract class CommonObjectAccessWrapperTestCases
     Object object = new Object();
     String[] names;
 
-    oaw = this.createAccessWrapper(object);
+    oaw = createAccessWrapper(object);
     names = oaw.getAttributeNames();
     assertEquals(0, names.length);
   }
@@ -82,12 +79,12 @@ public abstract class CommonObjectAccessWrapperTestCases
   }
 
   @Test
-  public void test_setAttributeValue_1() throws NoSuchFieldException
+  public void test_setAttributeValue_1() throws UnknownFieldException
   {
     ObjectAccessWrapper oaw;
     Subclass1 object = new Subclass1();
 
-    oaw = this.createAccessWrapper(object);
+    oaw = createAccessWrapper(object);
     oaw.setAttributeValue("ident", new Long(123L));
     assertEquals(new Long(123L), oaw.getValueOfField("ident"));
   }
@@ -98,15 +95,15 @@ public abstract class CommonObjectAccessWrapperTestCases
     ObjectAccessWrapper oaw;
     Subclass1 object = new Subclass1();
 
-    oaw = this.createAccessWrapper(object);
+    oaw = createAccessWrapper(object);
     try
     {
       oaw.setAttributeValue("xxxxx", new Long(123L));
-      fail("Expected NoSuchFieldException");
+      fail("Expected UnknownFieldException");
     }
     catch (Exception e)
     {
-      assertTrue(e instanceof NoSuchFieldException);
+      assertTrue(e instanceof UnknownFieldException);
     }
   }
 
@@ -116,7 +113,7 @@ public abstract class CommonObjectAccessWrapperTestCases
     ObjectAccessWrapper oaw;
     Subclass1 object = new Subclass1();
 
-    oaw = this.createAccessWrapper(object);
+    oaw = createAccessWrapper(object);
     oaw.set("name", "Eragon");
     oaw.set("unknown", "Palmera");
     assertEquals("Eragon", oaw.get("name"));
@@ -129,7 +126,7 @@ public abstract class CommonObjectAccessWrapperTestCases
     ObjectAccessWrapper oaw;
     Subclass1 object = new Subclass1();
 
-    oaw = this.createAccessWrapper(object);
+    oaw = createAccessWrapper(object);
     oaw.setValueOfField("var_1_2", Integer.valueOf("20"));
     oaw.setValueOfField("unknown", "Palmera");
     assertEquals(new Integer(20), oaw.getValueOfField("var_1_2"));

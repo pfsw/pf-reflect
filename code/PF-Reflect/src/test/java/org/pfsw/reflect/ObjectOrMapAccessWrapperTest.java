@@ -9,9 +9,6 @@
 // ===========================================================================
 package org.pfsw.reflect;
 
-// ===========================================================================
-// IMPORTS
-// ===========================================================================
 import static org.junit.Assert.*;
 
 import java.util.HashMap;
@@ -38,13 +35,13 @@ public class ObjectOrMapAccessWrapperTest extends CommonObjectAccessWrapperTestC
     ObjectAccessWrapper oaw;
     String[] names;
 
-    oaw = this.createAccessWrapper(this.sampleMap1());
+    oaw = createAccessWrapper(sampleMap1());
     names = oaw.getAttributeNames();
-    assertTrue(this.contains(names, "alpha"));
-    assertTrue(this.contains(names, "beta"));
-    assertTrue(this.contains(names, "gamma"));
-    assertTrue(this.contains(names, "delta"));
-    assertTrue(this.contains(names, "pi"));
+    assertTrue(contains(names, "alpha"));
+    assertTrue(contains(names, "beta"));
+    assertTrue(contains(names, "gamma"));
+    assertTrue(contains(names, "delta"));
+    assertTrue(contains(names, "pi"));
   }
 
   @Test
@@ -52,7 +49,7 @@ public class ObjectOrMapAccessWrapperTest extends CommonObjectAccessWrapperTestC
   {
     ObjectAccessWrapper oaw;
 
-    oaw = this.createAccessWrapper(this.sampleMap1());
+    oaw = createAccessWrapper(sampleMap1());
     assertEquals("centauri", oaw.get("alpha"));
     assertEquals("geuze", oaw.get("beta"));
     assertEquals("erich", oaw.get("gamma"));
@@ -62,11 +59,11 @@ public class ObjectOrMapAccessWrapperTest extends CommonObjectAccessWrapperTestC
   }
 
   @Test
-  public void test_getAttributeValue_1() throws NoSuchFieldException
+  public void test_getAttributeValue_1() throws UnknownFieldException
   {
     ObjectAccessWrapper oaw;
 
-    oaw = this.createAccessWrapper(this.sampleMap1());
+    oaw = createAccessWrapper(sampleMap1());
     assertEquals("centauri", oaw.getAttributeValue("alpha"));
     assertEquals("geuze", oaw.getAttributeValue("beta"));
     assertEquals("erich", oaw.getAttributeValue("gamma"));
@@ -75,19 +72,19 @@ public class ObjectOrMapAccessWrapperTest extends CommonObjectAccessWrapperTestC
   }
 
   @Test
-  public void test_getAttributeValue_NoSuchFieldException()
+  public void test_getAttributeValue_UnknownFieldException()
   {
     ObjectAccessWrapper oaw;
 
-    oaw = this.createAccessWrapper(this.sampleMap1());
+    oaw = createAccessWrapper(sampleMap1());
     try
     {
       assertNull(oaw.getAttributeValue("omega"));
-      fail("NoSuchFieldException expected!");
+      fail("UnknownFieldException expected!");
     }
     catch (Exception e)
     {
-      assertTrue(e instanceof NoSuchFieldException);
+      assertTrue(e instanceof UnknownFieldException);
     }
   }
 
@@ -96,7 +93,7 @@ public class ObjectOrMapAccessWrapperTest extends CommonObjectAccessWrapperTestC
   {
     ObjectAccessWrapper oaw;
 
-    oaw = this.createAccessWrapper(this.sampleMap1());
+    oaw = createAccessWrapper(sampleMap1());
     assertEquals("centauri", oaw.getValueOfField("alpha"));
     assertEquals("geuze", oaw.getValueOfField("beta"));
     assertEquals("erich", oaw.getValueOfField("gamma"));
@@ -110,7 +107,7 @@ public class ObjectOrMapAccessWrapperTest extends CommonObjectAccessWrapperTestC
   {
     ObjectAccessWrapper oaw;
 
-    oaw = this.createAccessWrapper(this.sampleMap1());
+    oaw = createAccessWrapper(sampleMap1());
     oaw.set("alpha", "111");
     oaw.set("pi", "222");
     oaw.set("kappa", "333");
@@ -128,7 +125,7 @@ public class ObjectOrMapAccessWrapperTest extends CommonObjectAccessWrapperTestC
   {
     ObjectAccessWrapper oaw;
 
-    oaw = this.createAccessWrapper(this.sampleMap1());
+    oaw = createAccessWrapper(sampleMap1());
     oaw.setValueOfField("alpha", "111");
     oaw.setValueOfField("pi", "222");
     oaw.setValueOfField("kappa", "333");
@@ -147,24 +144,24 @@ public class ObjectOrMapAccessWrapperTest extends CommonObjectAccessWrapperTestC
   {
     ObjectAccessWrapper oaw;
 
-    oaw = this.createAccessWrapper(this.sampleMap1());
+    oaw = createAccessWrapper(sampleMap1());
     try
     {
       oaw.setAttributeValue("alpha", "111");
       oaw.setAttributeValue("pi", "222");
     }
-    catch (NoSuchFieldException ex)
+    catch (UnknownFieldException ex)
     {
-      fail("No NoSuchFieldException expected! " + ex.getMessage());
+      fail("No UnknownFieldException expected! " + ex.getMessage());
     }
     try
     {
       oaw.setAttributeValue("kappa", "333");
-      fail("NoSuchFieldException expected!");
+      fail("UnknownFieldException expected!");
     }
     catch (Exception ex)
     {
-      assertTrue(ex instanceof NoSuchFieldException);
+      assertTrue(ex instanceof UnknownFieldException);
     }
     assertEquals("111", oaw.get("alpha"));
     assertEquals("geuze", oaw.get("beta"));

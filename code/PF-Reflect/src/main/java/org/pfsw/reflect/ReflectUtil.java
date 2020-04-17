@@ -22,9 +22,6 @@
 // ===========================================================================
 package org.pfsw.reflect;
 
-// ===========================================================================
-// IMPORTS
-// ===========================================================================
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
@@ -64,7 +61,7 @@ public class ReflectUtil
   public static final ReflectUtil RU = new ReflectUtil();
 
   private static final boolean DEBUG = "true".equals(System.getProperty("org.pfsw.reflect.debug", "false"));
-  
+
   /**
    *  A reusable empty array of type Class[]
    */
@@ -684,17 +681,17 @@ public class ReflectUtil
    * 
    * @param obj The object that contains the field (must not be null).
    * @param name The name of the field to look for (must not be null).
-   * @throws NoSuchFieldException If the field is unknown in the given object.
+   * @throws UnknownFieldException If the field is unknown in the given object.
    * @throws IllegalArgumentException If obj or name is null.
    */
-  public <T> T getValueOf(Object obj, String name) throws NoSuchFieldException
+  public <T> T getValueOf(Object obj, String name)
   {
     Field field;
 
     field = getField(obj, name);
     if (field == null)
     {
-      throw new NoSuchFieldException("Field name: " + name);
+      throw new UnknownFieldException("Field name: %s", name);
     }
     return getValueOf(obj, field);
   }
@@ -704,7 +701,6 @@ public class ReflectUtil
    * 
    * @param obj The object that contains the field (must not be null).
    * @param field The field to look for (must not be null).
-   * @throws NoSuchFieldException If the field is unknown in the given object.
    * @throws IllegalArgumentException If obj or name is null.
    */
   @SuppressWarnings("unchecked")
@@ -712,12 +708,12 @@ public class ReflectUtil
   {
     T value = null;
     boolean saveAccessibility = false;
-    
+
     if (field == null)
     {
       throw new IllegalArgumentException("Field must not be null");
     }
-    
+
     saveAccessibility = field.isAccessible();
     field.setAccessible(true);
     try
@@ -740,10 +736,10 @@ public class ReflectUtil
     {
       field.setAccessible(saveAccessibility);
     }
-    
+
     return value;
   }
-  
+
   /**
    * Sets the value of the field with the specified name to the 
    * given value.
@@ -751,10 +747,10 @@ public class ReflectUtil
    * @param targetObject The object that contains the field.
    * @param name The name of the field to set.
    * @param value The value to assign to the field.
-   * @throws NoSuchFieldException If the field is unknown in the given object.
+   * @throws UnknownFieldException If the field is unknown in the given object.
    * @throws IllegalArgumentException If obj or name is null.
    */
-  public void setValueOf(Object targetObject, String name, Object value) throws NoSuchFieldException
+  public void setValueOf(Object targetObject, String name, Object value)
   {
     setValueOf(targetObject, name, value, false);
   }
@@ -766,10 +762,10 @@ public class ReflectUtil
    * @param obj The object that contains the field
    * @param name The name of the field to set
    * @param value The value to assign to the field
-   * @throws NoSuchFieldException If the field is unknown in the given object
+   * @throws UnknownFieldException If the field is unknown in the given object
    * @throws IllegalArgumentException If obj or name is null
    */
-  public void setValueOf(Object obj, String name, char value) throws NoSuchFieldException
+  public void setValueOf(Object obj, String name, char value)
   {
     setValueOf(obj, name, new Character(value), true);
   }
@@ -781,10 +777,10 @@ public class ReflectUtil
    * @param obj The object that contains the field
    * @param name The name of the field to set
    * @param value The value to assign to the field
-   * @throws NoSuchFieldException If the field is unknown in the given object
+   * @throws UnknownFieldException If the field is unknown in the given object
    * @throws IllegalArgumentException If obj or name is null
    */
-  public void setValueOf(Object obj, String name, int value) throws NoSuchFieldException
+  public void setValueOf(Object obj, String name, int value)
   {
     setValueOf(obj, name, new Integer(value), true);
   }
@@ -796,10 +792,10 @@ public class ReflectUtil
    * @param obj The object that contains the field
    * @param name The name of the field to set
    * @param value The value to assign to the field
-   * @throws NoSuchFieldException If the field is unknown in the given object
+   * @throws UnknownFieldException If the field is unknown in the given object
    * @throws IllegalArgumentException If obj or name is null
    */
-  public void setValueOf(Object obj, String name, byte value) throws NoSuchFieldException
+  public void setValueOf(Object obj, String name, byte value)
   {
     setValueOf(obj, name, new Byte(value), true);
   }
@@ -811,10 +807,10 @@ public class ReflectUtil
    * @param obj The object that contains the field
    * @param name The name of the field to set
    * @param value The value to assign to the field
-   * @throws NoSuchFieldException If the field is unknown in the given object
-   * @throws IllegalArgumentException If obj or name is null
+   * @throws UnknownFieldException If the field is unknown in the given object.
+   * @throws IllegalArgumentException If obj or name is null.
    */
-  public void setValueOf(Object obj, String name, boolean value) throws NoSuchFieldException
+  public void setValueOf(Object obj, String name, boolean value)
   {
     setValueOf(obj, name, value ? Boolean.TRUE : Boolean.FALSE, true);
   }
@@ -826,10 +822,10 @@ public class ReflectUtil
    * @param obj The object that contains the field
    * @param name The name of the field to set
    * @param value The value to assign to the field
-   * @throws NoSuchFieldException If the field is unknown in the given object
+   * @throws UnknownFieldException If the field is unknown in the given object
    * @throws IllegalArgumentException If obj or name is null
    */
-  public void setValueOf(Object obj, String name, long value) throws NoSuchFieldException
+  public void setValueOf(Object obj, String name, long value)
   {
     setValueOf(obj, name, new Long(value), true);
   }
@@ -841,10 +837,10 @@ public class ReflectUtil
    * @param obj The object that contains the field
    * @param name The name of the field to set
    * @param value The value to assign to the field
-   * @throws NoSuchFieldException If the field is unknown in the given object
+   * @throws UnknownFieldException If the field is unknown in the given object
    * @throws IllegalArgumentException If obj or name is null
    */
-  public void setValueOf(Object obj, String name, short value) throws NoSuchFieldException
+  public void setValueOf(Object obj, String name, short value)
   {
     setValueOf(obj, name, new Short(value), true);
   }
@@ -856,10 +852,10 @@ public class ReflectUtil
    * @param obj The object that contains the field
    * @param name The name of the field to set
    * @param value The value to assign to the field
-   * @throws NoSuchFieldException If the field is unknown in the given object
+   * @throws UnknownFieldException If the field is unknown in the given object
    * @throws IllegalArgumentException If obj or name is null
    */
-  public void setValueOf(Object obj, String name, double value) throws NoSuchFieldException
+  public void setValueOf(Object obj, String name, double value)
   {
     setValueOf(obj, name, new Double(value), true);
   }
@@ -871,10 +867,10 @@ public class ReflectUtil
    * @param obj The object that contains the field
    * @param name The name of the field to set
    * @param value The value to assign to the field
-   * @throws NoSuchFieldException If the field is unknown in the given object
+   * @throws UnknownFieldException If the field is unknown in the given object
    * @throws IllegalArgumentException If obj or name is null
    */
-  public void setValueOf(Object obj, String name, float value) throws NoSuchFieldException
+  public void setValueOf(Object obj, String name, float value)
   {
     setValueOf(obj, name, new Float(value), true);
   }
@@ -890,7 +886,7 @@ public class ReflectUtil
   {
     setValueOf(obj, field, value, field.getType().isPrimitive());
   }
-  
+
   /**
    * Returns true if a public method with the specified name exists in
    * the given class or any of its superclasses.
@@ -1472,7 +1468,7 @@ public class ReflectUtil
     }
     return result;
   }
-  
+
   /**
    * A generic mechanism to get for a given name the corresponding enum constant. 
    * 
@@ -1492,12 +1488,12 @@ public class ReflectUtil
     {
       return null;
     }
-    
+
     if (!enumType.isEnum())
     {
       throw new ReflectionException("The given type %s is no enum type!", enumType.getName());
     }
-    
+
     enumConstants = enumType.getEnumConstants();
     if ((enumConstants != null))
     {
@@ -1557,14 +1553,14 @@ public class ReflectUtil
     }
   }
 
-  protected void setValueOf(Object obj, String name, Object value, boolean isPrimitive) throws NoSuchFieldException
+  protected void setValueOf(Object obj, String name, Object value, boolean isPrimitive)
   {
     Field field;
 
     field = getField(obj, name);
     if (field == null)
     {
-      throw new NoSuchFieldException("Field name: " + name);
+      throw new UnknownFieldException("Field name: %s", name);
     }
     setValueOf(obj, field, value, isPrimitive);
   }

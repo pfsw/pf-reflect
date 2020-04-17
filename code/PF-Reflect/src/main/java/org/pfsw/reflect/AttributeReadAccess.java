@@ -24,9 +24,9 @@ public interface AttributeReadAccess
    * Returns the current value of the attribute with the given name.
    *
    * @param name The attribute's name ( case sensitive )
-   * @throws NoSuchFieldException If there is no attribute with the given name
+   * @throws UnknownFieldException If there is no attribute with the given name
    */
-  public Object getAttributeValue(String name) throws NoSuchFieldException;
+  public Object getAttributeValue(String name) throws UnknownFieldException;
 
   /**
    * Returns the names of all attributes that can be accessed by the

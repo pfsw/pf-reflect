@@ -98,7 +98,6 @@ public class Modifiers
 
   /**
    * Resets the modifier to 0.
-   * @return 
    */
   public Modifiers reset()
   {

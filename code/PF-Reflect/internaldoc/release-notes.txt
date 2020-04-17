@@ -5,7 +5,10 @@ Copyright (c) 2002-2020, by Manfred Duchrow. All rights reserved.
 
 -----------------------------------------------------------------------
 
-VERSION 4.3.0 (14/03/2020) - 320 Unit Tests, 88,5% Coverage
+VERSION 4.3.0 (17/04/2020) - 320 Unit Tests, 88,6% Coverage
+    
+* INCOMPATIBLE CHANGE!
+  > Replaced NoSuchFieldException by (unchecked) UnknownFieldException
 
 * ReflectUtil
   > Added
@@ -54,6 +57,7 @@ VERSION 4.3.0 (14/03/2020) - 320 Unit Tests, 88,5% Coverage
   > org.pfsw.reflect.MapEntry<K, V>
   
 * Added Automatic-Module-Name to manifest file
+* Upgrade to gradle 6.3
 
 -----------------------------------------------------------------------
 

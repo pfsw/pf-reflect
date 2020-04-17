@@ -106,16 +106,16 @@ public class ObjectOrMapAccessWrapper extends ObjectAccessWrapper
    * Returns the current value of the attribute (field) with the given name.
    *
    * @param name The attribute's name ( case sensitive )
-   * @throws NoSuchFieldException If there is no attribute with the given name
+   * @throws UnknownFieldException If there is no attribute with the given name
    */
   @Override
-  public Object getAttributeValue(String name) throws NoSuchFieldException
+  public Object getAttributeValue(String name) throws UnknownFieldException
   {
     if (isMap())
     {
       if (!getMap().containsKey(name))
       {
-        throw new NoSuchFieldException(name);
+        throw new UnknownFieldException(name);
       }
       return get(name);
     }
@@ -127,16 +127,16 @@ public class ObjectOrMapAccessWrapper extends ObjectAccessWrapper
    *
    * @param name The attribute's name ( case sensitive )
    * @param value The value to be put into the attribute's 'slot'
-   * @throws NoSuchFieldException If there is no attribute with the given name
+   * @throws UnknownFieldException If there is no attribute with the given name
    */
   @Override
-  public void setAttributeValue(String name, Object value) throws NoSuchFieldException
+  public void setAttributeValue(String name, Object value) throws UnknownFieldException
   {
     if (isMap())
     {
       if (!getMap().containsKey(name))
       {
-        throw new NoSuchFieldException(name);
+        throw new UnknownFieldException(name);
       }
       set(name, value);
       return;
