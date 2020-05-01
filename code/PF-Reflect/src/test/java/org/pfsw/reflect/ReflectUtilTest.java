@@ -9,9 +9,6 @@
 // ===========================================================================
 package org.pfsw.reflect;
 
-// ===========================================================================
-// IMPORTS
-// ===========================================================================
 import static org.junit.Assert.*;
 
 import java.awt.BorderLayout;
@@ -1615,6 +1612,20 @@ public class ReflectUtilTest
     assertTrue(Type.SOCKS == util.getEnumValueOf(sampleEnumType, "SOCKS"));
   }
 
+  @Test
+  public void test_isSubTypeOf()
+  {
+    assertTrue(util.isSubTypeOf(Superclass.class, Subclass1.class));
+    assertTrue(util.isSubTypeOf(Superclass.class, Subclass2.class));
+    assertTrue(util.isSubTypeOf(Serializable.class, OtherClass.class));
+    assertTrue(util.isSubTypeOf(List.class, IGalacticalCollection.class));
+    assertTrue(util.isSubTypeOf(Set.class, IGalacticalCollection.class));
+    
+    assertFalse(util.isSubTypeOf(Superclass.class, Superclass.class));
+    assertFalse(util.isSubTypeOf(Superclass.class, DummyClass1.class));
+    assertFalse(util.isSubTypeOf(Map.class, IGalacticalCollection.class));
+  }
+  
   // =========================================================================
   // HELPER METHODS
   // =========================================================================

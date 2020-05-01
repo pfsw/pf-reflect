@@ -26,6 +26,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -231,6 +232,18 @@ public class ReflectUtil
       return null;
     }
     return clazz;
+  }
+
+  /**
+   * Returns whether or not the given type extends the given superType.
+   * 
+   * @param superType The type the that the other type potentially extends (must not be null).
+   * @param type The type to be checked if it is a sub-type of the given superType (must not be null).
+   * @return true if type extends superType.
+   */
+  public boolean isSubTypeOf(Class<?> superType, Class<?> type)
+  {
+    return (superType != type) && superType.isAssignableFrom(type);
   }
 
   /**
@@ -929,27 +942,16 @@ public class ReflectUtil
   }
 
   /**
-   * Returns true if the given field is not null and is package visible.
+   * Returns true if the given member ({@link Field}, {@link Method}, {@link Constructor}) 
+   * is not null and is package visible.
    */
-  public boolean isPackageVisible(Field field)
+  public boolean isPackageVisible(Member member)
   {
-    if (field == null)
+    if (member == null)
     {
       return false;
     }
-    return isDefaultVisibility(field.getModifiers());
-  }
-
-  /**
-   * Returns true if the given method is not null and is package visible.
-   */
-  public boolean isPackageVisible(Method method)
-  {
-    if (method == null)
-    {
-      return false;
-    }
-    return isDefaultVisibility(method.getModifiers());
+    return isDefaultVisibility(member.getModifiers());
   }
 
   /**

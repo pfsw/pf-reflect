@@ -5,6 +5,25 @@ Copyright (c) 2002-2020, by Manfred Duchrow. All rights reserved.
 
 -----------------------------------------------------------------------
 
+VERSION 4.4.0 (01/05/2020) - 323 Unit Tests, 88,8% Coverage
+    
+* Modifiers
+  > Added
+    - public static Modifiers of(Member member)
+    - public static Modifiers of(Class<?> type)
+    
+* ReflectUtil
+  > Added
+    - public boolean isSubTypeOf(Class<?> superType, Class<?> type)
+    
+  > Replaced
+    - public boolean isPackageVisible(Field field)
+    - public boolean isPackageVisible(Method method)
+    by
+    - public boolean isPackageVisible(Member member)
+    
+-----------------------------------------------------------------------
+
 VERSION 4.3.0 (17/04/2020) - 320 Unit Tests, 88,6% Coverage
     
 * INCOMPATIBLE CHANGE!

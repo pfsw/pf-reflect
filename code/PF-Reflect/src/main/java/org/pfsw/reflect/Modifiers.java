@@ -1,16 +1,20 @@
 // ===========================================================================
 // CONTENT  : CLASS Modifiers
 // AUTHOR   : M.Duchrow
-// VERSION  : 1.1 - 14/03/2020
+// VERSION  : 1.2 - 01/05/2020
 // HISTORY  :
 //  13/01/2008  mdu  CREATED
 //  14/03/2020  mdu   added -> create()
+//  01/05/2020  mdu   added -> of(Class), of(Member)
 //
 // Copyright (c) 2008-2020, by Manfred Duchrow. All rights reserved.
 // ===========================================================================
 package org.pfsw.reflect;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Member;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 /**
@@ -18,7 +22,7 @@ import java.lang.reflect.Modifier;
  * without having to fiddle around with bit logic.
  *
  * @author M.Duchrow
- * @version 1.1
+ * @version 1.2
  */
 public class Modifiers
 {
@@ -50,19 +54,45 @@ public class Modifiers
   // =========================================================================
   // CLASS METHODS
   // =========================================================================
+  /**
+   * Returns a new unintialized instance. 
+   */
   public static Modifiers create()
   {
     return new Modifiers();
   }
 
+  /**
+   * Returns a new instance initialized with the given bit settings. 
+   */
   public static Modifiers create(int initialValue)
   {
     return new Modifiers(initialValue);
   }
 
+  /**
+   * Returns a new instance initialized with the modifier bits of the given field. 
+   */
   public static Modifiers create(Field field)
   {
     return create(field.getModifiers());
+  }
+
+  /**
+   * Returns a new instance initialized with the modifier bits of the given 
+   * member (i.e. {@link Field}, {@link Method}, {@link Constructor}). 
+   */
+  public static Modifiers of(Member member)
+  {
+    return create(member.getModifiers());
+  }
+
+  /**
+   * Returns a new instance initialized with the modifier bits of the given class. 
+   */
+  public static Modifiers of(Class<?> type)
+  {
+    return create(type.getModifiers());
   }
 
   // =========================================================================

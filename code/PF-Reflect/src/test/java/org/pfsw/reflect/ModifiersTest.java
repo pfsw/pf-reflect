@@ -8,12 +8,13 @@
 // ===========================================================================
 package org.pfsw.reflect;
 
+import static org.pfsw.reflect.ReflectUtil.RU;
 import static org.junit.Assert.*;
 
 import java.lang.reflect.Modifier;
 
-import org.junit.Before;
 import org.junit.Test;
+import org.pfsw.reflect.testhelper.BaseClass1;
 import org.pfsw.reflect.testhelper.Subclass1;
 
 /**
@@ -23,18 +24,11 @@ import org.pfsw.reflect.testhelper.Subclass1;
  */
 public class ModifiersTest
 {
-  // =========================================================================
-  // INSTANCE VARIABLES
-  // =========================================================================
-  private Modifiers modifiers;
-
-  // =========================================================================
-  // TEST METHODS
-  // =========================================================================
-
   @Test
   public void test_abstract_1()
   {
+    Modifiers modifiers = Modifiers.create();
+    
     assertFalse(modifiers.isAbstract());
 
     modifiers.setAbstract();
@@ -59,6 +53,8 @@ public class ModifiersTest
   @Test
   public void test_final_1()
   {
+    Modifiers modifiers = Modifiers.create();
+    
     assertFalse(modifiers.isFinal());
     modifiers.setFinal();
     assertTrue(modifiers.isFinal());
@@ -73,6 +69,8 @@ public class ModifiersTest
   @Test
   public void test_native_1()
   {
+    Modifiers modifiers = Modifiers.create();
+    
     assertFalse(modifiers.isNative());
     modifiers.setNative();
     assertTrue(modifiers.isNative());
@@ -87,6 +85,8 @@ public class ModifiersTest
   @Test
   public void test_strict_1()
   {
+    Modifiers modifiers = Modifiers.create();
+    
     assertFalse(modifiers.isStrict());
     modifiers.setStrict();
     assertTrue(modifiers.isStrict());
@@ -101,6 +101,8 @@ public class ModifiersTest
   @Test
   public void test_transient_1()
   {
+    Modifiers modifiers = Modifiers.create();
+    
     assertFalse(modifiers.isTransient());
     modifiers.setTransient();
     assertTrue(modifiers.isTransient());
@@ -115,6 +117,8 @@ public class ModifiersTest
   @Test
   public void test_interface_1()
   {
+    Modifiers modifiers = Modifiers.create();
+    
     assertFalse(modifiers.isInterface());
     modifiers.setInterface();
     assertTrue(modifiers.isInterface());
@@ -129,6 +133,8 @@ public class ModifiersTest
   @Test
   public void test_volatile_1()
   {
+    Modifiers modifiers = Modifiers.create();
+    
     assertFalse(modifiers.isVolatile());
     modifiers.setVolatile();
     assertTrue(modifiers.isVolatile());
@@ -143,6 +149,8 @@ public class ModifiersTest
   @Test
   public void test_synchronized_1()
   {
+    Modifiers modifiers = Modifiers.create();
+    
     assertFalse(modifiers.isSynchronized());
     modifiers.setSynchronized();
     assertTrue(modifiers.isSynchronized());
@@ -157,6 +165,8 @@ public class ModifiersTest
   @Test
   public void test_static_1()
   {
+    Modifiers modifiers = Modifiers.create();
+    
     assertFalse(modifiers.isStatic());
     modifiers.setStatic();
     assertTrue(modifiers.isStatic());
@@ -171,6 +181,8 @@ public class ModifiersTest
   @Test
   public void test_visibility_1()
   {
+    Modifiers modifiers = Modifiers.create();
+    
     assertTrue(modifiers.isDefaultVisibility());
 
     modifiers.setPublic();
@@ -201,6 +213,8 @@ public class ModifiersTest
   @Test
   public void test_visibility_2()
   {
+    Modifiers modifiers = Modifiers.create();
+    
     assertTrue(modifiers.isDefaultVisibility());
 
     modifiers.setPublic();
@@ -240,6 +254,8 @@ public class ModifiersTest
   @Test
   public void test_visibility_3()
   {
+    Modifiers modifiers = Modifiers.create();
+    
     assertTrue(modifiers.isDefaultVisibility());
 
     modifiers.setVisibility(Modifiers.VIS_PUBLIC);
@@ -279,6 +295,8 @@ public class ModifiersTest
   @Test
   public void test_reset_1()
   {
+    Modifiers modifiers = Modifiers.create();
+    
     modifiers.setStatic();
     modifiers.setFinal();
     modifiers.setProtected();
@@ -344,12 +362,23 @@ public class ModifiersTest
     assertTrue(m1.isDefaultVisibility());
   }
   
-  // =========================================================================
-  // HELPER METHODS
-  // =========================================================================
-  @Before
-  public void setUp()
+  @Test
+  public void test_isAbstract__class()
   {
-    this.modifiers = Modifiers.create();
+    Modifiers m1 = Modifiers.of(BaseClass1.class);
+    Modifiers m2 = Modifiers.of(Subclass1.class);
+    
+    assertTrue(m1.isAbstract());
+    assertFalse(m2.isAbstract());
+  }
+  
+  @Test
+  public void test_isAbstract__method()
+  {
+    Modifiers m1 = Modifiers.of(RU.getMethod(BaseClass1.class, "getName"));
+    Modifiers m2 = Modifiers.of(RU.getMethod(BaseClass1.class, "getPrefix"));
+    
+    assertFalse(m1.isAbstract());
+    assertTrue(m2.isAbstract());
   }
 }
