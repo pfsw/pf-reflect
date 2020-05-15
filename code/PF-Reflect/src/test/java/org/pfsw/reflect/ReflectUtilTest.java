@@ -44,6 +44,8 @@ import javax.swing.plaf.ComponentUI;
 
 import org.junit.Test;
 import org.pfsw.reflect.testhelper.DummyClass1;
+import org.pfsw.reflect.testhelper.DummyClass2;
+import org.pfsw.reflect.testhelper.ExtendedPerson;
 import org.pfsw.reflect.testhelper.ExternalTypeId;
 import org.pfsw.reflect.testhelper.IGalacticalCollection;
 import org.pfsw.reflect.testhelper.OtherClass;
@@ -1097,6 +1099,51 @@ public class ReflectUtilTest
   }
 
   @Test
+  public void test_createNewInstance__with_default_constructor()
+  {
+    DummyClass1 object = util.createNewInstance(DummyClass1.class);
+    assertNotNull(object);
+  }
+
+  @Test
+  public void test_createNewInstance__no_default_constructor()
+  {
+    try
+    {
+      util.createNewInstance(DummyClass2.class);
+      fail("ReflectionException must have been thrown!");
+    }
+    catch (RuntimeException e)
+    {
+      assertTrue(e instanceof ReflectionException);
+      assertTrue(e.getMessage().contains("default constructor"));
+    }
+  }
+
+  @Test
+  public void test_createNewInstance__with_matching_constructor()
+  {
+    DummyClass2 object = util.createNewInstance(DummyClass2.class, "Fred");
+    assertNotNull(object);
+    assertEquals("Fred", object.getName());
+  }
+
+  @Test
+  public void test_createNewInstance__no_matching_constructor()
+  {
+    try
+    {
+      util.createNewInstance(DummyClass2.class, "Brian", "May");
+      fail("ReflectionException must have been thrown!");
+    }
+    catch (RuntimeException e)
+    {
+      assertTrue(e instanceof ReflectionException);
+      assertTrue(e.getMessage().contains("matching constructor"));
+    }
+  }
+
+  @Test
   public void test_newInstance_class_1() throws Exception
   {
     Object object;
@@ -1620,10 +1667,110 @@ public class ReflectUtilTest
     assertTrue(util.isSubTypeOf(Serializable.class, OtherClass.class));
     assertTrue(util.isSubTypeOf(List.class, IGalacticalCollection.class));
     assertTrue(util.isSubTypeOf(Set.class, IGalacticalCollection.class));
-    
+
     assertFalse(util.isSubTypeOf(Superclass.class, Superclass.class));
     assertFalse(util.isSubTypeOf(Superclass.class, DummyClass1.class));
     assertFalse(util.isSubTypeOf(Map.class, IGalacticalCollection.class));
+  }
+
+  @Test
+  public void test_isPackageVisible__false()
+  {
+    Object object = new DummyClass1(2);
+
+    assertFalse(util.isPackageVisible(null));
+    assertFalse(util.isPackageVisible(util.findField(object.getClass(), "strValue")));
+    assertFalse(util.isPackageVisible(util.findField(object.getClass(), "intValue")));
+  }
+
+  @Test
+  public void test_hasPublicGetter__true()
+  {
+    Object object = new PersonData();
+
+    assertTrue(util.hasPublicGetter(object, util.findField(object.getClass(), "firstName")));
+    assertTrue(util.hasPublicGetter(object, util.findField(object.getClass(), "lastName")));
+
+    object = new Subclass1();
+    assertTrue(util.hasPublicGetter(object, util.findField(object.getClass(), "name")));
+  }
+
+  @Test
+  public void test_hasPublicGetter__false()
+  {
+    Object object = new DummyClass1(2);
+
+    assertFalse(util.hasPublicGetter(object, util.findField(object.getClass(), "strValue")));
+    assertFalse(util.hasPublicGetter(object, util.findField(object.getClass(), "intValue")));
+
+    object = new Subclass1();
+    assertFalse(util.hasPublicGetter(object, util.findField(object.getClass(), "flag1")));
+  }
+
+  @Test
+  public void test_hasPublicSetter__true()
+  {
+    Object object = new PersonData();
+
+    assertTrue(util.hasPublicSetter(object, util.findField(object.getClass(), "firstName")));
+    assertTrue(util.hasPublicSetter(object, util.findField(object.getClass(), "lastName")));
+
+    object = new Subclass1();
+    assertTrue(util.hasPublicSetter(object, util.findField(object.getClass(), "name")));
+  }
+
+  @Test
+  public void test_hasPublicSetter__false()
+  {
+    Object object = new DummyClass1(2);
+
+    assertFalse(util.hasPublicSetter(null, util.findField(object.getClass(), "strValue")));
+    assertFalse(util.hasPublicSetter(object, util.findField(object.getClass(), "strValue")));
+    assertFalse(util.hasPublicSetter(object, util.findField(object.getClass(), "intValue")));
+
+    object = new Subclass1();
+    assertFalse(util.hasPublicSetter(object, util.findField(object.getClass(), "flag1")));
+    assertFalse(util.hasPublicSetter(object, util.findField(object.getClass(), "var_1_4")));
+  }
+  
+  @Test
+  public void test_hasGetter__true()
+  {
+    Object object = new ExtendedPerson();
+    
+    assertTrue(util.hasGetter(object, util.findField(object.getClass(), "alpha")));
+    assertTrue(util.hasGetter(object, util.findField(object.getClass(), "gamma")));
+    assertTrue(util.hasGetter(object, util.findField(object.getClass(), "delta")));
+  }
+
+  @Test
+  public void test_hasGetter__false()
+  {
+    Object object = new ExtendedPerson();
+    
+    assertFalse(util.hasGetter(null, util.findField(object.getClass(), "strValue")));
+    assertFalse(util.hasGetter(object, util.findField(object.getClass(), "beta")));
+    assertFalse(util.hasGetter(object, util.findField(object.getClass(), "omega")));
+  }
+  
+  @Test
+  public void test_hasSetter__true()
+  {
+    Object object = new ExtendedPerson();
+    
+    assertTrue(util.hasSetter(object, util.findField(object.getClass(), "alpha")));
+    assertTrue(util.hasSetter(object, util.findField(object.getClass(), "beta")));
+    assertTrue(util.hasSetter(object, util.findField(object.getClass(), "gamma")));
+  }
+  
+  @Test
+  public void test_hasSetter__false()
+  {
+    Object object = new ExtendedPerson();
+    
+    assertFalse(util.hasSetter(null, util.findField(object.getClass(), "strValue")));
+    assertFalse(util.hasSetter(object, util.findField(object.getClass(), "delta")));
+    assertFalse(util.hasSetter(object, util.findField(object.getClass(), "omega")));
   }
   
   // =========================================================================

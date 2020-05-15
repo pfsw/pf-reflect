@@ -1,11 +1,12 @@
 // ===========================================================================
 // CONTENT  : CLASS ObjectAccessWrapper
 // AUTHOR   : M.Duchrow
-// VERSION  : 1.0 - 19/12/2008
+// VERSION  : 1.1 - 13/05/2020
 // HISTORY  :
 //  19/12/2008  mdu  CREATED
+//  13/05/2020  mdu   changed --> moved makeGetterName() makeSetterName() to ReflectUtil
 //
-// Copyright (c) 2008, by Manfred Duchrow. All rights reserved.
+// Copyright (c) 2008-2020, by Manfred Duchrow. All rights reserved.
 // ===========================================================================
 package org.pfsw.reflect;
 
@@ -17,7 +18,7 @@ import java.util.List;
  * setter methods or directly. The access is possible for all visibilities.   
  *
  * @author Manfred Duchrow
- * @version 1.0
+ * @version 1.1
  */
 public class ObjectAccessWrapper implements AttributeReadWriteAccess
 {
@@ -56,7 +57,7 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
   {
     String getterName;
 
-    getterName = makeGetterName(fieldName);
+    getterName = RU.makeGetterName(fieldName);
     try
     {
       return Dynamic.perform(getObject(), getterName);
@@ -76,7 +77,7 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
   {
     String setterName;
 
-    setterName = makeSetterName(fieldName);
+    setterName = RU.makeSetterName(fieldName);
     try
     {
       Dynamic.perform(getObject(), setterName, value);
@@ -196,26 +197,6 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
   // =========================================================================
   // PROTECTED INSTANCE METHODS
   // =========================================================================
-  protected String makeGetterName(String fieldName)
-  {
-    return makeAccessMethodName("get", fieldName);
-  }
-
-  protected String makeSetterName(String fieldName)
-  {
-    return makeAccessMethodName("set", fieldName);
-  }
-
-  protected String makeAccessMethodName(final String prefix, final String fieldName)
-  {
-    StringBuffer methodName;
-
-    methodName = new StringBuffer(fieldName.length() + prefix.length());
-    methodName.append(prefix);
-    methodName.append(fieldName.substring(0, 1).toUpperCase());
-    methodName.append(fieldName.substring(1));
-    return methodName.toString();
-  }
 
   /**
    * Handles all exceptions that might occur due to reflection access.

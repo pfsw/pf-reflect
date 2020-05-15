@@ -1,7 +1,7 @@
 // ===========================================================================
 // CONTENT  : CLASS ReflectUtil
 // AUTHOR   : Manfred Duchrow
-// VERSION  : 2.4 - 28/07/2019
+// VERSION  : 2.5 - 14/05/2020
 // HISTORY  :
 //  27/09/2002  duma  CREATED
 //	24/10/2002	duma	added		-> isDefaultVisibility()
@@ -17,8 +17,9 @@
 //  27/07/2014  mdu   changed -> signatures of method finder methods to use varargs rather than arrays
 //  18/03/2017  mdu   added   -> asObjectProperty(), asObjectProperties()
 //  28/07/2019  mdu   added   -> RU, getEnumValueOf()
+//  14/05/2020  mdu   added   -> createNewInstance(), hasGetter(), hasSetter(), hasPublicGetter(), hasPublicSetter()
 //
-// Copyright (c) 2002-2019, by Manfred Duchrow. All rights reserved.
+// Copyright (c) 2002-2020, by Manfred Duchrow. All rights reserved.
 // ===========================================================================
 package org.pfsw.reflect;
 
@@ -48,7 +49,7 @@ import java.util.Set;
  * access to normally invisible members will cause an exception. 
  *
  * @author Manfred Duchrow
- * @version 2.4
+ * @version 2.5
  */
 public class ReflectUtil
 {
@@ -942,6 +943,46 @@ public class ReflectUtil
   }
 
   /**
+   * Returns whether or not the given object has a public getter method for the specified field.
+   */
+  public boolean hasPublicGetter(Object object, Field field)
+  {
+    return hasPublicMethod(object, makeGetterName(field.getName()));
+  }
+  
+  /**
+   * Returns whether or not the given object has a public setter method for the specified field.
+   */
+  public boolean hasPublicSetter(Object object, Field field)
+  {
+    return hasPublicMethod(object, makeSetterName(field.getName()), field.getType());
+  }
+  
+  /**
+   * Returns whether or not the given object has a getter method (any visibility) for the specified field.
+   */
+  public boolean hasGetter(Object object, Field field)
+  {
+    if (object == null)
+    {
+      return false;
+    }
+    return findMethod(object.getClass(), makeGetterName(field.getName())) != null;
+  }
+  
+  /**
+   * Returns whether or not the given object has a setter method (any visibility) for the specified field.
+   */
+  public boolean hasSetter(Object object, Field field)
+  {
+    if (object == null)
+    {
+      return false;
+    }
+    return findMethod(object.getClass(), makeSetterName(field.getName()), field.getType()) != null;
+  }
+  
+  /**
    * Returns true if the given member ({@link Field}, {@link Method}, {@link Constructor}) 
    * is not null and is package visible.
    */
@@ -988,14 +1029,35 @@ public class ReflectUtil
   }
 
   /**
+   * If the given class has a constructor matching the given arguments it will be used
+   * to create a new instance. The constructor will be called regardless of its visibility. 
+   * That is, even private, protected and default constructors are used to create the new instance.
+   * If no such constructor is available a ReflectionException will be thrown.
+   * 
+   * @param aClass The class of which a new instance must be created (must not be null)
+   * @param args The arguments to be passed to the constructor. If omitted the default constructor will be used.
+   * @return The created instance. 
+   * @throws ReflectionException A runtime exception that indicates that the class has no 
+   *  default constructor or it wraps another exception that occurred during instantiation.
+   */
+  public <T> T createNewInstance(Class<T> aClass, Object... args)
+  {
+    return internalCreateNewInstanceOfClass(false, aClass, args);
+  }
+
+  /**
    * If the given class has a constructor without parameters it will be used
    * to create a new instance. The constructor will be called regardless of
    * its visibility. That is, even private, protected and default constructors
    * are used to create the new instance.
+   * <p>
+   * It is recommended to use method {@link #createNewInstance(Class, Object...)} instead
+   * because it throws a {@link ReflectionException} if the constructor cannot be found.
    * 
    * @param aClass The class of which a new instance must be created (must not be null)
    * @return The new created instance or null if no matching constructor can be found 
    * @throws ReflectionException A runtime exception that wraps the original exception.
+   * @see #createNewInstance 
    */
   public <T> T newInstance(Class<T> aClass)
   {
@@ -1074,32 +1136,7 @@ public class ReflectUtil
    */
   public <T> T newInstanceOf(Class<T> aClass, Object... params)
   {
-    Constructor<T> constructor;
-    boolean accessible;
-    Exception ex = null;
-    Class<?>[] paramTypes;
-
-    paramTypes = getTypesFromParameters(params);
-    constructor = findConstructor(aClass, paramTypes);
-    if (constructor != null)
-    {
-      accessible = constructor.isAccessible();
-      constructor.setAccessible(true);
-      try
-      {
-        return constructor.newInstance(params);
-      }
-      catch (Exception e)
-      {
-        ex = e;
-      }
-      finally
-      {
-        constructor.setAccessible(accessible);
-      }
-      throw new ReflectionException(ex);
-    }
-    return null;
+    return internalCreateNewInstanceOfClass(true, aClass, params);
   }
 
   /**
@@ -1184,17 +1221,28 @@ public class ReflectUtil
   }
 
   /**
+   * Returns the default constructor of the given class or null if no such constructor can be found.
+   * The visibility of the constructor is not relevant.  
+   * 
+   * @return A constructor or null.
+   */
+  public <T> Constructor<T> findDefaultConstructor(final Class<T> aClass)
+  {
+    return findConstructor(aClass);
+  }
+
+  /**
    * Returns the constructor of the given class for the specified parameter
-   * types of null if no such constructor can be found.
+   * types or null if no such constructor can be found.
    * The visibility of the constructor is ignored. A private constructor
    * can be used with the newInstance() methods of this class to create
    * instances. 
    * 
-   * @return A constructor or null
+   * @return A constructor or null.
    * @see #newInstance(Class)
    */
   @SuppressWarnings("unchecked")
-  public <T> Constructor<T> findConstructor(final Class<T> aClass, final Class<?>[] paramTypes)
+  public <T> Constructor<T> findConstructor(final Class<T> aClass, final Class<?>... paramTypes)
   {
     Constructor<T>[] constructors;
     Class<?>[] types;
@@ -1518,9 +1566,94 @@ public class ReflectUtil
     return null;
   }
 
+  /**
+   * Returns the getter method name for the given field name.
+   */
+  public String makeGetterName(String fieldName)
+  {
+    return makeAccessMethodName("get", fieldName);
+  }
+
+  /**
+   * Returns the setter method name for the given field name.
+   */
+  public String makeSetterName(String fieldName)
+  {
+    return makeAccessMethodName("set", fieldName);
+  }
+
+  /**
+   * Returns the method name with the specified prefix for the given field name.
+   */
+  public String makeAccessMethodName(final String prefix, final String fieldName)
+  {
+    StringBuffer methodName;
+
+    methodName = new StringBuffer(fieldName.length() + prefix.length());
+    methodName.append(prefix);
+    methodName.append(fieldName.substring(0, 1).toUpperCase());
+    methodName.append(fieldName.substring(1));
+    return methodName.toString();
+  }
+
   // =========================================================================
   // PROTECTED INSTANCE METHODS
   // =========================================================================
+  /**
+   * If the given class has a constructor with types corresponding to the given
+   * parameters it will be used to create a new instance. 
+   * The constructor will be called regardless of
+   * its visibility. That is, even private, protected and default constructors
+   * are used to create the new instance.
+   * <br>
+   * This method is exactly the same as {@link #newInstance(Class, Object[])}.
+   * It is just uses the varargs declaration that is available since Java 1.5.
+   * 
+   * @param returnNull If true <code>null</code> will be returned if constructor cannot be found, 
+   *  otherwise a ReflectionException will be thrown in that case. 
+   * @param aClass The class of which a new instance must be created (must not be null)
+   * @param params The initialization parameters for the constructor (may be null)
+   * @return The new created instance or null if no matching constructor can be found 
+   * @throws ReflectionException A runtime exception that wraps the original exception.
+   */
+  protected <T> T internalCreateNewInstanceOfClass(boolean returnNull, Class<T> aClass, Object... params)
+  {
+    Constructor<T> constructor;
+    boolean accessible;
+    Exception ex = null;
+    Class<?>[] paramTypes;
+
+    paramTypes = getTypesFromParameters(params);
+    constructor = findConstructor(aClass, paramTypes);
+    if (constructor == null)
+    {
+      if (returnNull)
+      {
+        return null;
+      }
+      if (paramTypes.length == 0)
+      {
+        throw new ReflectionException("No default constructor found for %s", aClass.getCanonicalName());
+      }
+      throw new ReflectionException("No matching constructor found for %s and arguments %s", aClass.getCanonicalName(), paramTypes);
+    }
+    accessible = constructor.isAccessible();
+    constructor.setAccessible(true);
+    try
+    {
+      return constructor.newInstance(params);
+    }
+    catch (Exception e)
+    {
+      ex = e;
+    }
+    finally
+    {
+      constructor.setAccessible(accessible);
+    }
+    throw new ReflectionException(ex);
+  }
+
   protected void addMethodsToList(List<Method> methodList, Method[] methods)
   {
     for (int i = 0; i < methods.length; i++)

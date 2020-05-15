@@ -5,7 +5,7 @@ Copyright (c) 2002-2020, by Manfred Duchrow. All rights reserved.
 
 -----------------------------------------------------------------------
 
-VERSION 4.4.0 (01/05/2020) - 323 Unit Tests, 88,8% Coverage
+VERSION 4.4.0 (13/05/2020) - 327 Unit Tests, 89,3% Coverage
     
 * Modifiers
   > Added
@@ -15,6 +15,14 @@ VERSION 4.4.0 (01/05/2020) - 323 Unit Tests, 88,8% Coverage
 * ReflectUtil
   > Added
     - public boolean isSubTypeOf(Class<?> superType, Class<?> type)
+    - public <T> T createNewInstance(Class<T> aClass, Object... args)
+    - public String makeGetterName(String fieldName)
+    - public String makeSetterName(String fieldName)
+    - public String makeAccessMethodName(final String prefix, final String fieldName)
+    - public boolean hasPublicGetter(Object object, Field field)
+    - public boolean hasPublicSetter(Object object, Field field)
+    - public boolean hasGetter(Object object, Field field)
+    - public boolean hasSetter(Object object, Field field)
     
   > Replaced
     - public boolean isPackageVisible(Field field)
