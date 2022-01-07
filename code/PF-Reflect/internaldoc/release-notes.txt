@@ -1,11 +1,11 @@
 Reflection Release-Notes
 Author: Manfred Duchrow
-Copyright (c) 2002-2020, by Manfred Duchrow. All rights reserved.
+Copyright (c) 2002-2022, by Manfred Duchrow. All rights reserved.
 =======================================================================
 
 -----------------------------------------------------------------------
 
-VERSION 4.4.0 (13/05/2020) - 327 Unit Tests, 89,3% Coverage
+VERSION 4.4.0 (07/01/2022) - 336 Unit Tests, 89,3% Coverage
     
 * Modifiers
   > Added

@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.junit.Test;
-import org.pfsw.reflect.ClassInfo;
 import org.pfsw.reflect.testhelper.OtherClass;
 import org.pfsw.reflect.testhelper.Subclass1;
 import org.pfsw.reflect.testhelper.Subclass2;

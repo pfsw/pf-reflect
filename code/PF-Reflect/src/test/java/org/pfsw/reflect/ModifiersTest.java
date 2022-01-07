@@ -8,8 +8,8 @@
 // ===========================================================================
 package org.pfsw.reflect;
 
-import static org.pfsw.reflect.ReflectUtil.RU;
 import static org.junit.Assert.*;
+import static org.pfsw.reflect.ReflectUtil.*;
 
 import java.lang.reflect.Modifier;
 

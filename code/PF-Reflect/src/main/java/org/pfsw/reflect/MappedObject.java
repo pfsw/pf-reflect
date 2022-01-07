@@ -9,7 +9,8 @@
 // ===========================================================================
 package org.pfsw.reflect;
 
-import static org.pfsw.reflect.ReflectUtil.RU;
+import static org.pfsw.reflect.ReflectUtil.*;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
