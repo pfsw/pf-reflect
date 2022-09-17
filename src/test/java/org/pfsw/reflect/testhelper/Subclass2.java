@@ -24,6 +24,7 @@ public class Subclass2 extends Subclass1
     super();
   }
 
+  @SuppressWarnings("unused")
   Subclass2(int start)
   {
     this();

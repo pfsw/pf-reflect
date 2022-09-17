@@ -202,6 +202,7 @@ public class ObjectAccessWrapper implements AttributeReadWriteAccess
    * Handles all exceptions that might occur due to reflection access.
    * Subclasses may override this method to do some logging.
    */
+  @SuppressWarnings("unused")
   protected void handleException(Exception e)
   {
     // Nothing to do here

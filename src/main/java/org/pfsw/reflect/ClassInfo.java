@@ -350,6 +350,7 @@ public class ClassInfo<T>
     }
   }
 
+  @SuppressWarnings("unused")
   protected void handleException(Exception exception)
   {
     // Currently nothing - just ignore

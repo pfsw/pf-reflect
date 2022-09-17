@@ -24,7 +24,6 @@
 package org.pfsw.reflect;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -1708,59 +1707,8 @@ public class ReflectUtil
     {
       throw new NullPointerException("'field' parameter is null");
     }
-    
+
     InternalFieldWrapper.create(field).setValueOf(obj, value, isPrimitive);
-  }
-
-  protected boolean isAccessible(Object object, AccessibleObject methodOrField)
-  {
-    try
-    {
-      return methodOrField.isAccessible();
-    }
-    catch (@SuppressWarnings("unused") RuntimeException e)
-    {
-      return false;
-    }
-  }
-
-  protected void removeFinal(Field field)
-  {
-    setModifiers(field, field.getModifiers() & ~Modifier.FINAL);
-  }
-
-  protected void setModifiers(Field field, int modifiers)
-  {
-    Field modifiersField;
-    boolean saveAccessibility = false;
-
-    try
-    {
-      modifiersField = Field.class.getDeclaredField("modifiers");
-      saveAccessibility = modifiersField.isAccessible();
-      modifiersField.setAccessible(true);
-      modifiersField.setInt(field, modifiers);
-    }
-    catch (Exception e)
-    {
-      if (DEBUG)
-      {
-        e.printStackTrace();
-      }
-    }
-    finally
-    {
-      field.setAccessible(saveAccessibility);
-    }
-  }
-
-  /**
-   * Return <tt>true</tt> if the modifiers includes the <tt>final</tt> modifier,
-   * false otherwise.
-   */
-  protected boolean isFinal(int modifiers)
-  {
-    return Modifier.isFinal(modifiers);
   }
 
   /**

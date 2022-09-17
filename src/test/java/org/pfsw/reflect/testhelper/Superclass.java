@@ -12,6 +12,7 @@ package org.pfsw.reflect.testhelper;
 import java.io.File;
 import java.util.Date;
 
+@SuppressWarnings("unused")
 public class Superclass
 {
   private final File folder = new File("/tmp");
