@@ -9,9 +9,11 @@
 // ===========================================================================
 package org.pfsw.reflect;
 
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 import java.awt.BorderLayout;
+import java.io.File;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
@@ -37,6 +39,7 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.Vector;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.jar.JarEntry;
 
 import javax.swing.JScrollPane;
@@ -537,7 +540,7 @@ public class ReflectUtilTest
   }
 
   @Test
-  public void test_setField_1() throws Exception
+  public void test_setValueOf_1()
   {
     String varName = "var_1_2";
     Integer newValue = new Integer(120);
@@ -549,7 +552,7 @@ public class ReflectUtilTest
   }
 
   @Test
-  public void test_setField_2() throws Exception
+  public void test_setValueOf_2()
   {
     String varName = "var_1_1";
     String newValue = "London";
@@ -561,7 +564,7 @@ public class ReflectUtilTest
   }
 
   @Test
-  public void test_setField_3() throws Exception
+  public void test_setValueOf_3()
   {
     String varName = "var_1_4";
     char newValue = 'A';
@@ -573,7 +576,7 @@ public class ReflectUtilTest
   }
 
   @Test
-  public void test_setField_4() throws Exception
+  public void test_setValueOf_unknown_field()
   {
     String varName = "unknown";
     Subclass2 obj = new Subclass2();
@@ -590,15 +593,42 @@ public class ReflectUtilTest
   }
 
   @Test
-  public void test_setField_static_with_class() throws UnknownFieldException
+  public void test_setValueOf_static_with_class()
   {
     DummyClass1.label = "unset";
     util.setValueOf(DummyClass1.class, "label", "nice");
     assertEquals("nice", DummyClass1.label);
   }
 
+  // The below test only works up to Java 11 - afterwards it is not possible to set final fields
   @Test
-  public void test_getValueOf_1() throws Exception
+  public void test_setValueOf_static_final()
+  {
+    AtomicReference<String> initial = util.getValueOf(Subclass2.class, "CONST_2_2");
+    AtomicReference<String> changed = new AtomicReference<String>("changed");
+    assertThat(Subclass2.getConst_2_2().equals(initial), is(true));
+    util.setValueOf(Subclass2.class, "CONST_2_2", changed);
+    assertThat(Subclass2.getConst_2_2().equals(changed), is(true));
+    util.setValueOf(Subclass2.class, "CONST_2_2", initial);
+  }
+
+  // The below test only works up to Java 11 - afterwards it is not possible to set final fields
+  @Test
+  public void test_setValueOf_inherited_private_final()
+  {
+    File file1;
+    File file2 = new File("/logs/archive");
+    Subclass2 object = new Subclass2();
+
+    file1 = object.getFolder();
+    util.setValueOf(object, "folder", file2);
+    assertThat(object.getFolder().equals(file2), is(true));
+    util.setValueOf(object, "folder", file1);
+    assertThat(object.getFolder().equals(file1), is(true));
+  }
+
+  @Test
+  public void test_getValueOf_1()
   {
     Subclass2 obj = new Subclass2();
     Object value;
@@ -1732,12 +1762,12 @@ public class ReflectUtilTest
     assertFalse(util.hasPublicSetter(object, util.findField(object.getClass(), "flag1")));
     assertFalse(util.hasPublicSetter(object, util.findField(object.getClass(), "var_1_4")));
   }
-  
+
   @Test
   public void test_hasGetter__true()
   {
     Object object = new ExtendedPerson();
-    
+
     assertTrue(util.hasGetter(object, util.findField(object.getClass(), "alpha")));
     assertTrue(util.hasGetter(object, util.findField(object.getClass(), "gamma")));
     assertTrue(util.hasGetter(object, util.findField(object.getClass(), "delta")));
@@ -1747,32 +1777,32 @@ public class ReflectUtilTest
   public void test_hasGetter__false()
   {
     Object object = new ExtendedPerson();
-    
+
     assertFalse(util.hasGetter(null, util.findField(object.getClass(), "strValue")));
     assertFalse(util.hasGetter(object, util.findField(object.getClass(), "beta")));
     assertFalse(util.hasGetter(object, util.findField(object.getClass(), "omega")));
   }
-  
+
   @Test
   public void test_hasSetter__true()
   {
     Object object = new ExtendedPerson();
-    
+
     assertTrue(util.hasSetter(object, util.findField(object.getClass(), "alpha")));
     assertTrue(util.hasSetter(object, util.findField(object.getClass(), "beta")));
     assertTrue(util.hasSetter(object, util.findField(object.getClass(), "gamma")));
   }
-  
+
   @Test
   public void test_hasSetter__false()
   {
     Object object = new ExtendedPerson();
-    
+
     assertFalse(util.hasSetter(null, util.findField(object.getClass(), "strValue")));
     assertFalse(util.hasSetter(object, util.findField(object.getClass(), "delta")));
     assertFalse(util.hasSetter(object, util.findField(object.getClass(), "omega")));
   }
-  
+
   // =========================================================================
   // HELPER METHODS
   // =========================================================================

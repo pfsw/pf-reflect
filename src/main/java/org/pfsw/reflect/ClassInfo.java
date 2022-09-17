@@ -110,6 +110,10 @@ public class ClassInfo<T>
     setIsSingleton(singleton);
   }
 
+  // =========================================================================
+  // PUBLIC INSTANCE METHODS
+  // =========================================================================
+
   public boolean isSingleton()
   {
     return this.isSingleton;
@@ -120,9 +124,6 @@ public class ClassInfo<T>
     this.isSingleton = newValue;
   }
 
-  // =========================================================================
-  // PUBLIC INSTANCE METHODS
-  // =========================================================================
   /**
    * Determines if the class or interface represented by this ClassInfo object is 
    * either the same as, or is a superclass or superinterface of, the class 

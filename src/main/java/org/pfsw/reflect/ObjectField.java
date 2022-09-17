@@ -38,6 +38,17 @@ public class ObjectField implements IObjectProperty
   }
   
   @Override
+  public String getName()
+  {
+    return getField().getName();
+  }
+  
+  public Field getField()
+  {
+    return this.field;
+  }
+  
+  @Override
   public Class<?> getType()
   {
     return getField().getType();
@@ -53,19 +64,5 @@ public class ObjectField implements IObjectProperty
   public String toString()
   {
     return String.format("%s(%s %s)", ObjectField.class.getSimpleName(), getType().getSimpleName(), getName());
-  }
-  
-  // =========================================================================
-  // PUBLIC INSTANCE METHODS
-  // =========================================================================
-  @Override
-  public String getName()
-  {
-    return getField().getName();
-  }
-  
-  public Field getField()
-  {
-    return this.field;
   }
 }

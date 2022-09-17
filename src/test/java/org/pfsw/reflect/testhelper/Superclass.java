@@ -9,10 +9,12 @@
 // ===========================================================================
 package org.pfsw.reflect.testhelper;
 
+import java.io.File;
 import java.util.Date;
 
 public class Superclass
 {
+  private final File folder = new File("/tmp");
   private String name = "Superclass";
   protected boolean flag1 = true;
   public Class<?> myClass = this.getClass();
@@ -29,6 +31,11 @@ public class Superclass
   }
 
   // Getter for fields
+
+  public File getFolder()
+  {
+    return this.folder;
+  }
 
   public String name()
   {

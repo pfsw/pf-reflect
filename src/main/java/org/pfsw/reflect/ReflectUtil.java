@@ -24,6 +24,7 @@
 package org.pfsw.reflect;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -62,7 +63,7 @@ public class ReflectUtil
    */
   public static final ReflectUtil RU = new ReflectUtil();
 
-  private static final boolean DEBUG = "true".equals(System.getProperty("org.pfsw.reflect.debug", "false"));
+  static final boolean DEBUG = "true".equals(System.getProperty("org.pfsw.reflect.debug", "false"));
 
   /**
    *  A reusable empty array of type Class[]
@@ -755,8 +756,8 @@ public class ReflectUtil
   }
 
   /**
-   * Sets the value of the field with the specified name to the 
-   * given value.
+   * Sets the value of the field with the specified name to the given value.
+   * <strong>Be aware that setting final fields this way only works up to Java 11 - afterwards it is not possible to set final fields anymore!</strong>
    * 
    * @param targetObject The object that contains the field.
    * @param name The name of the field to set.
@@ -770,8 +771,8 @@ public class ReflectUtil
   }
 
   /**
-   * Sets the value of the field with the specified name to the 
-   * given value.
+   * Sets the value of the field with the specified name to the given value.
+   * <strong>Be aware that setting final fields this way only works up to Java 11 - afterwards it is not possible to set final fields anymore!</strong>
    * 
    * @param obj The object that contains the field
    * @param name The name of the field to set
@@ -785,8 +786,8 @@ public class ReflectUtil
   }
 
   /**
-   * Sets the value of the field with the specified name to the 
-   * given value.
+   * Sets the value of the field with the specified name to the given value.
+   * <strong>Be aware that setting final fields this way only works up to Java 11 - afterwards it is not possible to set final fields anymore!</strong>
    * 
    * @param obj The object that contains the field
    * @param name The name of the field to set
@@ -800,8 +801,8 @@ public class ReflectUtil
   }
 
   /**
-   * Sets the value of the field with the specified name to the 
-   * given value.
+   * Sets the value of the field with the specified name to the given value.
+   * <strong>Be aware that setting final fields this way only works up to Java 11 - afterwards it is not possible to set final fields anymore!</strong>
    * 
    * @param obj The object that contains the field
    * @param name The name of the field to set
@@ -815,8 +816,8 @@ public class ReflectUtil
   }
 
   /**
-   * Sets the value of the field with the specified name to the 
-   * given value.
+   * Sets the value of the field with the specified name to the given value.
+   * <strong>Be aware that setting final fields this way only works up to Java 11 - afterwards it is not possible to set final fields anymore!</strong>
    * 
    * @param obj The object that contains the field
    * @param name The name of the field to set
@@ -830,8 +831,8 @@ public class ReflectUtil
   }
 
   /**
-   * Sets the value of the field with the specified name to the 
-   * given value.
+   * Sets the value of the field with the specified name to the given value.
+   * <strong>Be aware that setting final fields this way only works up to Java 11 - afterwards it is not possible to set final fields anymore!</strong>
    * 
    * @param obj The object that contains the field
    * @param name The name of the field to set
@@ -845,8 +846,8 @@ public class ReflectUtil
   }
 
   /**
-   * Sets the value of the field with the specified name to the 
-   * given value.
+   * Sets the value of the field with the specified name to the given value.
+   * <strong>Be aware that setting final fields this way only works up to Java 11 - afterwards it is not possible to set final fields anymore!</strong>
    * 
    * @param obj The object that contains the field
    * @param name The name of the field to set
@@ -860,8 +861,8 @@ public class ReflectUtil
   }
 
   /**
-   * Sets the value of the field with the specified name to the 
-   * given value.
+   * Sets the value of the field with the specified name to the given value.
+   * <strong>Be aware that setting final fields this way only works up to Java 11 - afterwards it is not possible to set final fields anymore!</strong>
    * 
    * @param obj The object that contains the field
    * @param name The name of the field to set
@@ -875,8 +876,8 @@ public class ReflectUtil
   }
 
   /**
-   * Sets the value of the field with the specified name to the 
-   * given value.
+   * Sets the value of the field with the specified name to the given value.
+   * <strong>Be aware that setting final fields this way only works up to Java 11 - afterwards it is not possible to set final fields anymore!</strong>
    * 
    * @param obj The object that contains the field
    * @param name The name of the field to set
@@ -891,6 +892,7 @@ public class ReflectUtil
 
   /**
    * Sets the specified field of the given object to the provided value.
+   * <strong>Be aware that setting final fields this way only works up to Java 11 - afterwards it is not possible to set final fields anymore!</strong>
    * 
    * @param obj The object that contains the field (must not be null).
    * @param field The field to be modified (must not be null).
@@ -949,7 +951,7 @@ public class ReflectUtil
   {
     return hasPublicMethod(object, makeGetterName(field.getName()));
   }
-  
+
   /**
    * Returns whether or not the given object has a public setter method for the specified field.
    */
@@ -957,7 +959,7 @@ public class ReflectUtil
   {
     return hasPublicMethod(object, makeSetterName(field.getName()), field.getType());
   }
-  
+
   /**
    * Returns whether or not the given object has a getter method (any visibility) for the specified field.
    */
@@ -969,7 +971,7 @@ public class ReflectUtil
     }
     return findMethod(object.getClass(), makeGetterName(field.getName())) != null;
   }
-  
+
   /**
    * Returns whether or not the given object has a setter method (any visibility) for the specified field.
    */
@@ -981,7 +983,7 @@ public class ReflectUtil
     }
     return findMethod(object.getClass(), makeSetterName(field.getName()), field.getType()) != null;
   }
-  
+
   /**
    * Returns true if the given member ({@link Field}, {@link Method}, {@link Constructor}) 
    * is not null and is package visible.
@@ -1700,75 +1702,65 @@ public class ReflectUtil
     setValueOf(obj, field, value, isPrimitive);
   }
 
-  protected void setValueOf(final Object obj, final Field field, final Object value, final boolean isPrimitive)
+  protected void setValueOf(final Object obj, Field field, final Object value, final boolean isPrimitive)
   {
-    boolean saveAccessibility = false;
-
     if (field == null)
     {
       throw new NullPointerException("'field' parameter is null");
     }
+    
+    InternalFieldWrapper.create(field).setValueOf(obj, value, isPrimitive);
+  }
 
-    saveAccessibility = field.isAccessible();
-    field.setAccessible(true);
+  protected boolean isAccessible(Object object, AccessibleObject methodOrField)
+  {
     try
     {
-      if (isPrimitive)
-      {
-        if (value instanceof Character)
-        {
-          field.setChar(obj, ((Character)value).charValue());
-        }
-        else if (value instanceof Integer)
-        {
-          field.setInt(obj, ((Integer)value).intValue());
-        }
-        else if (value instanceof Long)
-        {
-          field.setLong(obj, ((Long)value).longValue());
-        }
-        else if (value instanceof Boolean)
-        {
-          field.setBoolean(obj, ((Boolean)value).booleanValue());
-        }
-        else if (value instanceof Double)
-        {
-          field.setDouble(obj, ((Double)value).doubleValue());
-        }
-        else if (value instanceof Float)
-        {
-          field.setFloat(obj, ((Float)value).floatValue());
-        }
-        else if (value instanceof Byte)
-        {
-          field.setByte(obj, ((Byte)value).byteValue());
-        }
-        else if (value instanceof Short)
-        {
-          field.setShort(obj, ((Short)value).shortValue());
-        }
-      }
-      else
-      {
-        field.set(obj, value);
-      }
+      return methodOrField.isAccessible();
     }
-    catch (RuntimeException e)
+    catch (@SuppressWarnings("unused") RuntimeException e)
     {
-      // Ignore this, because null values are allowed !
+      return false;
+    }
+  }
+
+  protected void removeFinal(Field field)
+  {
+    setModifiers(field, field.getModifiers() & ~Modifier.FINAL);
+  }
+
+  protected void setModifiers(Field field, int modifiers)
+  {
+    Field modifiersField;
+    boolean saveAccessibility = false;
+
+    try
+    {
+      modifiersField = Field.class.getDeclaredField("modifiers");
+      saveAccessibility = modifiersField.isAccessible();
+      modifiersField.setAccessible(true);
+      modifiersField.setInt(field, modifiers);
+    }
+    catch (Exception e)
+    {
       if (DEBUG)
       {
         e.printStackTrace();
       }
     }
-    catch (IllegalAccessException ex1)
-    {
-      throw new IllegalAccessError(ex1.getMessage());
-    }
     finally
     {
       field.setAccessible(saveAccessibility);
     }
+  }
+
+  /**
+   * Return <tt>true</tt> if the modifiers includes the <tt>final</tt> modifier,
+   * false otherwise.
+   */
+  protected boolean isFinal(int modifiers)
+  {
+    return Modifier.isFinal(modifiers);
   }
 
   /**
