@@ -1,3 +1,7 @@
+plugins {
+  id 'signing'
+}
+
 apply plugin: 'java'
 
 def includePath = project.pfswGradleIncludePath // usually specified in $GRADLE_USER_HOME/gradle.properties
@@ -15,6 +19,10 @@ apply from: "${includePath}/common/repositories.gradle"
 apply from: "${includePath}/java/java-6-compile.gradle"
 apply from: "${includePath}/java/java-compatibility.gradle"
 apply from: "${includePath}/java/publishing-java-full.gradle"
+
+signing {
+  sign publishing.publications.mavenJava
+}
 
 dependencies {
   testImplementation group: 'junit', name: 'junit', version: '4.12'
