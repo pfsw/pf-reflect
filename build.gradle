@@ -12,6 +12,8 @@ archivesBaseName = "pf-reflect"
 ext {
   javaVersion = '6'
   javaModuleNameSuffix = 'reflect'
+  libDisplayName = 'PF Reflection Utilities'
+  libDescription = 'Library for simplified Java reflection usage'
 }
 
 apply from: "${includePath}/common/ext-variables.gradle"
