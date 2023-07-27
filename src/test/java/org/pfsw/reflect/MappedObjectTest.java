@@ -1,8 +1,12 @@
 package org.pfsw.reflect;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 import static org.pfsw.reflect.testhelper.UnitTestHelper.*;
+import static org.hamcrest.Matchers.*;
+import static org.hamcrest.MatcherAssert.*;
 
 import java.math.BigDecimal;
 import java.util.Date;

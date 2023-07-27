@@ -1,11 +1,12 @@
 // ===========================================================================
 // CONTENT  : CLASS ObjectField
 // AUTHOR   : Manfred Duchrow
-// VERSION  : 1.0 - 18/03/2017
+// VERSION  : 2.0 - 27/07/2023
 // HISTORY  :
 //  18/03/2017  mdu  CREATED
+//  27/07/2023  mdu  changed -> extends AbstractElementWithModifiers
 //
-// Copyright (c) 2017, by MDCS. All rights reserved.
+// Copyright (c) 2017-2023, by MDCS. All rights reserved.
 // ===========================================================================
 package org.pfsw.reflect;
 
@@ -15,9 +16,9 @@ import java.lang.reflect.Field;
  * This is an IObjectProperty implementing wrapper around a {@link Field}.
  *
  * @author Manfred Duchrow
- * @version 1.0
+ * @version 2.0
  */
-public class ObjectField implements IObjectProperty
+public class ObjectField extends AbstractElementWithModifiers implements IObjectProperty
 {
   // =========================================================================
   // INSTANCE VARIABLES

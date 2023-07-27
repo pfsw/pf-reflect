@@ -9,8 +9,14 @@
 // ===========================================================================
 package org.pfsw.reflect;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.MatcherAssert.*;
 
 import java.awt.BorderLayout;
 import java.io.File;
@@ -1579,9 +1585,17 @@ public class ReflectUtilTest
     property = objectProperties.get(0);
     assertEquals("firstName", property.getName());
     assertEquals(String.class, property.getType());
-    assertTrue(property.getModifiers().isPrivate());
-    assertFalse(property.getModifiers().isStatic());
-    assertFalse(property.getModifiers().isFinal());
+    assertTrue(property.isPrivate());
+    assertFalse(property.isProtected());
+    assertFalse(property.isProtected());
+    assertFalse(property.isDefaultVisibility());
+    assertFalse(property.isPublic());
+    assertFalse(property.isStatic());
+    assertFalse(property.isFinal());
+    assertFalse(property.isStrict());
+    assertFalse(property.isSynchronized());
+    assertFalse(property.isTransient());
+    assertFalse(property.isVolatile());
   }
 
   @Test
@@ -1596,7 +1610,7 @@ public class ReflectUtilTest
       @Override
       public boolean matches(IObjectProperty objectProperty)
       {
-        return !objectProperty.getModifiers().isPublic();
+        return !objectProperty.isPublic();
       }
     };
 
@@ -1619,16 +1633,19 @@ public class ReflectUtilTest
     property = objectProperties.get(0);
     assertEquals("label", property.getName());
     assertEquals(String.class, property.getType());
-    assertTrue(property.getModifiers().isPublic());
-    assertTrue(property.getModifiers().isStatic());
-    assertFalse(property.getModifiers().isFinal());
+    assertTrue(property.isPublic());
+    assertTrue(property.isStatic());
+    assertFalse(property.isFinal());
 
     property = objectProperties.get(1);
     assertEquals("type", property.getName());
     assertEquals(Integer.TYPE, property.getType());
-    assertTrue(property.getModifiers().isPrivate());
-    assertFalse(property.getModifiers().isStatic());
-    assertFalse(property.getModifiers().isFinal());
+    assertTrue(property.isPrivate());
+    assertFalse(property.isStatic());
+    assertFalse(property.isFinal());
+    assertFalse(property.isNative());
+    assertFalse(property.isInterface());
+    assertFalse(property.isAbstract());
   }
 
   @Test
